@@ -1,0 +1,11 @@
+# --- 管理しないもの（例） ---
+/.vscode/
+
+/data-xlsx,csv/
+
+/memo/
+
+/src/img/
+/src/video/
+
+/trash/

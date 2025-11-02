@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スト6 豪鬼攻略サイト</title>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: #ffffff;
+      color: #222;
+      margin: 0;
+      padding: 0 16px;
+    }
+    header {
+      padding: 2rem 0 1rem;
+      border-bottom: 2px solid #ddd;
+    }
+    h1 {
+      font-size: 2rem;
+      text-align: center;
+    }
+    nav {
+      margin-bottom: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.75rem;
+      text-align: left;
+    }
+    th {
+      background-color: #f5f5f5;
+    }
+    section {
+      margin-bottom: 4rem;
+    }
+    a {
+      color: #0077cc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    body {
+    background-color: #111; /* 背景を暗く */
+    color: #eee; /* テキストは明るく */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1b1b1b;
+    color: #eee;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    border: 1px solid #444;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  th, td {
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+    font-size: 14px;
+  }
+
+  thead th {
+    background-color: #2a2a2a;
+    color: #00ffff; /* サイバー系のアクセント */
+    font-size: 13px;
+    border-bottom: 2px solid #00ffff;
+    text-shadow: 0 0 4px #00ffff88;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #222;
+  }
+
+  tbody tr:hover {
+    background-color: #333;
+    transition: background-color 0.2s;
+  }
+
+  h2 {
+    color: #ff3366;
+    text-shadow: 0 0 5px #ff336688;
+    margin-bottom: 16px;
+    font-size: 24px;
+  }
+
+  td br {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  @media screen and (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
+    thead {
+      display: none;
+    }
+    tr {
+      margin-bottom: 15px;
+      background: #1b1b1b;
+      border: 1px solid #333;
+      padding: 10px;
+      border-radius: 6px;
+    }
+    td {
+      padding: 6px 10px;
+      border: none;
+      position: relative;
+    }
+    td::before {
+      content: attr(data-label);
+      font-weight: bold;
+      color: #00ffff;
+      display: block;
+      margin-bottom: 4px;
+    }
+  }
+  body {
+  background-color: #fff; /* ページ全体の背景を白に */
+  color: #2b2b2b;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 2rem;
+}
+
+/* テーブル全体を黒基調 */
+.move-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+  background-color: #111;
+  color: #eee;
+  box-shadow: 0 0 10px #2b2b2b;
+  border: 2px solid #444;
+  font-size: 14px;
+}
+
+/* ヘッダー */
+.move-table thead {
+  background-color: #222;
+}
+.move-table thead th {
+  color: #00f0ff;
+  padding: 10px;
+  border-bottom: 2px solid #444;
+  text-align: center;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* 本文セル */
+.move-table td {
+  padding: 8px 10px;
+  text-align: center;
+  border-bottom: 1px solid #333;
+  white-space: nowrap;
+}
+
+/* 偶数行の背景色を変更して視認性アップ */
+.move-table tbody tr:nth-child(even) {
+  background-color: #1a1a1a;
+}
+
+/* 特定列のスタイル調整例（任意） */
+.move-table td:nth-child(1),
+.move-table th:nth-child(1) {
+  text-align: left;
+  font-weight: bold;
+  color: #ffd700;
+}
+
+/* キャンセル列のC文字に色をつける（ゲーム感UP） */
+.move-table td:contains("C") {
+  color: #ff80ff;
+  font-weight: bold;
+}
+
+/* 小さなスクロール対応（横幅超える場合） */
+.table-wrapper {
+  overflow-x: auto;
+}
+  body {
+    background-color: #fff; /* 全体背景：白 */
+    margin: 0;
+    font-family: sans-serif;
+  }
+
+  .table-wrapper {
+    background-color: #1a1a1a; /* 表の背景：黒 */
+    padding: 1rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-radius: 8px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .move-table {
+    width: 100%;
+    min-width: 1000px; /* スクロールさせるための横幅 */
+    border-collapse: collapse;
+    color: #fff;
+  }
+
+  .move-table th,
+  .move-table td {
+    padding: 0.5rem 1rem;
+    border: 1px solid #444;
+    text-align: center;
+    scroll-snap-align: start;
+  }
+
+  .move-table th {
+    background-color: #333;
+    color: #0ff;
+    position: sticky;
+    top: 0;
+  }
+
+  .move-table td {
+    background-color: #222;
+  }
+  .combo-box {
+  display: flex;
+  overflow-x: auto;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.combo-box span {
+  white-space: nowrap;
+  background: #333;
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* 横並び用ラッパー */
+.traits-wrapper {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 2rem 0;
+}
+
+/* 共通カードデザイン */
+.strengths, .weaknesses {
+  flex: 1 1 400px;
+  max-width: 600px;
+  background-color: #fff;
+  color: #333;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+  position: relative;
+  border: 2px solid transparent;
+}
+
+/* ゲーム風バー */
+.strengths::before, .weaknesses::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 6px;
+  border-radius: 6px 0 0 6px;
+}
+
+.strengths::before {
+  background: linear-gradient(to bottom, #00c6ff, #0072ff);
+}
+
+.weaknesses::before {
+  background: linear-gradient(to bottom, #ff6a6a, #d60000);
+}
+
+/* タイトル */
+.strengths h3, .weaknesses h3 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+  border-left: 4px solid #ccc;
+  color: #111;
+}
+
+/* リスト共通 */
+.strengths ul, .weaknesses ul {
+  padding-left: 1.5rem;
+}
+
+.strengths li, .weaknesses li {
+  margin-bottom: 0.75rem;
+  padding-left: 1.2rem;
+  position: relative;
+  line-height: 1.6;
+}
+
+.strengths li::before {
+  content: "▶";
+  position: absolute;
+  left: 0;
+  color: #0072ff;
+  font-weight: bold;
+}
+
+.weaknesses li::before {
+  content: "⚠";
+  position: absolute;
+  left: 0;
+  color: #d60000;
+  font-weight: bold;
+}
+
+/* ネストリスト */
+.strengths ul ul, .weaknesses ul ul {
+  margin-top: 0.5rem;
+  padding-left: 1rem;
+  border-left: 2px solid #eee;
+}
+
+.strengths ul ul li::before,
+.weaknesses ul ul li::before {
+  content: "・";
+  color: #999;
+}
+
+.strengths {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.move {
+  background: #0078d4;
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.level-details {
+  flex: 2 1 500px;
+}
+
+.level-details h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #28a745;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.3rem;
+}
+
+.level-card {
+  background: #ffffff;
+  border-left: 6px solid #ccc;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.level-card h4 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+/* Lv別色分け */
+.lv0 { border-left-color: #999; }
+.lv1 { border-left-color: #6c757d; }
+.lv2 { border-left-color: #007bff; }
+.lv3 { border-left-color: #17a2b8; }
+.lv4 { border-left-color: #ffc107; }
+
+  h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.8rem;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 0.5rem;
+    }
+
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .column {
+      flex: 1;
+      min-width: 300px;
+      background: #f9f9f9;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    }
+
+    .attack {
+      border-left: 6px solid #e63946;
+    }
+
+    .defense {
+      border-left: 6px solid #1d3557;
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+    }
+
+    li {
+      margin-bottom: 0.7rem;
+      line-height: 1.6;
+    }
+
+    li::marker {
+      color: inherit;
+    }
+
+    .attack li::marker {
+      color: #e63946;
+    }
+
+    .defense li::marker {
+      color: #1d3557;
+    }
+
+    .tree {
+      padding-left: 1.5rem;
+      margin-left: 1rem;
+    }
+    .node {
+      margin-bottom: 1rem;
+      position: relative;
+      padding-left: 1.5rem;
+      border-left: 2px solid #555;
+    }
+    .node:last-child {
+      border-left: none;
+    }
+    .node::before {
+      content: "";
+      position: absolute;
+      top: 0.75rem;
+      left: 0;
+      width: 1.5rem;
+      height: 2px;
+      background-color: #555;
+    }
+    .label {
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    .hit { background-color: #2c6cf7; color: white; }
+    .counter { background-color: #f7a12c; color: black; }
+    .punish { background-color: #e03c3c; color: white; }
+    .state { background-color: #47b784; color: white; }
+    .follow {
+      margin-top: 0.3rem;
+      margin-left: 1.5rem;
+      font-style: italic;
+    }
+    .finisher-accordion {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin: 10px 0;
+  background: #fdfdfd;
+  font-family: sans-serif;
+  overflow: hidden;
+}
+.finisher-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #eee;
+  padding: 10px;
+  cursor: pointer;
+}
+.finisher-title {
+  font-weight: bold;
+  font-size: 16px;
+}
+.finisher-icon i {
+  font-size: 16px;
+}
+.finisher-content {
+  display: none;
+  padding: 10px;
+  background: #fff;
+}
+.finisher-list {
+  list-style: none;
+  padding-left: 0;
+}
+.finisher-list li {
+  padding: 6px 0;
+  border-bottom: 1px dashed #ccc;
+  font-size: 14px;
+}
+.finisher-list li:last-child {
+  border-bottom: none;
+}
+.combo_arrow {
+  margin: 0 4px;
+}
+.finisher-accordion {
+  margin: 3px 15px 0px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: sans-serif;
+  overflow: hidden;
+}
+.finisher-toggle {
+  display: none;
+}
+.finisher-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #eee;
+  padding: 10px;
+  margin: 0px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+}
+.finisher-icon::after {
+    content: '+';
+    font-size: 16px;
+}
+.finisher-toggle:checked + .finisher-header .finisher-icon::after {
+  content: '−';
+}
+.finisher-content {
+  display: none;
+  padding: 10px;
+  background: #fff;
+  padding-bottom: 2.5px;
+}
+.finisher-toggle:checked + .finisher-header + .finisher-content {
+  display: block;
+}
+.finisher-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0px;
+}
+.finisher-list li {
+  padding: 6px 0;
+  border-bottom: 1px dashed #ccc;
+  font-size: 14px;
+}
+.finisher-list li:last-child {
+  border-bottom: none;
+}
+.combo_arrow {
+  margin: 0 4px;
+}
+
+
+
+.vertical-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.vertical-nav li {
+  margin: 0.5em 0;
+}
+
+.vertical-nav a {
+  text-decoration: none;
+  color: #3b2f2f;
+  transition: color 0.3s ease;
+}
+
+.vertical-nav a:hover {
+  color: #b44c00;
+}
+
+
+.combo-gauge-table {
+  margin: 1em 0;
+  overflow-x: auto;
+}
+
+.combo-gauge-table table {
+  border-collapse: collapse;
+  width: 100%;
+  text-align: center;
+  font-size: 0.95em;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+}
+
+.combo-gauge-table th,
+.combo-gauge-table td {
+  border: 1px solid #ccc;
+  padding: 0.5em 0.75em;
+}
+
+.combo-gauge-table thead {
+  background-color: #e0f0ff;
+  font-weight: bold;
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ストリートファイター6 豪鬼 攻略・研究サイト</h1>
+  </header>
+  <nav class="vertical-nav">
+  <ul>
+    <li><a href="#">刺身</a></li>
+    <li><a href="#">天ぷら</a></li>
+    <li><a href="#">煮物</a></li>
+    <li><a href="#">焼き魚</a></li>
+    <li><a href="#">味噌汁</a></li>
+    <li><a href="#">ご飯</a></li>
+  </ul>
+</nav>
+<div class="combo-gauge-table">
+  <table>
+    <thead>
+      <tr>
+        <th rowspan="2">ゲージ</th>
+        <th rowspan="2">運び</th>
+        <th rowspan="2">ダメージ</th>
+        <th colspan="4">SAゲージ</th>
+      </tr>
+      <tr>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ドライブゲージ</td>
+        <td>123</td>
+        <td>123</td>
+        <td>123</td>
+        <td>123</td>
+        <td>123</td>
+        <td>123</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+    <h1>豪鬼 - 始動技ロジックツリー</h1>
+      弱技始動
+      <div class="flex">
+                                <div class="combo-tree">
+                                    <span class="label title">立ち弱パンチ</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label hit">通常ヒット</span>
+                                            <div class="combo-box2"><span>屈弱P</span>＞<span>立弱K</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label counter">カウンター</span>
+                                            <div class="combo-box2"><span>立弱K</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label punish">パニカン</span>
+                                            <div class="combo-box2"><span>屈強P</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="combo-tree">
+                                    <span class="label title">しゃがみ弱パンチ</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label hit">通常ヒット</span>
+                                            <div class="combo-box2"><span>屈弱P</span>＞<span>立弱K</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label counter">カウンター</span>
+                                            <div class="combo-box2"><span>屈中P</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label punish">パニカン</span>
+                                            <div class="combo-box2"><span>屈強P</span>＞<span>〆</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+      </div>
+      <div class="flex">
+                                <div class="combo-tree">
+                                    <span class="label title">立ち弱キック</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label hit">通常ヒット</span>
+                                            <div class="tree">
+                                                <div class="node">
+                                                    <span class="label state">立ち状態のみ</span>
+                                                    <div class="combo-box2"><span>弱竜巻斬空脚</span>＞<span>屈強K</span></div>
+                                                    <div class="combo-box2"><span>中竜巻斬空脚</span></div>
+                                                    
+                                                </div>
+                                                <div class="node">
+                                                    <span class="label state">状態関係なし</span>
+                                                    <div class="combo-box2"><span>弱灼火</span></div>
+                                                    <div class="combo-box2"><span>強豪昇龍拳</span></div>
+                                                    <div class="combo-box2"><span>キャンセルラッシュ</span>＞<span>立弱P</span>＞<span>〆</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label counter">カウンター</span>
+                                            <div class="combo-box2"><span>キャンセルラッシュ</span>＞<span>屈中P</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label punish">パニカン</span>
+                                            <div class="combo-box2"><span>OD灼火</span></div>
+                                            <div class="combo-box2"><span>OD竜巻斬空脚</span>＞<span>弱豪昇龍拳</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="combo-tree">
+                                    <span class="label title">しゃがみ弱キック</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label hit">通常ヒット</span>
+                                            <div class="combo-box2"><span>屈弱P</span>＞<span>立弱K</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label counter">カウンター</span>
+                                            <div class="combo-box2"><span>立弱K</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label punish">パニカン</span>
+                                            <div class="combo-box2"><span>立中Pタゲコン</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+      </div>
+      中技始動
+      <div class="flex">
+                                <div class="combo-tree">
+                                    <span class="label title">立ち中パンチ</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label hit">通常ヒット</span>
+                                            <div class="combo-box2"><span>屈弱P</span>＞<span>立弱K</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label counter">カウンター</span>
+                                            <div class="combo-box2"><span>屈中P</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label punish">パニカン</span>
+                                            <div class="combo-box2"><span>屈強P</span>＞<span>〆</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="combo-tree">
+                                    <span class="label title">しゃがみ中パンチ</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label hit">通常ヒット</span>
+                                            <div class="combo-box2"><span>屈中P</span>＞<span>〆</span></div>
+                                            <div class="combo-box2"><span>弱・中・強・OD竜巻斬空脚</span></div>
+                                            <div class="combo-box2"><span>弱・中・OD灼火</span></div>
+                                            <div class="combo-box2"><span>キャンセルラッシュ</span>＞<span>前強P</span>＞<span>〆</span></div>
+                                            <div class="combo-box2"><span>キャンセルラッシュ</span>＞<span>立強K</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label counter">カウンター</span>
+                                            <div class="combo-box2"><span>屈中K</span>＞<span>〆</span></div>
+                                            <div class="combo-box2"><span>屈強P</span>＞<span>〆</span></div>
+                                            <div class="combo-box2"><span>強灼火</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label punish">パニカン</span>
+                                            <div class="combo-box2"><span>立強P</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+      </div>
+      <div class="flex">
+                                <div class="combo-tree">
+                                    <span class="label title">立ち中キック</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label hit">通常ヒット</span>
+                                            <div class="combo-box2"><span>弱・中・強・OD竜巻斬空脚</span></div>
+                                            <div class="combo-box2"><span>弱・中・OD灼火</span></div>
+                                            <div class="combo-box2"><span>キャンセルラッシュ</span>＞<span>前強P</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label counter">カウンター</span>
+                                            <div class="combo-box2"><span>立弱K</span>＞<span>〆</span></div>
+                                            <div class="combo-box2"><span>強灼火</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label punish">パニカン</span>
+                                            <div class="combo-box2"><span>屈中P</span>＞<span>〆</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="combo-tree">
+                                    <span class="label title">しゃがみ中キック</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label hit">通常ヒット</span>
+                                            <div class="combo-box2"><span>弱・中・強・OD竜巻斬空脚</span></div>
+                                            <div class="combo-box2"><span>弱・中・OD灼火</span></div>
+                                            <div class="combo-box2"><span>キャンセルラッシュ</span>＞<span>立強P</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label counter">カウンター</span>
+                                            <div class="combo-box2"><span>キャンセルラッシュ</span>＞<span>前強P</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label punish">パニカン</span>
+                                            <div class="combo-box2"><span>強灼火</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+      </div>
+      強技始動
+      <div class="flex">
+                                <div class="combo-tree">
+                                    <span class="label title">立ち強パンチ</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label hit">通常ヒット</span>
+                                            <div class="combo-box2"><span>弱・中・強・OD竜巻斬空脚</span></div>
+                                            <div class="combo-box2"><span>弱・中・強・OD灼火</span></div>
+                                            <div class="combo-box2"><span>キャンセルラッシュ</span>＞<span>前強P</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label counter">カウンター</span>
+                                            <div class="combo-box2"><span>立弱K</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label punish">パニカン</span>
+                                            <div class="combo-box2"><span>屈中P</span>＞<span>〆</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="combo-tree">
+                                    <span class="label title">しゃがみ強パンチ</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label hit">通常ヒット</span>
+                                            <div class="combo-box2"><span>弱・中・強・OD竜巻斬空脚</span></div>
+                                            <div class="combo-box2"><span>弱・中・強・OD灼火</span></div>
+                                            <div class="combo-box2"><span>キャンセルラッシュ</span>＞<span>前強P</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label punish">パニカン</span>
+                                            <div class="combo-box2"><span>屈弱P</span>＞<span>〆</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+      </div>
+      <div class="flex">
+                                <div class="combo-tree">
+                                    <span class="label title">立ち強キック</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label hit">通常ヒット</span>
+                                            <div class="combo-box2"><span>屈中P</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label counter">カウンター</span>
+                                            <div class="combo-box2"><span>屈強P</span>＞<span>〆</span></div>
+                                            <div class="combo-box2"><span>立強P</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label punish">パニカン</span>
+                                            <div class="combo-box2"><span>微歩き</span>＞<span>屈中P</span>＞<span>中Pタゲコン</span>＞<span>〆</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="combo-tree">
+                                    <span class="label title">しゃがみ強キック</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label state">強制ダウン</span>
+                                        </div>
+                                    </div>
+                                </div>
+      </div>
+      ジャンプ技始動
+      <div class="flex">
+                                <div class="combo-tree">
+                                    <span class="label title">ジャンプ中K</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label hit">通常ヒット</span>
+                                            <div class="combo-box2"><span>屈強P</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label counter">カウンター</span>
+                                            <div class="combo-box2"><span>引強Ｋ</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label punish">パニカン</span>
+                                            <div class="combo-box2"><span>立強Ｋ</span>＞<span>〆</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="combo-tree">
+                                    <span class="label title">ジャンプ強P・K</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label hit">通常ヒット</span>
+                                            <div class="combo-box2"><span>屈強P</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label counter">カウンター</span>
+                                            <div class="combo-box2"><span>引強K</span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label punish">パニカン</span>
+                                            <div class="combo-box2"><span>立強K</span>＞<span>〆</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+      </div>
+      特殊技始動
+      <div class="flex">
+                                <div class="combo-tree">
+                                    <span class="label title">前中P(中段)</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label hit">通常ヒット</span>
+                                            <div class="combo-box2"><span></span>＞<span></span>＞<span></span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label counter">カウンター</span>
+                                            <div class="combo-box2"><span></span>＞<span></span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label punish">パニカン</span>
+                                            <div class="combo-box2"><span></span>＞<span></span>＞<span></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="combo-tree">
+                                    <span class="label title">引強キック</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label hit">通常ヒット</span>
+                                            <div class="combo-box2"><span></span>＞<span></span>＞<span></span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label counter">カウンター</span>
+                                            <div class="combo-box2"><span></span>＞<span></span>＞<span></span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label punish">パニカン</span>
+                                            <div class="combo-box2"><span></span>＞<span></span>＞<span></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+      </div>
+      <div class="flex">
+                                <div class="combo-tree">
+                                    <span class="label title">前強パンチ</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label hit">通常ヒット</span>
+                                            <div class="combo-box2"><span></span>＞<span></span>＞<span></span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label counter">カウンター</span>
+                                            <div class="combo-box2"><span></span>＞<span></span>＞<span>〆</span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label punish">パニカン</span>
+                                            <div class="combo-box2"><span></span>＞<span></span>＞<span></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="combo-tree">
+                                    <span class="label title">引強キック</span>
+                                    <div class="tree">
+                                        <div class="node">
+                                            <span class="label hit">通常ヒット</span>
+                                            <div class="combo-box2"><span></span>＞<span></span>＞<span></span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label counter">カウンター</span>
+                                            <div class="combo-box2"><span></span>＞<span></span>＞<span></span></div>
+                                        </div>
+                                        <div class="node">
+                                            <span class="label punish">パニカン</span>
+                                            <div class="combo-box2"><span></span>＞<span></span>＞<span></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+      </div>
+        <div class="combo-card" id="4F">
+                            <h5>弱P始動(4F)</h5>
+                            <h6>通常</h6>
+                            <div class="combo-box"><span>屈弱P</span><span class="sub">×2</span>＞<span>立弱K</span>＞<span>〆</span></div>
+                            <div class="finisher-accordion">
+                                <input type="checkbox" id="4F0" class="finisher-toggle">
+                                <label for="4F0" class="finisher-header">
+                                    <span class="finisher-title">立弱Kからの〆技一覧</span>
+                                    <span class="finisher-icon"></span>
+                                </label>
+                                <div class="finisher-content">
+                                    <ul class="finisher-list">
+                                    <li>弱灼火 = 状況維持</li>
+                                    <li>弱竜巻斬空脚＞屈強K = 起き攻め・立状態のみ</li>
+                                    <li>中竜巻斬空脚 = 運び・起き攻め<span class="add">立状態のみ</span></li>
+                                    <li>強豪昇龍拳 = ダメージ</li>
+                                    <li>キャンセルラッシュ＞弱P = ダメージ・運び<span class="add">ゲージ3本</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <h6>カウンターヒット</h6>
+                            <div class="combo-box"><span>屈弱P</span><span class="sub">カウンター</span>＞<span>屈中P</span>＞<span>〆</span></div>
+                            <div class="finisher-accordion">
+                                <input type="checkbox" id="4F1" class="finisher-toggle">
+                                <label for="4F1" class="finisher-header">
+                                    <span class="finisher-title">屈中Pからの〆技一覧</span>
+                                    <span class="finisher-icon"></span>
+                                </label>
+                                <div class="finisher-content">
+                                    <ul class="finisher-list">
+                                    <li>弱灼火 = 状況維持</li>
+                                    <li>弱竜巻斬空脚＞屈強K = 起き攻め<span class="add">立状態のみ</span></li>
+                                    <li>中竜巻斬空脚 = 運び・起き攻め<span class="add">立状態のみ</span></li>
+                                    <li>強豪昇龍拳 = ダメージ</li>
+                                    <li>キャンセルラッシュ＞前強P = ダメージ・運び<span class="add">ゲージ3本</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <h6>パニッシュカウンター</h6>
+                            <div class="combo-box"><span>屈弱P</span><span class="sub">パニカン</span>＞<span>屈強P</span>＞<span>〆</span></div>
+                            <div class="finisher-accordion">
+                                <input type="checkbox" id="4F2" class="finisher-toggle">
+                                <label for="4F2" class="finisher-header">
+                                    <span class="finisher-title">屈強Pからの〆技一覧</span>
+                                    <span class="finisher-icon"></span>
+                                </label>
+                                <div class="finisher-content">
+                                    <ul class="finisher-list">
+                                    <li>強灼火(1段止め) = 状況維持</li>
+                                    <li>弱竜巻斬空脚＞屈強K = 起き攻め<span class="add">立状態のみ</span></li>
+                                    <li>中竜巻斬空脚 = 運び立<span class="add">状態のみ</span></li>
+                                    <li>強竜巻斬空脚 = ダメージ・運び</li>
+                                    <li>キャンセルラッシュ＞前強P = ダメージ・運び<span class="add">ゲージ3本</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <h6>空中ヒット</h6>
+                            以下を状況に応じて使用する。
+                            <div class="finisher-accordion">
+                                <input type="checkbox" id="4F3" class="finisher-toggle">
+                                <label for="4F3" class="finisher-header">
+                                    <span class="finisher-title">空中ヒットからの〆技一覧</span>
+                                    <span class="finisher-icon"></span>
+                                </label>
+                                <div class="finisher-content">
+                                    <ul class="finisher-list">
+                                    <li>中竜巻斬空脚 = 基本コンボ</li>
+                                    <li>強竜巻斬空脚 = ダメージ・運び</li>
+                                    <li>生ラッシュ＞通常技 = 状況に応じて技を選択</li>
+                                    <li>OD灼火=運び・張り付きでSA1が入る</li>
+                                    <li>OD竜巻斬空脚＞強竜巻斬空脚=</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="combo-card" id="5F">
+                            <h5>弱K始動(5F)</h5>
+                            <h6>通常</h6>
+                            以下を状況に応じて使用する。
+                            <div class="finisher-accordion">
+                                <input type="checkbox" id="5F0" class="finisher-toggle">
+                                <label for="5F0" class="finisher-header">
+                                    <span class="finisher-title">立弱K通常・カウンターヒットからの〆技一覧</span>
+                                    <span class="finisher-icon"></span>
+                                </label>
+                                <div class="finisher-content">
+                                    <ul class="finisher-list">
+                                    <li>弱灼火 = 状況維持</li>
+                                    <li>弱竜巻斬空脚＞屈強K = 起き攻め・立状態のみ</li>
+                                    <li>中竜巻斬空脚 = 運び・起き攻め<span class="add">立状態のみ</span></li>
+                                    <li>強豪昇龍拳 = ダメージ</li>
+                                    <li>キャンセルラッシュ＞弱P = ダメージ・運び<span class="add">ゲージ3本</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <h6>カウンターヒット</h6>
+                            カウンターヒット時は、通常ヒット時に加えラッシュから屈中Pがつながる。
+                            <h6>パニッシュカウンター</h6>
+                            上記のコンボに加え以下を状況に応じて使用する。
+                            <div class="finisher-accordion">
+                                <input type="checkbox" id="5F1" class="finisher-toggle">
+                                <label for="5F1" class="finisher-header">
+                                    <span class="finisher-title">立弱Kパニッシュカウンターからの〆技一覧</span>
+                                    <span class="finisher-icon"></span>
+                                </label>
+                                <div class="finisher-content">
+                                    <ul class="finisher-list">
+                                    <li>OD灼火 = 運び・画面端</li>
+                                    <li>OD竜巻＞弱豪昇龍拳 = ダメージ</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="combo-card" id="F">
+                            <h5>屈中P始動(6F)</h5>
+
+                            <h6>通常・カウンターヒット</h6>
+                            <h6>パニッシュカウンター</h6>
+                        </div>
+                        <div class="combo-card" id="F">
+                            <h5>屈中K(8F)</h5>
+                            <h6>通常・カウンターヒット</h6>
+                            <h6>パニッシュカウンター</h6>
+                        </div>
+                        <div class="combo-card" id="F">
+                            <h5>引強K始動(12F)</h5>
+                            <h6>通常・カウンターヒット</h6>
+                            <h6>パニッシュカウンター</h6>
+                        </div>
+                        <div class="combo-card" id="F">
+                            <h5>強K始動(13F)</h5>
+                            <h6>通常・カウンターヒット</h6>
+                            <h6>パニッシュカウンター</h6>
+                        </div>
+                        <div class="combo-card" id="F">
+                            <h5>前強P始動(13F)</h5>
+                            <h6>通常・カウンターヒット</h6>
+                            屈中P
+                            屈中K
+                            <h6>パニッシュカウンター</h6>
+                            
+                        </div>
+                        <div class="combo-card" id="F">
+                            <h5>強灼火始動(23F)</h5>
+                            <h6>通常・カウンターヒット</h6>
+                            <h6>パニッシュカウンター</h6>
+                        </div>
+                        <div class="combo-card" id="F">
+                            <h5>インパクト始動</h5>
+                            <h6>立弱P</h6>
+                            
+                        </div>
+                        <div class="combo-card" id="F">
+                            <h5>ラッシュ始動</h5>
+                            <h6>立弱P</h6>
+                            <h6>立弱P(カウンターヒット)</h6>=立強Pがつながる
+                            <h6>立弱P(パニカンヒット)</h6>
+                        </div>
+
+
+  </div>
+    <h2>距離別の攻め時と守り時</h2>
+
+  <!-- 遠距離 -->
+  <div class="section">
+    <h2>遠距離</h2>
+    <div class="row">
+      <div class="column attack">
+        <h3>攻め時</h3>
+        <ul>
+          <li>Dゲージがある時はこの距離に居てもしょうがない</li>
+          <li>相手が固有ゲージ持ち（ジュリ、リリーなど）の時は近づくべき</li>
+          <li>弱波動や斬空と共に近づく</li>
+        </ul>
+      </div>
+      <div class="column defense">
+        <h3>守り時</h3>
+        <ul>
+          <li>Dゲージを回復させたい時は弱波動や強波動で距離を維持</li>
+          <li>弾ガードで相手のDゲージ回復を遅らせる</li>
+          <li>端同士なら弾抜けをあまり警戒しなくてよい</li>
+          <li>下がりすぎず斬空で画面押すのもアリ</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 中距離 -->
+  <div class="section">
+    <h2>中距離</h2>
+    <div class="row">
+      <div class="column attack">
+        <h3>攻め時</h3>
+        <ul>
+          <li>奇襲できるが、安定はどっしり構える</li>
+          <li>波動拳を回して主導権を握る（対空意識）</li>
+          <li>弾・前中Kで固める</li>
+          <li>インパクト狙いに注意、逆に釣りたい</li>
+          <li>立ち強Kは+2Fだが、しゃがみに当たらない</li>
+          <li>固まった相手に前ステ投げ・ラッシュ・阿修羅→朧など</li>
+          <li>百鬼は相手の弾を見て使い分け</li>
+          <li>弱百鬼→着地で様子見、意識を揺さぶる</li>
+          <li>百鬼への反応が鈍ったら百鬼Pで有利を取る</li>
+        </ul>
+      </div>
+      <div class="column defense">
+        <h3>守り時</h3>
+        <ul>
+          <li>低体力なので差し合いは不利になりやすい</li>
+          <li>置き技合戦は運ゲー＋低体力で不利</li>
+          <li>置き技は2中P、攻めには中足</li>
+          <li>仕込みは中央→ラッシュ、相手側→OD灼火</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 近距離 -->
+  <div class="section">
+    <h2>近距離</h2>
+    <div class="row">
+      <div class="column attack">
+        <h3>攻め時</h3>
+        <ul>
+          <li>立ち中Pガードで+1F、有利なので使いやすい</li>
+          <li>端付近：しゃがみ中P×2→OD灼火で画面端へ</li>
+          <li>端での固め：立ち中P（+1F）、OD波動（+2F）、百鬼P（+4F）</li>
+        </ul>
+      </div>
+      <div class="column defense">
+        <h3>守り時</h3>
+        <ul>
+          <li>暴れるならしゃがみ弱P</li>
+          <li>カウンター確認できるならしゃがみ中Pでコンボ</li>
+          <li>確認しないなら：しゃがみ弱P×2→立ち弱K→強昇龍</li>
+          <li>強昇龍→OD波動ならさらに距離を離せてターンを取れる</li>
+          <li>後ろ阿修羅は無敵なし。バクステや後ろジャンプ推奨</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<div class="level-system">
+  <div class="level-up-method">
+    <h3>酔いLvの上げ方</h3>
+    <ul>
+      <li><span class="move">魔身</span>（↓↓＋P）</li>
+      <li><span class="move">通常投げ</span>（ホールド）</li>
+      <li><span class="move">流酔脚</span></li>
+      <li><span class="move">幻酔舞</span></li>
+      <li><span class="move">円月脚</span></li>
+      <li><span class="move">SA2</span></li>
+    </ul>
+  </div>
+
+  <div class="level-details">
+    <h3>Lvごとの使える技</h3>
+
+    <div class="level-card lv0">
+      <h4>酔いLv0</h4>
+      <p>「流酔拳 / 流酔脚」「張弓腿」「酔疾歩」「幻酔舞」が使用可能。</p>
+    </div>
+
+    <div class="level-card lv1">
+      <h4>酔いLv1</h4>
+      <p>「無影蹴」「鋭鍾打」が追加。</p>
+    </div>
+
+    <div class="level-card lv2">
+      <h4>酔いLv2</h4>
+      <p>「爆廻」「円月脚」が追加。</p>
+    </div>
+
+    <div class="level-card lv3">
+      <h4>酔いLv3</h4>
+      <p>「点辰」「酩酊襲」、4強Pモーション変更が追加。</p>
+    </div>
+
+    <div class="level-card lv4">
+      <h4>酔いLv4</h4>
+      <p>ビジュアル変化、「流酔拳」強化、「疾歩仙掌」「乱酔旋」追加。<br>移動速度上昇・薬湯のドライブ回復量2倍（SA2は3倍）。</p>
+    </div>
+  </div>
+</div>
+
+  <div class="combo-box"><span>強灼火(PC)</span>＞<span>屈大P</span>＞<span>OD灼火</span>＞<span>引大K</span>＞<span>OD百鬼襲</span>＞<span>百鬼豪斬空(派生)</span>＞<span>DR</span>＞<span>中P(CR)</span>＞<span>引大K</span>＞<span>豪波動拳(Lv2)</span>＞<span>中竜巻斬空脚</span>＞<span>弱豪昇龍拳</span>＞<span>SA3</span></div>
+
+  <nav>
+    <table>
+      <thead>
+        <tr><th>セクション一覧</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="#strengths">豪鬼の強み</a></td></tr>
+        <tr><td><a href="#combos">コンボ集</a></td></tr>
+        <tr><td><a href="#lethal">リーサル判断</a></td></tr>
+        <tr><td><a href="#okizeme">起き攻め</a></td></tr>
+        <tr><td><a href="#setplay">セットアップ</a></td></tr>
+        <tr><td><a href="#meter">ゲージごとの判断</a></td></tr>
+        <tr><td><a href="#advanced">その他上級者向け情報</a></td></tr>
+      </tbody>
+    </table>
+  </nav>
+  <div class="traits-wrapper">
+      <div class="strengths">
+          <h3>強み</h3>
+          <ul>
+              <li>機動力が非常に高い(前歩き・後ろ歩き共にすべてのキャラクターでトップクラス)</li>
+              <li>飛び道具が優秀
+                  <ul>
+                      <li>弾速・全体フレーム・ガード時フレームがリュウの波動拳より優れる</li>
+                      <li>溜め対応でジャストパリィ対策がされにくい</li>
+                      <li>阿修羅閃空派生の「朧」と択になっている</li>
+                      <li>コンボパーツとしても実用的</li>
+                  </ul>
+              </li>
+              <li>運びが優秀</li>
+              <li>対空が豊富でダメージ・状況が優秀
+                  <ul>
+                      <li>対空豪昇龍拳からSA3をキャンセルできる</li>
+                      <li>強昇龍拳は横リーチが長く対策が困難</li>
+                      <li>OD昇龍拳は三段でスーパーアーマーを貫通</li>
+                      <li>空対空がOD斬空、SA1(天魔豪斬空)など難しいけどリターンが大きい</li>
+                  </ul>
+              </li>
+              <li>画面端コンボ火力が非常に高い（OD金剛灼火やSA2）</li>
+              <li>安定した起き攻めに繋がる技が豊富（例：弱竜巻＞大足）</li>
+              <li>大差がついた展開での「捨てゲー行動」が強力
+                  <ul>
+                      <li>立ち強K：+3Fの突進技</li>
+                      <li>天魔空刃脚・百鬼襲：昇龍対空釣り</li>
+                      <li>瞬獄殺によるラウンドリーサル</li>
+                      <li>昇龍キャンセルSA3の逆択</li>
+                  </ul>
+              </li>
+              <li>弱技全般のリーチが長く、確反性能が高い</li>
+              <li>中攻撃の性能が全体的に優秀</li>
+              <li>強攻撃はリターンが高く確認しやすい</li>
+              <li>プロでも使用者が多く、動画や解説を探しやすい</li>
+          </ul>
+      </div>
+
+      <div class="weaknesses">
+          <h3>弱み</h3>
+          <ul>
+          <li>体力が9000で全体的に被ダメージリスクが高い</li>
+          <li>画面中央での火力が並みで攻め継続もやや難しい
+              <ul>
+                  <li>竜巻斬空脚がしゃがみに当たらない</li>
+                  <li>豪昇龍拳や金剛灼火は起き攻めに使いにくい</li>
+                  <li>投げからの起き攻めが不可</li>
+                  <li>投げ(パニカン)でも起き攻めが難しい</li>
+              </ul>
+          </li>
+          <li>SA1の発生がやや遅く切り返しに不安</li>
+          <li>中央でのSA2はヒットしてもリターンがとりにくい</li>
+          <li>位置入れ替えコンボが少なく画面端脱出が難しい</li>
+          <li>ドライブラッシュの後半速度が遅め</li>
+          <li>高ランク帯では対策・慣れられている可能性あり</li>
+          </ul>
+      </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="move-table">
+        <thead><tr><th>技名</th><th>強度</th><th>発生</th><th>持続</th><th>硬直</th><th>ヒット</th><th>ガード</th><th>キャンセル</th><th>ダメージ</th><th>補正</th><th>Dゲージ増(ヒット)</th><th>Dゲージ減(ガード)</th><th>Dゲージ減(Pカウンター)</th><th>SAゲージ増加</th><th>属性</th><th>備考</th></tr></thead>
+        <tbody>
+            <tr><td>立ち弱P（面割り）</td><td>弱</td><td>4</td><td>3</td><td>7</td><td>+4</td><td>-1</td><td>C</td><td>300</td><td>始動補正20%</td><td>250</td><td>-500</td><td>-2000</td><td>300</td><td>上</td><td></td></tr>
+            <tr><td>立ち弱K（脛斬り）</td><td>弱</td><td>5</td><td>3</td><td>11</td><td>+2</td><td>-4</td><td>C</td><td>300</td><td>始動補正20%</td><td>250</td><td>-500</td><td>-2000</td><td>300</td><td>上</td><td></td></tr>
+            <tr><td>立ち中P（豪掌）</td><td>中</td><td>6</td><td>4</td><td>11</td><td>+4</td><td>+1</td><td>C</td><td>600</td><td></td><td>1500</td><td>-3000</td><td>-4000</td><td>500</td><td>上</td><td></td></tr>
+            <tr><td>立ち中K（腸潰し）</td><td>中</td><td>7</td><td>5</td><td>15</td><td>+3</td><td>-3</td><td>C</td><td>700</td><td></td><td>2000</td><td>-4000</td><td>-6000</td><td>500</td><td>上</td><td>強制立ち効果</td></tr>
+            <tr><td>立ち強P（岩砕突き）</td><td>強</td><td>9</td><td>5</td><td>18</td><td>+3</td><td>-3</td><td>C</td><td>800</td><td></td><td>2000</td><td>-5000</td><td>-8000</td><td>1000</td><td>上</td><td></td></tr>
+            <tr><td>立ち強K（首撥ね）</td><td>強</td><td>13</td><td>15</td><td>15</td><td>+7</td><td>+3</td><td></td><td>800</td><td>コンボ補正20%</td><td>3000</td><td>-6000</td><td>-10000</td><td>1000</td><td>上</td><td>強制立ち効果 / 空振り時硬直1F増加</td></tr>
+            <tr><td>しゃがみ弱P（足止め）</td><td>弱</td><td>4</td><td>2</td><td>9</td><td>+5</td><td>-1</td><td>C</td><td>300</td><td>始動補正20%</td><td>250</td><td>-500</td><td>-2000</td><td>300</td><td>上</td><td></td></tr>
+            <tr><td>しゃがみ弱K（楔打ち）</td><td>弱</td><td>5</td><td>2</td><td>10</td><td>+3</td><td>-3</td><td></td><td>200</td><td>始動補正20%</td><td>250</td><td>-500</td><td>-2000</td><td>300</td><td>下</td><td></td></tr>
+            <tr><td>しゃがみ中P（膝折り豪掌）</td><td>中</td><td>6</td><td>3</td><td>14</td><td>+6</td><td>-1</td><td>C</td><td>600</td><td></td><td>1500</td><td>-3000</td><td>-4000</td><td>500</td><td>上</td><td></td></tr>
+            <tr><td>しゃがみ中K（踝払い）</td><td>中</td><td>8</td><td>3</td><td>19</td><td>+1</td><td>-6</td><td>C</td><td>500</td><td>始動補正20%</td><td>1000</td><td>-2000</td><td>-4000</td><td>500</td><td>下</td><td></td></tr>
+            <tr><td>しゃがみ強P（獄門掌）</td><td>強</td><td>8</td><td>8</td><td>19</td><td>+0</td><td>-8</td><td>C</td><td>900</td><td></td><td>3000</td><td>-6000</td><td>-8000</td><td>1000</td><td>上</td><td></td></tr>
+            <tr><td>しゃがみ強K（刎脚）</td><td>強</td><td>9</td><td>3</td><td>23</td><td>D</td><td>-12</td><td></td><td>900</td><td></td><td>3000</td><td>-4000</td><td>-10000</td><td>1000</td><td>下</td><td>カウンター / Pカウンター時ダウン時間増加</td></tr>
+            <tr><td>ジャンプ弱P（眉間割り）</td><td>弱</td><td>4</td><td>10</td><td>着地後3</td><td></td><td></td><td></td><td>300</td><td></td><td>500</td><td>-1500</td><td>-2000</td><td>300</td><td>中</td><td></td></tr>
+            <tr><td>ジャンプ弱K（飛び膝）</td><td>弱</td><td>6</td><td>10</td><td>着地後3</td><td></td><td></td><td></td><td>300</td><td></td><td>500</td><td>-1500</td><td>-2000</td><td>300</td><td>中</td><td>めくり性能</td></tr>
+            <tr><td>ジャンプ中P（跳び朱刀）</td><td>中</td><td>8</td><td>4</td><td>着地後3</td><td></td><td></td><td>C</td><td>700</td><td></td><td>1000</td><td>-2500</td><td>-4000</td><td>500</td><td>中</td><td>空中ヒット時吹き飛びダウン</td></tr>
+            <tr><td>ジャンプ中K（首斬り）</td><td>中</td><td>7</td><td>6</td><td>着地後3</td><td></td><td></td><td></td><td>500</td><td></td><td>1000</td><td>-2500</td><td>-4000</td><td>500</td><td>中</td><td>めくり性能</td></tr>
+            <tr><td>ジャンプ強P（羅刹拳）</td><td>強</td><td>9</td><td>6</td><td>着地後3</td><td></td><td></td><td></td><td>800</td><td></td><td>2000</td><td>-4000</td><td>-5000</td><td>1000</td><td>中</td><td>空中カウンター / Pカウンター時叩きつけダウン</td></tr>
+            <tr><td>ジャンプ強K（斬鉄脚）</td><td>強</td><td>12</td><td>6</td><td>着地後3</td><td></td><td></td><td></td><td>800</td><td></td><td>2000</td><td>-4000</td><td>-5000</td><td>1000</td><td>中</td><td></td></tr>
+        </tbody>
+    </table>
+  </div>
+  <section id="strengths">
+    <h2>豪鬼の強み</h2>
+    <p>・高火力コンボ<br>
+       ・瞬間的な崩し性能（空刃脚、赤鴉空烈刃）<br>
+       ・多彩な起き攻めルート<br>
+       ・中距離のリーチとスピードのバランス良し</p>
+  </section>
+
+  <section id="combos">
+    <h2>コンボ集</h2>
+    <h3>ダメージ重視</h3>
+    <p>（例）近距離立ち中P > 立ち強P > 鬼刃脚 > 真空波動拳</p>
+
+    <h3>運び重視</h3>
+    <p>（例）しゃがみ中K > 鬼火 > 前ステ > 赤鴉空烈刃</p>
+
+    <h3>起き攻め重視</h3>
+    <p>（例）空中ヒット確認 > 鬼火 > 前ステ > 有利F取って択</p>
+  </section>
+
+  <section id="lethal">
+    <h2>リーサル判断</h2>
+    <p>・残り体力とゲージを瞬時に計算し、<br>
+       ・CA確定状況の判断例（中足 > 鬼火 > CA）<br>
+       ・画面端での削りリーサルセットアップなど</p>
+  </section>
+
+  <section id="okizeme">
+    <h2>起き攻め</h2>
+    <p>・前投げ後：前ステ > 中P or 投げ択<br>
+       ・EX鬼火後：+4Fからの2択（中K / 投げ）<br>
+       ・空中EX竜巻から裏周り択など</p>
+  </section>
+
+  <section id="setplay">
+    <h2>セットアップ</h2>
+    <p>・画面端特化：中P > 鬼火 > 端密着ループ<br>
+       ・空中ヒット後のめくりセットアップ<br>
+       ・バックジャンプから赤鴉空烈刃設置など</p>
+  </section>
+
+  <section id="meter">
+    <h2>ゲージごとの判断</h2>
+    <p>・0ゲージ：基礎コンボからの起き攻めを徹底<br>
+       ・1～2ゲージ：EX鬼火 or 赤鴉で強化択<br>
+       ・3ゲージ：CA絡めたリーサル or セットプレイ強化</p>
+  </section>
+
+  <section id="advanced">
+    <h2>その他上級者向け情報</h2>
+    <p>・反撃確定状況（技ごとのフレーム把握）<br>
+       ・キャラごとの立ち回りや対策との相性<br>
+       ・トレモでの確認方法や設定例</p>
+  </section>
+</body>
+</html>

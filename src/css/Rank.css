@@ -1,0 +1,41 @@
+.rank-img{
+    width: 40px;
+    height: 20px;
+}
+.rank-table {
+  max-width: 600px;
+  overflow-x: auto;
+  border: 2px solid #9eb6ad;
+  color: #dadada;
+  margin: 1em auto;
+
+  table {
+  background-color: #2f2e3a;
+  border-collapse: collapse;
+  min-width: 800px; /* 横スクロールを発生させる */
+  text-align: center;
+  }
+
+  th,
+  td {
+    text-align: center;
+    border: 1px solid #9eb6ad;
+    padding: 6px;
+    white-space: nowrap;
+  }
+
+  .rank-img {
+    display: block;
+    margin: 0 auto 4px;
+    width: 40px;
+    height: auto;
+  }
+
+  .glyphicon-star{
+    color: #dadada;
+  }
+}
+
+dl{
+  margin-left: 20px;
+}

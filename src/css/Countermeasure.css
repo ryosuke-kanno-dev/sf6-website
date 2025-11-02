@@ -1,0 +1,113 @@
+/* スクロール領域 */
+.scroll {
+  max-height: 450px;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  cursor: grab;
+}
+.scroll::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: var(--scroll-shadow-height, 100%);
+  pointer-events: none;
+  background: linear-gradient(to left, rgba(0,0,0,0.4), transparent);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 3;
+}
+.scroll.left-edge::before {
+  opacity: 1;
+}
+.dragging {
+  cursor: grabbing;
+}
+
+/* 表全体 */
+.technique-data-table {
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 13px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  margin: 0px 0px 0px 10px;
+  border-collapse: separate; /* ← これ */
+  border-spacing: 0; /* ← これも */
+}
+.technique-data-table th,
+.technique-data-table td {
+  padding: 6px;
+  white-space: nowrap;
+}
+.technique-data-table td:not(:last-child) {
+  white-space: nowrap;
+}
+.technique-data-table thead{
+  height: 30px;
+  font-size: 14px;
+}
+.technique-data-table thead th {
+  position: sticky;
+  top: 0;
+  background: #4c088c;
+  border: 2px solid #4311a9;
+  z-index: 5;
+}
+.technique-data-table th {
+  text-align: center;
+}
+.technique-data-table th:last-child {
+  padding-left: 5px;
+  min-width: 550px;
+  text-align: start;
+}
+.technique-data-table td:nth-child(n+2):nth-child(-n+8) {
+  text-align: center;
+}
+.technique-data-table tbody tr:nth-child(even){
+  background: #210564;
+}
+.technique-data-table tbody tr:nth-child(odd){
+  background: #1d025a;
+}
+.technique-data-table tbody th{
+  padding: 3px 0px 3px 5px;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  border: none;
+  border-top: #9e59f1;
+  border-bottom: #9e59f1;
+  background: linear-gradient(90deg, rgba(234, 0, 255, .6), rgba(137, 23, 171, .6) 57%, rgba(137, 23, 171, .6) 79%, rgba(137, 23, 171, 0));
+  text-align: left;
+}
+.technique-data-table tbody td{
+  min-height: 50px;
+  border: 2px solid #4311a9;
+}
+.technique-data-table tbody td:last-child {
+  max-width: 550px;
+  padding: 3px 0px 3px 5px;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere; 
+}
+.technique-data-table tbody td:last-child span {
+  display: inline-block;
+  width: 100%;
+  max-width: 550px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+.technique-data-table .command{
+  width: 18px;
+  height: 18px;
+}
+.technique-data-table .move-name{
+  padding-left: 5px;
+}
+.technique-data-table .move-command{
+  padding-left: 8px;
+}

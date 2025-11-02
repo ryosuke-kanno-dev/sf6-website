@@ -1,0 +1,298 @@
+[
+  {
+    "title": "地上戦練習",
+    "text": "ランダム抽選率を上げるとその行動を多く行うので自分が苦手な行動のランダム抽選率を上げるとよい練習になると思います。",
+    "character": "ルーク",
+    "image": {"src": "../img/character/luke_ss02.jpg"},
+    "tags": ["地上戦", "立ち回り","差し返し"],
+    "settings": {
+      "record": {
+        "note": "ジャンプからレコード開始",
+        "slots": [1,2,3,4,5]
+      }
+    },
+    "video": {"file": "ground_training"},
+    "table": [
+      {"action": "しゃがみ中キック","response": "差し返し"},
+      {"action": "インパクト","response": "インパクト返し"},
+      {"action": "前ステップ→投げ","response": "弱パンチ"},
+      {"action": "前方ジャンプ","response": "対空"},
+      {"action": "しゃがみ中パンチ","response": "なにもしない"}
+    ]
+  },
+  {
+    "title": "対空練習",
+    "text": "近距離まで近づき弱パンチをガードさせて飛びを落とす練習。通常の昇竜拳と振り向き昇竜を練習できそれだけに意識を向けないようにインパクトもレコードしてある。",
+    "character": "ルーク",
+    "image": {"src": "../img/character/luke_ss02.jpg"},
+    "tags": ["対空", "昇竜拳", "振り向き昇竜拳", "インパクト" ],
+    "settings": {
+      "dummy": {
+        "image": "../img/trainings/all_guard.png",
+        "note": "ダミー設定はすべてガードにする"
+      },
+      "counter": {
+        "note": "ランダムでリバーサル行動を選択",
+        "guard": [1,2,3]
+      }
+    },
+    "video": {"file": "aircraft_training"},
+    "table": [
+      {"action": "垂直ジャンプ","response": "昇竜対空"},
+      {"action": "前方ジャンプ","response": "振り向き昇竜対空"},
+      {"action": "インパクト","response": "インパクト返し"}
+    ]
+  },
+  {
+    "title": "打撃重ね/投げ重ね/様子見(中央)",
+    "text": "打撃重ねの場合は通常ヒットかガード、投げ重ねの場合はジャンプなどでよけられるか投げ抜け、様子見の場合は対空や確定反撃の練習",
+    "character": "リュウ",
+    "image": {"src": "../img/character/ryu_ss02.jpg"},
+    "tags": ["打撃", "投げ", "重ね", "様子見", "中央", "対空" ],
+    "settings": {
+      "dummy": {
+        "image": "../img/trainings/second_guard_passive.png",
+        "note": "ダミー設定は2段目以降ガードにし起き上がりを後方受け身にする"
+      },
+      "counter": {
+        "down": [1,2,4,7,10],
+        "note": "通常投げにはディレイを4Fくらい入れる"
+      }
+    },
+    "video": {"file": "center_layerd_training"},
+    "table": [
+      {"action": "弱パンチ","response": "通常ヒット/カウンターヒット/ガード"},
+      {"action": "垂直ジャンプ","response": "通常ヒット/通常対空/通常対空"},
+      {"action": "前方ジャンプ","response": "通常ヒット/振り向き対空/振り向き対空"},
+      {"action": "通常投げ","response": "ガード/投げ抜け/確定反撃"},
+      {"action": "後方ジャンプ","response": "通常ヒット/対空(出来る技がある場合)/ラッシュから対空"}
+    ]
+  },
+  {
+    "title": "打撃重ね(画面端)",
+    "text": "画面端の起き上がりに打撃を重ねヒット(通常orカウンター)していたらコンボ、ガードされてもそのまま有利フレームを維持できるかの練習。",
+    "character": "リュウ",
+    "image": {"src": "../img/character/ryu_ss02.jpg"},
+    "tags": ["打撃", "重ね", "画面端", "確認" ],
+    "settings": {
+      "dummy": {
+        "image": "../img/trainings/second_guard.png",
+        "note": "ダミー設定は2段目以降ガードにする"
+      },
+      "counter": {
+        "down": [1,2,3],
+        "guard": [1,2]
+      }
+    },
+    "video": {"file": "strike_layered_edge_training"},
+    "table": [
+      {"action": "弱パンチ","response": "カウンターヒット時最大コンボ"},
+      {"action": "垂直ジャンプ","response": "通常ヒット時最大コンボ"},
+      {"action": "何もしない→弱パンチ","response": "有利継続からカウンターヒット時最大コンボ"}, 
+      {"action": "何もしない→何もしない","response": "波動拳など不利の少ないキャンセルの利く必殺技でリセット"}
+    ]
+  },
+  {
+    "title": "投げ重ね(画面端)",
+    "text": "柔道の練習や画面端コンボ後の投げ起き攻め時の練習。",
+    "character": "リュウ",
+    "image": {"src": "../img/character/ryu_ss02.jpg"},
+    "tags": ["投げ", "重ね", "画面端", "対空" ],
+    "settings": {
+      "counter": {
+        "down": [1,2,4,5]
+      }
+    },
+    "video": {"file": "throw_layered_edge_training"},
+    "table": [
+      {"action": "弱パンチ","response": "カウンターになり投げが通る"},
+      {"action": "垂直ジャンプ","response": "昇竜対空などのフレームが間に合う対空"},
+      {"action": "前方ジャンプ","response": "振り向き昇竜対空などのフレームが間に合う対空"},
+      {"action": "後方ステップ","response": "マイナスフレームを4F以下にして確定反撃を受けないようにする"}
+    ]
+  },
+  {
+    "title": "様子見(画面端)",
+    "text": "画面端で様子見したときは逆択中足や前ジャンプに引っかからず端攻めをキープできるような練習が大事。",
+    "character": "リュウ",
+    "image": {"src": "../img/character/ryu_ss02.jpg"},
+    "tags": ["様子見", "画面端" ,"Dリバ" ,"確定反撃" ,"対空"],
+    "settings": {
+      "dummy": {
+        "image": "../img/trainings/all_guard.png",
+        "note": "ダミー設定はすべてガードにする"
+      },
+      "counter": {
+        "down": [4,6,7,8,9]
+      }
+    },
+    "video": {"file": "wait_layered_edge_training"},
+    "table": [
+      {"action": "前方ジャンプ","response": "リターンの多い対空技(空対空など)"},
+      {"action": "しゃがみ中キック","response": "何もしない"},
+      {"action": "通常投げ","response": "パニカン"},
+      {"action": "パリィ","response": "歩き投げ"},
+      {"action": "しゃがみ中キック→ラッシュ→しゃがみ弱パンチ","response": "Dリバ"}
+    ]
+  },
+  {
+    "title": "状況確認(確認)",
+    "text": "ルークが着地するタイミングで技を振りルークの動きを見てヒットかガードか確認し次の技を振るか判断する。",
+    "character": "ルーク",
+    "image": {"src": "../img/character/luke_ss02.jpg"},
+    "tags": ["状況", "確認" ],
+    "settings": {
+      "dummy": {
+        "image": "../img/trainings/all_guard.png",
+        "note": "ダミー設定はすべてガードにする"
+      },
+      "record": {
+        "note": "ジャンプからレコード",
+        "slots": [6,7]
+      }
+    },
+    "video": {"file": "status_check_training"},
+    "table": [
+      {"action": "強パンチ","response": "キャンセル技(キャンセルラッシュなど)"},
+      {"action": "ガード","response": "何もしない"}
+    ]
+  },
+  {
+    "title": "体力確認(確認)",
+    "text": "相手の体力バーの減少を見てヒットしているかどうかを判断する練習。</br>しゃがみ中パンチやしゃがみ中キックなどで判断するキャラが多い。<br>※キャラクターはルークにしていますが誰でも大丈夫です。",
+    "character": "ルーク",
+    "image": {"src": "../img/character/luke_ss02.jpg"},
+    "tags": ["体力", "確認" ],
+    "settings": {
+      "dummy": {
+        "image": "../img/trainings/random_guard.png",
+        "note": "ダミー設定はランダムガードにする"
+      }
+    },
+    "video": {"file": "hitpoints_check_training"},
+    "table": [
+      {"action": "ヒット時","response": "OD技やドライブラッシュなどダメージの取れる技"},
+      {"action": "ガード時","response": "波動拳や隙の少ない技をキャンセルするかなにもキャンセルしない"}
+    ]
+  },
+
+  {
+    "title": "シミー",
+    "text": "しゃがみ中キックラッシュから弱パンチで連続ガードを作り投げが当たらない場所まで後退する。",
+    "character": "リュウ",
+    "image": {"src": "../img/character/ryu_ss02.jpg"},
+    "tags": ["シミー", "対空" ],
+    "settings": {
+      "dummy": {
+        "image": "../img/trainings/all_guard.png",
+        "note": "ダミー設定はすべてガードにする"
+      },
+      "counter": {
+        "guard": [3,4,5,6]
+      }
+    },
+    "video": {"file": "shimmy_training"},
+    "table": [
+      {"action": "通常投げ(ディレイ2F)","response": "パニカン"},
+      {"action": "垂直ジャンプ","response": "対空"},
+      {"action": "前方ジャンプ","response": "振り向き昇竜対空など"},
+      {"action": "しゃがみ中キック","response": "ガード"}
+    ]
+  },
+
+  {
+    "title": "遅らせ(グラ潰し)",
+    "text": "ガードさせて有利な技かつ密着状態を維持できる技をあて相手の投げ抜けタイミングで少し遅らせて打撃を振る。",
+    "character": "リュウ",
+    "image": {"src": "../img/character/ryu_ss02.jpg"},
+    "tags": ["遅らせ", "投げ潰し" ],
+    "settings": {
+      "dummy": {
+        "image": "../img/trainings/all_guard.png",
+        "note": "ダミー設定はすべてガードにする"
+      },
+      "counter": {
+        "note":"ディレイの数値はもう少し多いほうが実践的に行うことができる(4~6くらい?)",
+        "guard": [2,3]
+      }
+    },
+    "video": {"file": "delay_training"},
+    "table": [
+      {"action": "何もしない","response": "連続ガードを作る"},
+      {"action": "通常投げ(ディレイ2F)","response": "カウンターからコンボにつなげる"}
+    ]
+  },
+  {
+    "title": "割り込み昇竜",
+    "text": "キャンセルラッシュを見てからOD無敵技(OD昇竜拳やSA)を撃つ練習。",
+    "character": "ルーク",
+    "image": {"src": "../img/character/luke_ss02.jpg"},
+    "tags": ["割り込み", "無敵技", "インパクト"],
+    "settings": {
+      "dummy": {
+        "image": "../img/trainings/all_guard.png",
+        "note": "ダミー設定はすべてガードにする"
+      },
+      "record": {
+        "slots": [1,2,3,8]
+      }
+    },
+    "video": {"file": "interrupt_training"},
+    "table": [
+      {"action": "しゃがみ中キック","response": "何もしない"},
+      {"action": "インパクト","response": "インパクト返し"},
+      {"action": "前ステップ→投げ","response": "弱パンチ"},
+      {"action": "しゃがみ中キック→ラッシュ→通常投げ","response": "OD無敵技"}
+    ]
+  },
+
+  {
+    "title": "リバサジャスパ",
+    "text": "起き上がりに相手が打撃を重ねた時のジャストパリィの練習。<br>リバサジャスパを狙いパリィしたときに相手が何も重ねていない場合のラッシュ仕込み",
+    "character": "リュウ",
+    "image": {"src": "../img/character/ryu_ss02.jpg"},
+    "tags": ["ジャストパリィ", "起き上がり", "リバサ" ],
+    "settings": {
+      "dummy": {"note": ""},
+      "record": {
+        "note": "中パンチと中キックの両対応は不可能なのでレコードのON/OFFを切り替えて行う。<br>実践では持続かどうかなど読みやフレーム消費などでタイミングを変える",
+        "slots": [3,4,5]
+      }
+    },
+    "video": {"file": "reversal_just_parry_training"},
+    "table": [
+      {"action": "中パンチ","response": "最持続重ねのタイミングでジャスパ"},
+      {"action": "中キック","response": "最持続重ね+3Fのタイミングでジャスパ"},
+      {"action": "何もしない","response": "相手が何も重ねていないとわかったらラッシュをする"}
+    ]
+  },
+
+  {
+    "title": "sample",
+    "text": "",
+    "character": "",
+    "image": {"src": "../img/character/_ss02.jpg"},
+    "tags": ["", "" ],
+    "settings": {
+      "dummy": {
+        "image": "../img/trainings/dummy.png",
+        "note": ""
+      },
+      "record": {
+        "note": "",
+        "slots": []
+      },
+      "counter": {
+        "note": "",
+        "down": [],
+        "guard": [],
+        "damage": []
+      }
+    },
+    "video": {"file": "_training"},
+    "table": [
+      {"action": "","response": ""},
+      {"action": "","response": ""}
+    ]
+  }
+]
