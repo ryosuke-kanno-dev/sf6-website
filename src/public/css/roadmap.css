@@ -1,0 +1,482 @@
+/**
+ * Roadmap Page Styles - SF6攻略サイト
+ *
+ * @description
+ * 上達ロードマップページ（roadmap.php）専用スタイル。
+ * 共通スタイルは variables.css / base.css / components.css / guide.css を使用し、
+ * このファイルには roadmap 固有のスタイルのみを定義する。
+ *
+ * @naming-convention
+ * - p-roadmap__*: 上達法ページ専用スタイル
+ *
+ * @dependencies
+ * variables.css, base.css, components.css, guide.css
+ *
+ * @updated 2026-03-05
+ */
+
+/* ==================== ランク帯ナビゲーション ==================== */
+.p-roadmap__rank-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+}
+
+.p-roadmap__rank-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    font-family: var(--font-primary);
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-decoration: none;
+}
+
+.p-roadmap__rank-btn:hover {
+    background: var(--bg-hover);
+    transform: translateX(4px);
+}
+
+.p-roadmap__rank-btn.is-active {
+    border-color: currentColor;
+    background: var(--bg-tertiary);
+    box-shadow: -3px 0 0 currentColor;
+}
+
+.p-roadmap__rank-btn-icon {
+    font-size: 1.5em;
+    flex-shrink: 0;
+}
+
+.p-roadmap__rank-btn-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.p-roadmap__rank-btn-title {
+    display: block;
+    font-weight: 700;
+    line-height: 1.2;
+    font-size: var(--font-size-sm);
+}
+
+.p-roadmap__rank-btn-sub {
+    display: block;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ランク別カラー */
+.p-roadmap__rank-btn[data-rank="beginner"] {
+    color: #CD7F32;
+}
+
+.p-roadmap__rank-btn[data-rank="silver"] {
+    color: #C0C0C0;
+}
+
+.p-roadmap__rank-btn[data-rank="platinum"] {
+    color: #00BFFF;
+}
+
+.p-roadmap__rank-btn[data-rank="master"] {
+    color: #FFD700;
+}
+
+.p-roadmap__rank-btn[data-rank="beginner"].is-active {
+    background: rgba(205, 127, 50, 0.08);
+}
+
+.p-roadmap__rank-btn[data-rank="silver"].is-active {
+    background: rgba(192, 192, 192, 0.08);
+}
+
+.p-roadmap__rank-btn[data-rank="platinum"].is-active {
+    background: rgba(0, 191, 255, 0.08);
+}
+
+.p-roadmap__rank-btn[data-rank="master"].is-active {
+    background: rgba(255, 215, 0, 0.08);
+}
+
+/* ==================== タイムライン ==================== */
+.p-roadmap__timeline {
+    position: relative;
+}
+
+.p-roadmap__timeline::before {
+    content: '';
+    position: absolute;
+    left: 28px;
+    top: 60px;
+    bottom: 60px;
+    width: 3px;
+    background: linear-gradient(to bottom,
+            #CD7F32 0%,
+            #C0C0C0 33%,
+            #00BFFF 66%,
+            #FFD700 100%);
+    opacity: 0.5;
+    border-radius: 2px;
+    pointer-events: none;
+}
+
+/* ==================== ランクセクション ==================== */
+.p-roadmap__section {
+    position: relative;
+    margin-bottom: var(--spacing-4xl);
+    padding-left: 72px;
+    scroll-margin-top: 100px;
+}
+
+/* ランクアイコン（タイムライン上の丸） */
+.p-roadmap__section::before {
+    content: attr(data-icon);
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    background: var(--bg-card);
+    border: 3px solid var(--border-color);
+    border-radius: 50%;
+    z-index: 1;
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    pointer-events: none;
+}
+
+.p-roadmap__section[data-rank="beginner"]::before {
+    border-color: #CD7F32;
+    box-shadow: 0 0 12px rgba(205, 127, 50, 0.3);
+}
+
+.p-roadmap__section[data-rank="silver"]::before {
+    border-color: #C0C0C0;
+    box-shadow: 0 0 12px rgba(192, 192, 192, 0.3);
+}
+
+.p-roadmap__section[data-rank="platinum"]::before {
+    border-color: #00BFFF;
+    box-shadow: 0 0 12px rgba(0, 191, 255, 0.3);
+}
+
+.p-roadmap__section[data-rank="master"]::before {
+    border-color: #FFD700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+/* ==================== セクションヘッダー ==================== */
+.p-roadmap__section-header {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.p-roadmap__rank-title {
+    font-size: var(--font-size-2xl);
+    font-weight: 900;
+    margin-bottom: var(--spacing-xs);
+    line-height: 1.2;
+}
+
+.p-roadmap__section[data-rank="beginner"] .p-roadmap__rank-title {
+    color: #CD7F32;
+    text-shadow: 0 0 12px rgba(205, 127, 50, 0.4);
+}
+
+.p-roadmap__section[data-rank="silver"] .p-roadmap__rank-title {
+    color: #C0C0C0;
+    text-shadow: 0 0 12px rgba(192, 192, 192, 0.4);
+}
+
+.p-roadmap__section[data-rank="platinum"] .p-roadmap__rank-title {
+    color: #00BFFF;
+    text-shadow: 0 0 12px rgba(0, 191, 255, 0.4);
+}
+
+.p-roadmap__section[data-rank="master"] .p-roadmap__rank-title {
+    color: #FFD700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.p-roadmap__rank-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--text-muted);
+    margin: 0;
+    font-weight: 500;
+}
+
+/* ==================== 目標チェックリスト ==================== */
+.p-roadmap__goals {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+}
+
+.p-roadmap__goal-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+}
+
+.p-roadmap__goal-icon {
+    flex-shrink: 0;
+    font-size: 1em;
+    color: var(--accent-gold);
+}
+
+/* ==================== Markdownレンダリング ==================== */
+.p-roadmap__md-body {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-loose);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.p-roadmap__md-body h2 {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin: var(--spacing-2xl) 0 var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.p-roadmap__md-body h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--secondary);
+    margin: var(--spacing-xl) 0 var(--spacing-sm);
+}
+
+.p-roadmap__md-body h4 {
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: var(--spacing-lg) 0 var(--spacing-sm);
+}
+
+.p-roadmap__md-body p {
+    margin-bottom: var(--spacing-md);
+}
+
+.p-roadmap__md-body ul,
+.p-roadmap__md-body ol {
+    padding-left: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.p-roadmap__md-body li {
+    margin-bottom: var(--spacing-xs);
+    line-height: var(--line-height-base);
+}
+
+.p-roadmap__md-body blockquote {
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--bg-tertiary);
+    border-left: 4px solid var(--secondary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.p-roadmap__md-body blockquote p {
+    margin-bottom: 0;
+}
+
+.p-roadmap__md-body strong {
+    color: var(--accent-gold);
+    font-weight: 700;
+}
+
+.p-roadmap__md-body code {
+    background: var(--bg-tertiary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.875em;
+    color: var(--secondary);
+}
+
+/* Markdownテーブル */
+.p-roadmap__md-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--spacing-md) 0 var(--spacing-lg);
+    font-size: var(--font-size-sm);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.p-roadmap__md-body th {
+    background: var(--bg-tertiary);
+    color: var(--secondary);
+    font-weight: 700;
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.p-roadmap__md-body td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    line-height: var(--line-height-base);
+}
+
+.p-roadmap__md-body tr:last-child td {
+    border-bottom: none;
+}
+
+.p-roadmap__md-body tr:hover td {
+    background: var(--bg-hover);
+}
+
+/* ==================== 推奨練習メニュー ==================== */
+.p-roadmap__training-section {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--border-color);
+}
+
+.p-roadmap__training-title {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.p-roadmap__training-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.p-roadmap__training-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.p-roadmap__training-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px var(--secondary-20);
+}
+
+.p-roadmap__training-card-title {
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.p-roadmap__training-card-meta {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-sm);
+}
+
+.p-roadmap__training-card-obj {
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    line-height: var(--line-height-base);
+    flex: 1;
+}
+
+.p-roadmap__training-card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-md);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--accent-gold);
+}
+
+/* ==================== 「見つからない」表示 ==================== */
+.p-roadmap__not-found {
+    padding: var(--spacing-lg);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* ==================== レスポンシブ ==================== */
+@media (max-width: 768px) {
+    .p-roadmap__section {
+        padding-left: 0;
+        padding-top: 70px;
+    }
+
+    .p-roadmap__section::before {
+        left: 0;
+        top: 0;
+        width: 48px;
+        height: 48px;
+        font-size: 22px;
+    }
+
+    .p-roadmap__timeline::before {
+        display: none;
+    }
+
+    .p-roadmap__goals {
+        grid-template-columns: 1fr;
+    }
+
+    .p-roadmap__training-list {
+        grid-template-columns: 1fr;
+    }
+
+    .p-roadmap__rank-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .p-roadmap__rank-btn {
+        flex: 1 1 calc(50% - var(--spacing-sm));
+        min-width: 130px;
+    }
+}
+
+@media (max-width: 480px) {
+    .p-roadmap__rank-btn {
+        flex: 1 1 100%;
+    }
+
+    .p-roadmap__md-body table {
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,62 @@
+﻿[
+  {
+    "id": 1,
+    "date": "2026-01-10",
+    "category": "キャラ攻略",
+    "title": "豪鬼攻略ページを大幅更新",
+    "excerpt": "ランク別立ち回りと最新コンボを追加。初心者から上級者まで対応した完全ガイド。",
+    "url": "akuma",
+    "image": "img/updates/akuma_update.jpg",
+    "featured": true
+  },
+  {
+    "id": 2,
+    "date": "2026-01-09",
+    "category": "練習メニュー",
+    "title": "対空練習メニューを追加",
+    "excerpt": "成功率8割を目指す段階的な練習法を詳しく解説。初心者でもすぐに実践可。",
+    "url": "training?id=anti_air",
+    "image": "img/updates/training_antiair.jpg",
+    "featured": true
+  },
+  {
+    "id": 3,
+    "date": "2026-01-08",
+    "category": "コンボ",
+    "title": "ケンのコンボ集を更新",
+    "excerpt": "ドライブラッシュコンボ5種類を新規追加。実戦で即使える実用的なレシピ。",
+    "url": "combo?chara=ken",
+    "image": "img/updates/ken_combo.jpg",
+    "featured": true
+  },
+  {
+    "id": 4,
+    "date": "2026-01-07",
+    "category": "キャラ対策",
+    "title": "対リュウ対策ページ公開",
+    "excerpt": "波動拳対策から確定反撃まで、リュウ戦で勝つための完全ガイド。",
+    "url": "matchup?opponent=ryu",
+    "image": "img/updates/ryu_matchup.jpg",
+    "featured": false
+  },
+  {
+    "id": 5,
+    "date": "2026-01-06",
+    "category": "システム",
+    "title": "ドライブシステム完全解説",
+    "excerpt": "ドライブインパクト、ドライブパリィの使い分けを実戦動画付きで解説。",
+    "url": "guide#drive-system",
+    "image": "img/updates/drive_system.jpg",
+    "featured": false
+  },
+  {
+    "id": 6,
+    "date": "2026-01-05",
+    "category": "ランク別",
+    "title": "プラチナ到達のための練習法",
+    "excerpt": "ゴールド帯から抜け出すために必要な5つのスキルを徹底解説。",
+    "url": "roadmap?rank=platinum",
+    "image": "img/updates/platinum_guide.jpg",
+    "featured": false
+  }
+]

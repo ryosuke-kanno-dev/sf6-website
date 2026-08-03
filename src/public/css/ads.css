@@ -1,0 +1,119 @@
+/**
+ * 広告枠スタイル
+ * SF6攻略ガイド
+ */
+
+/* ==================== 広告枠基本スタイル ==================== */
+.ad-space {
+    background: var(--bg-tertiary);
+    border: 1px dashed var(--border-color);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    text-align: center;
+    padding: var(--spacing-md);
+    margin: var(--spacing-xl) auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.ad-space::before {
+    content: 'スポンサー';
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* サイドバー広告 (300x250) */
+.ad-space.sidebar {
+    width: 300px;
+    height: 250px;
+    margin: var(--spacing-lg) auto;
+}
+
+/* 横長広告 (728x90) */
+.ad-space.horizontal {
+    width: 100%;
+    max-width: 728px;
+    height: 90px;
+}
+
+/* レクタングル広告 (336x280) */
+.ad-space.rectangle {
+    width: 336px;
+    height: 280px;
+}
+
+/* モバイル広告 (320x100) */
+.ad-space.mobile {
+    width: 100%;
+    max-width: 320px;
+    height: 100px;
+}
+
+/* 記事内広告 (300x600) */
+.ad-space.skyscraper {
+    width: 300px;
+    height: 600px;
+}
+
+/* ==================== 広告配置位置 ==================== */
+/* ヘッダー下広告 */
+.ad-header-below {
+    margin: var(--spacing-lg) auto;
+}
+
+/* コンテンツ間広告 */
+.ad-between-content {
+    margin: var(--spacing-2xl) auto;
+}
+
+/* フッター上広告 */
+.ad-footer-above {
+    margin: var(--spacing-2xl) auto var(--spacing-lg);
+}
+
+/* サイドバー内広告 */
+.ad-in-sidebar {
+    position: sticky;
+    top: 100px;
+}
+
+/* ==================== レスポンシブ ==================== */
+@media (max-width: 768px) {
+    .ad-space.horizontal {
+        max-width: 100%;
+        height: auto;
+        min-height: 90px;
+    }
+
+    .ad-space.sidebar,
+    .ad-space.rectangle,
+    .ad-space.skyscraper {
+        width: 100%;
+        max-width: 320px;
+        height: auto;
+        min-height: 100px;
+    }
+
+    .ad-in-sidebar {
+        position: static;
+    }
+}
+
+/* ==================== 広告ラベル ==================== */
+.ad-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-xs);
+    display: block;
+    text-align: center;
+}

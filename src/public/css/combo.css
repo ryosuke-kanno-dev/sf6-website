@@ -1,0 +1,991 @@
+/**
+ * Combo Page Styles - SF6攻略サイト
+ *
+ * @description
+ * コンボ集ページ（combo.php）専用スタイル。
+ * 共通スタイルは variables.css / base.css / components.css を参照。
+ *
+ * @naming-convention
+ *   p-combo__*  : コンボ集ページ専用
+ *   c-cmd--*    : コマンドアイコン（command_converter.php と連携）
+ *
+ * @updated 2026-03-11
+ */
+
+/* ========================================================
+ * A. キャラ選択グリッド
+ * ====================================================== */
+.p-combo__intro {
+    text-align: center;
+    padding: var(--spacing-2xl) 0 var(--spacing-3xl);
+}
+
+.p-combo__intro-title {
+    font-size: var(--font-size-4xl);
+    font-weight: 900;
+    color: var(--accent-white);
+    text-shadow: 0 0 20px var(--accent-gold);
+    margin-bottom: var(--spacing-md);
+}
+
+.p-combo__intro-sub {
+    font-size: var(--font-size-lg);
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-3xl);
+}
+
+.p-combo__char-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.p-combo__char-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-lg) var(--spacing-md);
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-bounce);
+    color: var(--text-primary);
+}
+
+.p-combo__char-card:hover {
+    border-color: var(--accent-gold);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px var(--accent-gold-20);
+}
+
+.p-combo__char-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    background: var(--bg-tertiary);
+    border: 2px solid var(--border-color);
+    display: block;
+}
+
+.p-combo__char-img-placeholder {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--bg-tertiary);
+    border: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--text-muted);
+}
+
+.p-combo__char-name {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.p-combo__char-type {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* ========================================================
+ * B. キャラ詳細 - 戻るボタン & ヘッダー
+ * ====================================================== */
+.p-combo__back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--secondary);
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    margin-bottom: var(--spacing-2xl);
+    transition: color var(--transition-fast);
+}
+
+.p-combo__back-link:hover {
+    color: var(--accent-gold);
+}
+
+.p-combo__char-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2xl);
+    margin-bottom: var(--spacing-2xl);
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.p-combo__char-header-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--accent-gold);
+    box-shadow: 0 0 20px var(--accent-gold-20);
+    flex-shrink: 0;
+}
+
+.p-combo__char-header-placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid var(--border-color);
+    background: var(--bg-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    flex-shrink: 0;
+}
+
+.p-combo__char-header-info {
+    flex: 1;
+}
+
+.p-combo__char-name-jp {
+    font-size: var(--font-size-3xl);
+    font-weight: 900;
+    color: var(--accent-white);
+    text-shadow: 0 0 12px var(--accent-gold-50);
+    margin-bottom: var(--spacing-xs);
+}
+
+.p-combo__char-name-en {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: var(--spacing-md);
+}
+
+/* ========================================================
+ * C. ステータスグリッド
+ * ====================================================== */
+.p-combo__stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+}
+
+.p-combo__stat-item {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.p-combo__stat-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+    display: block;
+}
+
+.p-combo__stat-value {
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: var(--secondary);
+}
+
+/* ========================================================
+ * D. プロフィールテキスト（Parsedown）
+ * ====================================================== */
+.p-combo__profile {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    line-height: var(--line-height-loose);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.p-combo__profile p {
+    margin-bottom: var(--spacing-sm);
+}
+
+.p-combo__profile strong {
+    color: var(--accent-gold);
+}
+
+/* ========================================================
+ * E. セクション共通
+ * ====================================================== */
+.p-combo__section {
+    margin-bottom: var(--spacing-3xl);
+}
+
+.p-combo__section-title {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+/* ========================================================
+ * F. 格ゲー記法ガイド
+ * ====================================================== */
+.p-combo__notation-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    align-items: start;
+}
+
+.p-combo__guide-heading {
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.p-combo__guide-desc {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.5;
+}
+
+/* テンキーグリッド（3×3）*/
+.p-combo__numpad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    width: fit-content;
+}
+
+.p-combo__numpad-cell {
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    flex-direction: column;
+    gap: 4px;
+}
+
+.p-combo__numpad-img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+.p-combo__numpad-num {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.p-combo__numpad-label {
+    font-size: 9px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.p-combo__numpad-cell--neutral {
+    background: rgba(255,255,255,0.04);
+    border-style: dashed;
+}
+
+/* アイコン早見表 */
+.p-combo__icon-guide {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.p-combo__icon-guide-section {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.p-combo__icon-guide-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.p-combo__icon-guide-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 3px 0;
+    font-size: var(--font-size-sm);
+}
+
+.p-combo__icon-guide-icon {
+    min-width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.p-combo__icon-guide-label {
+    min-width: 4em;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-right: 4px;
+}
+
+.p-combo__icon-guide-desc {
+    color: var(--text-muted);
+    line-height: 1.4;
+    flex: 1;
+}
+
+/* ========================================================
+ * G. コマンドリスト（カード形式）
+ * ====================================================== */
+.p-combo__move-type-group {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.p-combo__move-type-title {
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: var(--bg-tertiary);
+
+    border-left: 3px solid var(--secondary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.p-combo__command-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.p-combo__command-table th {
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+    font-weight: 700;
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.p-combo__command-table td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+    line-height: 1.5;
+}
+
+.p-combo__command-table tr:last-child td {
+    border-bottom: none;
+}
+
+.p-combo__command-table tr:hover td {
+    background: var(--bg-hover);
+}
+
+.p-combo__move-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.p-combo__move-name-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.p-combo__supplement {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* ========================================================
+ * H. コンボ集テーブル
+ * ====================================================== */
+.p-combo__difficulty-tabs {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: var(--spacing-sm);
+}
+
+.p-combo__diff-tab {
+    padding: var(--spacing-xs) var(--spacing-lg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    background: var(--bg-card);
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.p-combo__diff-tab.is-active,
+.p-combo__diff-tab:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--secondary);
+    color: var(--secondary);
+}
+
+.p-combo__diff-panel {
+    display: none;
+}
+
+.p-combo__diff-panel.is-active {
+    display: block;
+}
+
+.p-combo__combo-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin-bottom: var(--spacing-xl);
+}
+
+.p-combo__combo-table th {
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.p-combo__combo-table td {
+    padding: var(--spacing-md) var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+    line-height: 1.6;
+}
+
+.p-combo__combo-table tr:last-child td {
+    border-bottom: none;
+}
+
+.p-combo__combo-table tr:hover td {
+    background: var(--bg-hover);
+}
+
+/* おすすめ行強調 */
+.p-combo__combo-table tr.is-recommended td {
+    background: rgba(255, 215, 0, 0.04);
+}
+
+.p-combo__combo-table tr.is-recommended td:first-child {
+    border-left: 3px solid var(--accent-gold);
+}
+
+/* ========================================================
+ * I. コマンドアイコン（v4 画像 + テキストバッジ方式）
+ * ====================================================== */
+
+/* レシピ全体のコンテナ */
+.p-combo__recipe-icons {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    line-height: 1;
+}
+
+/* ──────────────────────────────────────────
+ * 画像アイコン共通 (.c-cmd-img)
+ * ────────────────────────────────────────── */
+.c-cmd-img {
+    display: inline-block;
+    vertical-align: middle;
+    object-fit: contain;
+    image-rendering: auto;
+}
+
+/* 方向矢印 */
+.c-cmd-img--dir {
+    width: 24px;
+    height: 24px;
+}
+
+/* 溜め方向矢印（通常より少し大きく・フィルターで色付け） */
+.c-cmd-img--charge {
+    width: 24px;
+    height: 24px;
+    filter: hue-rotate(200deg) saturate(1.5) brightness(1.2);
+}
+
+/* ボタンアイコン */
+.c-cmd-img--btn {
+    width: 22px;
+    height: 22px;
+}
+
+/* 修飾アイコン（HOLD等）*/
+.c-cmd-img--mod {
+    width: 20px;
+    height: 20px;
+    opacity: 0.8;
+}
+
+/* 特殊（360等）*/
+.c-cmd-img--special {
+    width: 24px;
+    height: 24px;
+}
+
+/* シンボル（+・or・N等）*/
+.c-cmd-img--sym {
+    width: 20px;
+    height: 20px;
+}
+
+/* ──────────────────────────────────────────
+ * テキストバッジ (.c-cmd-badge)
+ * ────────────────────────────────────────── */
+.c-cmd-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 2px 6px;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    vertical-align: middle;
+}
+
+/* OD */
+.c-cmd-badge--od {
+    background: rgba(255, 145, 0, 0.20);
+    border-color: #FF9100;
+    color: #FF9100;
+}
+
+/* 生ラッシュ */
+.c-cmd-badge--nr {
+    background: rgba(0, 176, 255, 0.20);
+    border-color: #00B0FF;
+    color: #00B0FF;
+}
+
+/* キャンセルドライブラッシュ */
+.c-cmd-badge--cr {
+    background: rgba(0, 176, 255, 0.15);
+    border-color: #00B0FF;
+    color: #00B0FF;
+    font-size: 10px;
+    max-width: 9em;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.2;
+}
+
+/* ジャンプ */
+.c-cmd-badge--jump {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255,255,255,0.3);
+    color: var(--text-muted);
+}
+
+/* 歩き */
+.c-cmd-badge--walk {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255,255,255,0.25);
+    color: var(--text-muted);
+}
+
+/* バックジャンプ */
+.c-cmd-badge--bj {
+    background: rgba(0, 200, 83, 0.10);
+    border-color: #00C853;
+    color: #00C853;
+}
+
+/* バックステップ */
+.c-cmd-badge--bs {
+    background: rgba(0, 200, 83, 0.10);
+    border-color: #00C853;
+    color: #00C853;
+}
+
+/* ディレイ */
+.c-cmd-badge--delay {
+    background: rgba(255, 145, 0, 0.12);
+    border-color: #FF9100;
+    color: #FF9100;
+}
+
+/* 自動派生 */
+.c-cmd-badge--auto {
+    background: rgba(255, 214, 0, 0.12);
+    border-color: #FFD600;
+    color: #FFD600;
+    font-size: 10px;
+}
+
+/* 不明トークン */
+.c-cmd-badge--unknown {
+    background: var(--bg-tertiary);
+    border-color: var(--border-color);
+    color: var(--text-muted);
+}
+
+/* or 選択肢 */
+.c-cmd-badge--or {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255,255,255,0.2);
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 10px;
+}
+
+/* ──────────────────────────────────────────
+ * 区切り・連続入力・修飾子
+ * ────────────────────────────────────────── */
+
+/* 技区切り → */
+.c-cmd-sep {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    padding: 0 6px;
+    vertical-align: middle;
+}
+
+/* 派生区切り ⇒ (通常よりやや細め) */
+.c-cmd-sep--derive {
+    color: var(--secondary);
+    opacity: 0.7;
+    font-size: 11px;
+    padding: 0 4px;
+}
+
+/* 連続入力 ▶ */
+.c-cmd-seq {
+    color: var(--secondary);
+    font-size: 10px;
+    padding: 0 2px;
+    vertical-align: middle;
+}
+
+/* + 記号 */
+.c-cmd-plus {
+    color: var(--text-muted);
+    font-size: 11px;
+    padding: 0 1px;
+    vertical-align: middle;
+}
+
+/* ジャンプ修飾子 j. */
+.c-cmd-mod--jump {
+    color: var(--text-muted);
+    font-size: 11px;
+    vertical-align: middle;
+}
+
+/* 繰り返し ×N〜M */
+.c-cmd-repeat {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 1px 5px;
+    vertical-align: middle;
+}
+
+/* 丸括弧テキスト () — convertCommandToIcons が出力するグループ括弧 */
+.c-cmd-text {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    vertical-align: middle;
+}
+
+
+
+/* ========================================================
+ * J. バッジ
+ * ====================================================== */
+.p-combo__recommended-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent-gold);
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid var(--accent-gold-50);
+    border-radius: 20px;
+    padding: 1px 8px;
+    white-space: nowrap;
+}
+
+.p-combo__difficulty-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 1px 8px;
+    white-space: nowrap;
+}
+
+.p-combo__difficulty-badge--beginner {
+    background: rgba(0, 200, 83, 0.15);
+    border: 1px solid #00C853;
+    color: #00C853;
+}
+
+.p-combo__difficulty-badge--intermediate {
+    background: rgba(255, 145, 0, 0.15);
+    border: 1px solid #FF9100;
+    color: #FF9100;
+}
+
+.p-combo__difficulty-badge--advanced {
+    background: rgba(255, 61, 87, 0.15);
+    border: 1px solid #FF3D57;
+    color: #FF3D57;
+}
+
+.p-combo__position-badge {
+    display: inline-block;
+    font-size: 11px;
+    color: var(--text-muted);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 1px 8px;
+    white-space: nowrap;
+}
+
+/* ========================================================
+ * J-2. コマンドリストカード
+ * ====================================================== */
+
+/* カードレイアウト（技画像 + 情報） */
+.p-combo__move-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    transition: background 0.15s;
+}
+
+.p-combo__move-card:hover {
+    background: var(--bg-hover);
+}
+
+/* 派生技（子筌）は左インデント */
+.p-combo__move-card--child {
+    padding-left: calc(var(--spacing-md) + 1.5em);
+    background: rgba(255,255,255,0.02);
+    position: relative;
+}
+
+.p-combo__move-child-marker {
+    position: absolute;
+    left: var(--spacing-md);
+    top: var(--spacing-md);
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* 技画像 */
+.p-combo__move-img-wrap {
+    flex-shrink: 0;
+    width: 80px;
+    height: 60px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--bg-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.p-combo__move-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* 技情報本体 */
+.p-combo__move-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.p-combo__move-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+}
+
+.p-combo__move-name {
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: var(--font-size-base);
+    line-height: 1.3;
+}
+
+.p-combo__move-name-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 1px;
+}
+
+/* コマンドと使用条件 */
+.p-combo__move-command {
+    margin: var(--spacing-xs) 0;
+}
+
+.p-combo__move-condition {
+    font-size: 12px;
+    color: var(--secondary);
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+/* 詳細ボタン */
+.p-combo__move-toggle {
+    flex-shrink: 0;
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.p-combo__move-toggle:hover {
+    border-color: var(--secondary);
+    color: var(--secondary);
+}
+
+.p-combo__move-toggle[aria-expanded="true"] {
+    background: rgba(0, 176, 255, 0.1);
+    border-color: var(--secondary);
+    color: var(--secondary);
+}
+
+/* アコーディオン */
+.p-combo__move-detail {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--secondary);
+}
+
+.p-combo__move-overview {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0 0 var(--spacing-sm);
+}
+
+/* 動画プレーヤー */
+.p-combo__move-video {
+    width: 100%;
+    max-width: 480px;
+    border-radius: var(--radius-sm);
+    background: #000;
+    display: block;
+    margin-top: var(--spacing-sm);
+}
+
+/* ========================================================
+ * K. メモ（Parsedown）
+ * ====================================================== */
+.p-combo__memo {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    line-height: var(--line-height-loose);
+    margin-top: var(--spacing-xs);
+}
+
+.p-combo__memo p {
+    margin: 0;
+}
+
+.p-combo__memo strong {
+    color: var(--accent-gold);
+}
+
+/* ========================================================
+ * L. レスポンシブ
+ * ====================================================== */
+@media (max-width: 768px) {
+    .p-combo__char-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+
+    .p-combo__char-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+    }
+
+    .p-combo__notation-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .p-combo__command-table,
+    .p-combo__combo-table {
+        font-size: 12px;
+        display: block;
+        overflow-x: auto;
+    }
+
+    .p-combo__difficulty-tabs {
+        flex-wrap: wrap;
+    }
+
+    .p-combo__stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

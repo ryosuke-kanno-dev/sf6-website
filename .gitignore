@@ -1,11 +1,7 @@
-# --- 管理しないもの（例） ---
-/.vscode/
+# 重いデータや設計資料、バックアップフォルダをGitの管理対象外にする
+_docs_and_backup/
 
-/data-xlsx,csv/
-
-/memo/
-
-/src/img/
-/src/video/
-
-/trash/
+# エクセルファイルや一時ファイル（念のため）
+*.xlsx
+.DS_Store
+Thumbs.db

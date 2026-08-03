@@ -1,0 +1,373 @@
+/**
+ * training.php 専用スタイル
+ * guide.cssのスタイルを継承・拡張
+ */
+
+/* ==================== Training Page Specific ==================== */
+/*.training-page {
+     guide-pageのスタイルを継承 
+}*/
+
+/*.training-section {
+     guide-sectionのスタイルを継承 
+}*/
+
+/* ==================== フレームメーターガイド ==================== */
+.frame-meter-guide {
+    display: grid;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+}
+
+.frame-meter-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+}
+
+.frame-meter-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+.frame-color-box {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.frame-info {
+    flex: 1;
+}
+
+.frame-label {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* ==================== フィルターカード ==================== */
+.filter-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-2xl);
+}
+
+/* フィルターカードは .c-card を使用 */
+
+
+.filter-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    width: 100%;
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--bg-tertiary);
+    border: 2px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+}
+
+.filter-btn .filter-icon {
+    font-size: var(--font-size-lg);
+}
+
+.filter-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--secondary);
+    color: var(--secondary);
+    transform: translateX(5px);
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, var(--accent-gold), var(--accent-orange));
+    color: var(--text-inverse);
+    border-color: var(--accent-gold);
+    transform: translateX(5px);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    font-weight: 700;
+}
+
+.filter-btn.filter-reset {
+    margin-top: var(--spacing-lg);
+    background: var(--bg-primary);
+    border-style: dashed;
+}
+
+.filter-btn.filter-reset:hover {
+    background: var(--bg-tertiary);
+}
+
+/* ==================== メニューカードグリッド ==================== */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--spacing-xl);
+}
+
+/* メニューカードは .c-card を使用 */
+
+/* メニューカード固有の状態管理 */
+.c-card.hidden {
+    display: none;
+}
+
+.c-card.mastered {
+    opacity: 0.7;
+    border-color: var(--success);
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(0, 255, 127, 0.05) 100%);
+}
+
+.c-card.mastered::after {
+    content: '✓';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    color: var(--success);
+    opacity: 0.3;
+}
+
+
+.menu-category {
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+}
+
+.badge-basic {
+    background: linear-gradient(135deg, var(--category-basic), #357ABD);
+    color: var(--mono-white);
+}
+
+.badge-defense {
+    background: linear-gradient(135deg, var(--category-defense), #3FA75F);
+    color: var(--mono-white);
+}
+
+.badge-offense {
+    background: linear-gradient(135deg, var(--category-offense), #C0392B);
+    color: var(--mono-white);
+}
+
+/* 習得チェックボックス */
+.mastered-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.mastered-check {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--success);
+}
+
+.mastered-text {
+    user-select: none;
+}
+
+/* メニュータイトル */
+.menu-title {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+/* メタ情報 */
+.menu-meta {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.menu-rank,
+.menu-duration {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.menu-meta .icon {
+    font-size: var(--font-size-base);
+}
+
+/* 目的 */
+.menu-objective {
+    color: var(--text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* アコーディオン */
+.menu-accordion {
+    margin-top: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.menu-accordion summary {
+    padding: var(--spacing-md);
+    cursor: pointer;
+    font-weight: 700;
+    background: var(--bg-tertiary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    transition: all var(--transition-base);
+    user-select: none;
+}
+
+.menu-accordion summary:hover {
+    background: var(--bg-hover);
+    color: var(--secondary);
+}
+
+.menu-accordion summary .icon {
+    font-size: var(--font-size-lg);
+}
+
+.menu-accordion[open] summary {
+    background: var(--bg-hover);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.menu-accordion-content {
+    padding: var(--spacing-lg);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    line-height: var(--line-height-loose);
+}
+
+/* メニューリンク */
+.menu-links {
+    margin-top: var(--spacing-lg);
+}
+
+.menu-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: transparent;
+    border: 1px solid var(--secondary);
+    color: var(--secondary);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-base);
+    font-weight: 500;
+}
+
+.menu-link:hover {
+    background: var(--secondary);
+    color: var(--bg-primary);
+    transform: translateX(5px);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+/* ==================== ルーティーンリスト ==================== */
+.routine-list {
+    list-style: none;
+    padding: 0;
+    counter-reset: routine-counter;
+}
+
+.routine-item {
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--secondary);
+}
+
+.routine-item-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.routine-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--secondary);
+    color: var(--bg-primary);
+    border-radius: 50%;
+    font-weight: 900;
+    font-size: var(--font-size-base);
+    flex-shrink: 0;
+}
+
+.routine-item-header strong {
+    flex: 1;
+    color: var(--text-primary);
+    font-size: var(--font-size-lg);
+}
+
+.routine-time {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: var(--accent-orange);
+    color: white;
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+}
+
+.routine-description {
+    color: var(--text-secondary);
+    line-height: var(--line-height-relaxed);
+    padding-left: calc(32px + var(--spacing-md));
+}
+
+/* ==================== レスポンシブ ==================== */
+@media (max-width: 768px) {
+    .filter-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .frame-meter-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .frame-color-box {
+        width: 100%;
+        height: 40px;
+    }
+
+    .routine-description {
+        padding-left: 0;
+        margin-top: var(--spacing-sm);
+    }
+}

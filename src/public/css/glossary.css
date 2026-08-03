@@ -1,0 +1,537 @@
+/**
+ * Glossary Page Styles - SF6攻略サイト
+ *
+ * @description
+ * 用語集ページ（glossary.php）専用スタイル。
+ * 共通スタイルは variables.css / base.css / components.css / guide.css を使用し、
+ * このファイルには用語集固有のスタイルのみを定義する。
+ *
+ * @naming-convention
+ * - p-glossary__*: 用語集ページ専用スタイル
+ *
+ * @dependencies
+ * variables.css, base.css, components.css, guide.css
+ *
+ * @updated 2026-03-04
+ */
+
+/* ==================== 検索エリア ==================== */
+.p-glossary__search-wrap {
+    margin-bottom: var(--spacing-xl);
+}
+
+.p-glossary__search-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+}
+
+.p-glossary__search-box {
+    position: relative;
+}
+
+.p-glossary__search-icon {
+    position: absolute;
+    left: var(--spacing-md);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: var(--font-size-lg);
+    pointer-events: none;
+}
+
+.p-glossary__search-input {
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) 44px;
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: var(--font-size-base);
+    font-family: var(--font-primary);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    box-sizing: border-box;
+}
+
+.p-glossary__search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.p-glossary__search-input:focus {
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 3px var(--secondary-10);
+}
+
+.p-glossary__search-count {
+    margin-top: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    min-height: 1.5em;
+    transition: opacity var(--transition-fast);
+}
+
+/* ==================== 50音インデックス ==================== */
+.p-glossary__index-wrap {
+    margin-bottom: var(--spacing-xl);
+}
+
+.p-glossary__index-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+}
+
+.p-glossary__index {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.p-glossary__index-btn {
+    min-width: 40px;
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    font-family: var(--font-primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-align: center;
+}
+
+.p-glossary__index-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--secondary);
+    color: var(--secondary);
+}
+
+.p-glossary__index-btn.is-active {
+    background: var(--secondary);
+    border-color: var(--secondary);
+    color: var(--bg-primary);
+    box-shadow: 0 0 10px var(--secondary-30);
+}
+
+.p-glossary__index-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.p-glossary__index-btn--all {
+    background: linear-gradient(135deg, var(--accent-gold), var(--accent-orange));
+    border-color: transparent;
+    color: var(--bg-primary);
+    font-weight: 700;
+}
+
+.p-glossary__index-btn--all:hover {
+    opacity: 0.85;
+    color: var(--bg-primary);
+}
+
+.p-glossary__index-btn--all.is-active {
+    background: var(--accent-gold);
+    box-shadow: 0 0 10px var(--accent-gold-40);
+}
+
+/* ==================== 用語グループ ==================== */
+.p-glossary__group {
+    margin-bottom: var(--spacing-3xl);
+    scroll-margin-top: 100px;
+}
+
+.p-glossary__group-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.p-glossary__group-title {
+    font-size: var(--font-size-2xl);
+    font-weight: 900;
+    color: var(--accent-gold);
+    text-shadow: 0 0 10px var(--accent-gold-30);
+    margin: 0;
+}
+
+.p-glossary__group-count {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    background: var(--bg-card);
+    padding: 2px 10px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-color);
+}
+
+/* ==================== 用語カードグリッド ==================== */
+.p-glossary__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--spacing-xl);
+}
+
+/* ==================== 用語カード ==================== */
+.p-glossary__card {
+    /* c-card の overflow: hidden を上書きして details 展開を妨げないようにする */
+    overflow: visible;
+    position: relative;
+    scroll-margin-top: 120px;
+    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+
+.p-glossary__card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px var(--secondary-20);
+    border-color: var(--secondary);
+}
+
+/* アンカーハイライト */
+.p-glossary__card.is-highlighted {
+    border-color: var(--accent-gold) !important;
+    box-shadow:
+        0 0 0 2px var(--accent-gold),
+        0 0 30px var(--accent-gold-30) !important;
+    animation: p-glossary-highlight 3s ease forwards;
+}
+
+@keyframes p-glossary-highlight {
+    0% {
+        box-shadow: 0 0 0 2px var(--accent-gold), 0 0 40px var(--accent-gold-50);
+    }
+
+    70% {
+        box-shadow: 0 0 0 2px var(--accent-gold), 0 0 30px var(--accent-gold-30);
+    }
+
+    100% {
+        box-shadow: var(--shadow-md);
+        border-color: var(--border-color);
+    }
+}
+
+/* カード内要素 */
+.p-glossary__card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.p-glossary__term-group {
+    flex: 1;
+    min-width: 0;
+}
+
+.p-glossary__term {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin: 0 0 var(--spacing-xs);
+    line-height: 1.3;
+}
+
+.p-glossary__kana {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.p-glossary__category {
+    flex-shrink: 0;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* カテゴリーカラー */
+.p-glossary__category--システム {
+    background: rgba(74, 144, 226, 0.2);
+    color: #74b4f4;
+    border: 1px solid rgba(74, 144, 226, 0.4);
+}
+
+.p-glossary__category--基礎 {
+    background: rgba(80, 200, 120, 0.2);
+    color: #70d890;
+    border: 1px solid rgba(80, 200, 120, 0.4);
+}
+
+.p-glossary__category--立ち回り {
+    background: rgba(255, 165, 0, 0.2);
+    color: #ffb84d;
+    border: 1px solid rgba(255, 165, 0, 0.4);
+}
+
+.p-glossary__category--テクニック {
+    background: rgba(157, 78, 221, 0.2);
+    color: #c87af8;
+    border: 1px solid rgba(157, 78, 221, 0.4);
+}
+
+.p-glossary__category--キャラ {
+    background: rgba(231, 76, 60, 0.2);
+    color: #f47060;
+    border: 1px solid rgba(231, 76, 60, 0.4);
+}
+
+.p-glossary__description {
+    font-size: var(--font-size-base);
+    color: var(--text-primary);
+    line-height: var(--line-height-loose);
+    margin-bottom: var(--spacing-md);
+}
+
+/* カード詳細コンテンツ */
+.p-glossary__detail {
+    margin-top: var(--spacing-md);
+}
+
+.p-glossary__content-block {
+    margin-bottom: var(--spacing-md);
+}
+
+.p-glossary__content-block:last-child {
+    margin-bottom: 0;
+}
+
+.p-glossary__content-title {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.p-glossary__content-title::before {
+    content: '▶';
+    font-size: 0.6em;
+}
+
+.p-glossary__content-text {
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    line-height: var(--line-height-loose);
+    padding: var(--spacing-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--border-color);
+}
+
+.p-glossary__content-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--spacing-xs);
+}
+
+.p-glossary__content-list li {
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    padding: var(--spacing-xs) var(--spacing-md);
+    padding-left: calc(var(--spacing-md) + 1em);
+    position: relative;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+    line-height: var(--line-height-base);
+}
+
+.p-glossary__content-list li::before {
+    content: '◉';
+    position: absolute;
+    left: var(--spacing-md);
+    color: var(--secondary);
+    font-size: 0.6em;
+    top: 0.4em;
+}
+
+/* テーブル */
+.p-glossary__table-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+.p-glossary__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+    min-width: 280px;
+}
+
+.p-glossary__table th {
+    background: var(--bg-tertiary);
+    color: var(--secondary);
+    font-weight: 700;
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.p-glossary__table td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+    line-height: var(--line-height-base);
+    vertical-align: top;
+}
+
+.p-glossary__table tr:last-child td {
+    border-bottom: none;
+}
+
+.p-glossary__table tr:hover td {
+    background: var(--bg-hover);
+}
+
+/* ==================== アコーディオン（詳細展開） ==================== */
+
+/* details / summary のブラウザ差異を吸収 */
+.p-glossary__card details {
+    margin-top: var(--spacing-md);
+    overflow: visible;
+}
+
+/* summary（クリック領域）*/
+.p-glossary__card details>summary {
+    /* list-style を非表示にする（デフォルトの▶マーカーを消す） */
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+/* WebKit系のデフォルトマーカーを消す */
+.p-glossary__card details>summary::-webkit-details-marker {
+    display: none;
+}
+
+.p-glossary__detail-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    font-family: var(--font-primary);
+    cursor: pointer;
+    text-align: left;
+    transition: all var(--transition-fast);
+}
+
+.p-glossary__detail-toggle::after {
+    content: '▼';
+    font-size: 0.65em;
+    margin-left: auto;
+    transition: transform var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.p-glossary__card details[open]>.p-glossary__detail-toggle::after {
+    transform: rotate(-180deg);
+}
+
+.p-glossary__detail-toggle:hover {
+    background: var(--bg-hover);
+    border-color: var(--secondary);
+    color: var(--secondary);
+}
+
+.p-glossary__card details[open] .p-glossary__detail-toggle {
+    border-color: var(--secondary);
+    color: var(--secondary);
+}
+
+details .p-glossary__detail {
+    padding-top: var(--spacing-md);
+}
+
+/* ==================== 「該当なし」表示 ==================== */
+.p-glossary__empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: var(--spacing-3xl);
+    color: var(--text-muted);
+}
+
+.p-glossary__empty-icon {
+    font-size: 56px;
+    display: block;
+    margin-bottom: var(--spacing-md);
+}
+
+.p-glossary__empty-text {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-sm);
+}
+
+.p-glossary__empty-sub {
+    font-size: var(--font-size-sm);
+}
+
+/* ==================== レスポンシブ ==================== */
+@media (max-width: 768px) {
+    .p-glossary__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .p-glossary__index {
+        gap: var(--spacing-xs);
+    }
+
+    .p-glossary__index-btn {
+        min-width: 36px;
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 12px;
+    }
+
+    .p-glossary__group-title {
+        font-size: var(--font-size-xl);
+    }
+
+    .p-glossary__term {
+        font-size: var(--font-size-lg);
+    }
+}
+
+@media (max-width: 480px) {
+    .p-glossary__card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .p-glossary__table {
+        font-size: 12px;
+    }
+
+    .p-glossary__index-btn {
+        min-width: 32px;
+        padding: 4px 8px;
+    }
+}

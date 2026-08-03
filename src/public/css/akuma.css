@@ -1,0 +1,988 @@
+/**
+ * Akuma Page Styles - SF6攻略サイト 豪鬼特設ページ
+ *
+ * @description
+ * 豪鬼（AKUMA）専用スタイル。
+ * 紫・赤黒系のテーマカラーで他ページと差別化。
+ * 共通スタイルは variables.css / base.css / components.css を参照。
+ *
+ * @naming-convention
+ *   p-akuma__*  : 豪鬼特設ページ専用
+ *
+ * @updated 2026-04-23
+ */
+
+/* ========================================================
+ * 豪鬼テーマカラー
+ * ====================================================== */
+:root {
+    --akuma-purple:     #9D4EDD;
+    --akuma-purple-dk:  #6A1B99;
+    --akuma-red:        #C62828;
+    --akuma-red-dk:     #7B1FA2;
+    --akuma-gold:       #FF6F00;
+    --akuma-bg:         #1a0a2e;
+    --akuma-bg-card:    #22103d;
+    --akuma-bg-section: #180826;
+    --akuma-glow:       0 0 20px rgba(157, 78, 221, 0.5), 0 0 40px rgba(157, 78, 221, 0.2);
+    --akuma-glow-red:   0 0 15px rgba(198, 40, 40, 0.6), 0 0 30px rgba(198, 40, 40, 0.2);
+    --akuma-border:     rgba(157, 78, 221, 0.25);
+    --akuma-border-hot: rgba(157, 78, 221, 0.7);
+    --akuma-20:         rgba(157, 78, 221, 0.20);
+    --akuma-10:         rgba(157, 78, 221, 0.10);
+    --akuma-05:         rgba(157, 78, 221, 0.05);
+    --akuma-red-20:     rgba(198, 40, 40, 0.20);
+    --akuma-red-10:     rgba(198, 40, 40, 0.10);
+    --akuma-gold-20:    rgba(255, 111, 0, 0.20);
+}
+
+/* ========================================================
+ * A. ヒーローヘッダー
+ * ====================================================== */
+
+.p-akuma__hero {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 20% 50%, rgba(157, 78, 221, 0.25) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(198, 40, 40, 0.20) 0%, transparent 50%),
+        linear-gradient(180deg, #1a0a2e 0%, #0d0015 100%);
+    padding: var(--spacing-3xl) 0;
+    border-bottom: 1px solid var(--akuma-border);
+}
+
+/* 背景装飾エフェクト */
+.p-akuma__hero-bg-shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+}
+
+.p-akuma__hero-bg-shape:nth-child(1) {
+    width: 400px;
+    height: 400px;
+    background: rgba(157, 78, 221, 0.12);
+    top: -100px;
+    right: -100px;
+    animation: akumaPulse 6s ease-in-out infinite;
+}
+
+.p-akuma__hero-bg-shape:nth-child(2) {
+    width: 300px;
+    height: 300px;
+    background: rgba(198, 40, 40, 0.10);
+    bottom: -80px;
+    left: -80px;
+    animation: akumaPulse 8s ease-in-out infinite 2s;
+}
+
+@keyframes akumaPulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50%       { opacity: 1;   transform: scale(1.1); }
+}
+
+.p-akuma__hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3xl);
+}
+
+.p-akuma__hero-portrait {
+    flex-shrink: 0;
+}
+
+.p-akuma__hero-portrait-img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--akuma-purple);
+    box-shadow: var(--akuma-glow);
+    display: block;
+}
+
+.p-akuma__hero-portrait-placeholder {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 3px solid var(--akuma-border);
+    background: var(--akuma-bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    box-shadow: var(--akuma-glow);
+}
+
+.p-akuma__hero-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.p-akuma__hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--akuma-purple);
+    background: var(--akuma-10);
+    border: 1px solid var(--akuma-border);
+    border-radius: var(--radius-full);
+    padding: 4px 14px;
+    margin-bottom: var(--spacing-md);
+}
+
+.p-akuma__hero-name-jp {
+    font-size: var(--font-size-4xl);
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1.1;
+    margin-bottom: var(--spacing-xs);
+    text-shadow:
+        0 0 30px rgba(157, 78, 221, 0.8),
+        0 0 60px rgba(157, 78, 221, 0.3);
+}
+
+.p-akuma__hero-name-en {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    color: var(--akuma-purple);
+    margin-bottom: var(--spacing-lg);
+}
+
+.p-akuma__hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.p-akuma__hero-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--akuma-10);
+    border: 1px solid var(--akuma-border);
+    border-radius: var(--radius-md);
+}
+
+.p-akuma__hero-stat-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+}
+
+.p-akuma__hero-stat-value {
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.p-akuma__hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.p-akuma__hero-tag {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    border: 1px solid transparent;
+}
+
+.p-akuma__hero-tag--power    { background: rgba(198,40,40,0.15); border-color: #C62828; color: #EF9A9A; }
+.p-akuma__hero-tag--rushdown { background: rgba(255,111,0,0.12); border-color: var(--akuma-gold); color: #FFCC80; }
+.p-akuma__hero-tag--sa3      { background: rgba(157,78,221,0.15); border-color: var(--akuma-purple); color: #CE93D8; }
+
+/* ========================================================
+ * B. ページナビゲーション（アンカーリンク）
+ * ====================================================== */
+
+.p-akuma__page-nav {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    background: rgba(26, 10, 46, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--akuma-border);
+    padding: 0;
+}
+
+.p-akuma__page-nav-inner {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.p-akuma__page-nav-inner::-webkit-scrollbar { display: none; }
+
+.p-akuma__page-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.p-akuma__page-nav-link:hover,
+.p-akuma__page-nav-link.is-active {
+    color: var(--akuma-purple);
+    border-bottom-color: var(--akuma-purple);
+}
+
+/* ========================================================
+ * C. セクション共通
+ * ====================================================== */
+
+.p-akuma__section {
+    padding: var(--spacing-3xl) 0;
+    border-bottom: 1px solid rgba(157, 78, 221, 0.1);
+}
+
+.p-akuma__section--dark {
+    background: rgba(13, 0, 21, 0.4);
+}
+
+.p-akuma__section-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.p-akuma__section-title {
+    font-size: var(--font-size-2xl);
+    font-weight: 900;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.p-akuma__section-title::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 1.2em;
+    background: linear-gradient(180deg, var(--akuma-purple), var(--akuma-red));
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.p-akuma__section-desc {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    line-height: var(--line-height-loose);
+    padding-left: calc(4px + var(--spacing-md));
+}
+
+/* ========================================================
+ * D. 強み・弱みカード
+ * ====================================================== */
+
+.p-akuma__swot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+}
+
+.p-akuma__swot-card {
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--akuma-border);
+}
+
+.p-akuma__swot-card--strength {
+    background: linear-gradient(135deg, rgba(157,78,221,0.12) 0%, rgba(26,10,46,0.6) 100%);
+    border-color: var(--akuma-purple);
+}
+
+.p-akuma__swot-card--weakness {
+    background: linear-gradient(135deg, rgba(198,40,40,0.10) 0%, rgba(26,10,46,0.6) 100%);
+    border-color: #C62828;
+}
+
+.p-akuma__swot-title {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.p-akuma__swot-card--strength .p-akuma__swot-title { color: #CE93D8; }
+.p-akuma__swot-card--weakness .p-akuma__swot-title { color: #EF9A9A; }
+
+.p-akuma__swot-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.p-akuma__swot-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    line-height: var(--line-height-loose);
+}
+
+.p-akuma__swot-item::before {
+    content: '▶';
+    font-size: 10px;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+.p-akuma__swot-card--strength .p-akuma__swot-item::before { color: var(--akuma-purple); }
+.p-akuma__swot-card--weakness .p-akuma__swot-item::before { color: #C62828; }
+
+/* ========================================================
+ * E. 立ち回り解説
+ * ====================================================== */
+
+.p-akuma__tactics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.p-akuma__tactic-card {
+    padding: var(--spacing-xl);
+    background: var(--akuma-05);
+    border: 1px solid var(--akuma-border);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.p-akuma__tactic-card:hover {
+    border-color: var(--akuma-purple);
+    box-shadow: 0 4px 20px var(--akuma-20);
+}
+
+.p-akuma__tactic-icon {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.p-akuma__tactic-title {
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: var(--spacing-sm);
+}
+
+.p-akuma__tactic-body {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    line-height: var(--line-height-loose);
+}
+
+/* ========================================================
+ * F. リーサル判断
+ * ====================================================== */
+
+.p-akuma__lethal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.p-akuma__lethal-card {
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, rgba(198,40,40,0.12) 0%, var(--akuma-05) 100%);
+    border: 1px solid rgba(198,40,40,0.3);
+    border-radius: var(--radius-md);
+}
+
+.p-akuma__lethal-title {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: #EF9A9A;
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.p-akuma__lethal-value {
+    font-size: var(--font-size-xl);
+    font-weight: 900;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.p-akuma__lethal-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: var(--line-height-loose);
+}
+
+/* ========================================================
+ * G. コンボテーブル
+ * ====================================================== */
+
+.p-akuma__combo-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--akuma-border);
+}
+
+.p-akuma__combo-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+    min-width: 560px;
+}
+
+.p-akuma__combo-table thead th {
+    background: rgba(157,78,221,0.12);
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--akuma-border);
+    white-space: nowrap;
+}
+
+.p-akuma__combo-table tbody td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-bottom: 1px solid rgba(157,78,221,0.08);
+    vertical-align: middle;
+}
+
+.p-akuma__combo-table tbody tr:last-child td { border-bottom: none; }
+.p-akuma__combo-table tbody tr:hover td  { background: var(--akuma-05); }
+
+.p-akuma__combo-table tbody tr.is-recommended td {
+    background: rgba(157,78,221,0.07);
+}
+
+.p-akuma__combo-star {
+    color: var(--akuma-gold);
+    text-shadow: 0 0 6px rgba(255,111,0,0.6);
+}
+
+.p-akuma__diff-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+
+.p-akuma__diff-badge--beginner    { background: rgba(76,175,80,0.15); border-color: #4CAF50; color: #81C784; }
+.p-akuma__diff-badge--intermediate { background: rgba(255,152,0,0.15); border-color: #FF9800; color: #FFB74D; }
+.p-akuma__diff-badge--advanced    { background: rgba(244,67,54,0.15); border-color: #F44336; color: #E57373; }
+
+.p-akuma__combo-damage {
+    font-weight: 700;
+    color: var(--akuma-gold);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.p-akuma__pos-badge {
+    font-size: 11px;
+    padding: 1px 6px;
+    background: var(--akuma-05);
+    border: 1px solid var(--akuma-border);
+    border-radius: var(--radius-full);
+    color: var(--text-muted);
+}
+
+/* ========================================================
+ * H. 起き攻め・セットアップカード
+ * ====================================================== */
+
+.p-akuma__setup-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.p-akuma__setup-card {
+    padding: var(--spacing-xl);
+    background: var(--akuma-05);
+    border: 1px solid var(--akuma-border);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-fast);
+}
+
+.p-akuma__setup-card:hover {
+    border-color: var(--akuma-purple);
+}
+
+.p-akuma__setup-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.p-akuma__setup-title {
+    font-weight: 700;
+    color: #ffffff;
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-tight);
+}
+
+.p-akuma__setup-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    background: rgba(157,78,221,0.15);
+    border: 1px solid var(--akuma-purple);
+    color: #CE93D8;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.p-akuma__setup-recipe {
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: rgba(0,0,0,0.3);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--akuma-purple);
+}
+
+.p-akuma__setup-body {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    line-height: var(--line-height-loose);
+}
+
+/* ========================================================
+ * I. キャラ対策サマリー（簡易版）
+ * ====================================================== */
+
+.p-akuma__matchup-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: var(--spacing-sm);
+}
+
+.p-akuma__matchup-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md) var(--spacing-sm);
+    background: var(--akuma-05);
+    border: 1px solid var(--akuma-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.p-akuma__matchup-item:hover {
+    border-color: var(--akuma-purple);
+    box-shadow: 0 4px 12px var(--akuma-20);
+    transform: translateY(-2px);
+}
+
+.p-akuma__matchup-img {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--akuma-border);
+    display: block;
+    transition: border-color var(--transition-fast);
+}
+
+.p-akuma__matchup-item:hover .p-akuma__matchup-img {
+    border-color: var(--akuma-purple);
+}
+
+.p-akuma__matchup-name {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+    line-height: 1.2;
+}
+
+.p-akuma__matchup-score {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+}
+
+.p-akuma__matchup-score--adv   { background: rgba(76,175,80,0.15); border: 1px solid #4CAF50; color:#81C784; }
+.p-akuma__matchup-score--even  { background: var(--akuma-05);       border: 1px solid var(--akuma-border); color:var(--text-muted); }
+.p-akuma__matchup-score--disadv{ background: rgba(244,67,54,0.12); border: 1px solid #F44336; color:#E57373; }
+
+/* ========================================================
+ * J. フレームデータテーブル
+ * ====================================================== */
+
+.p-akuma__frame-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--akuma-border);
+}
+
+.p-akuma__frame-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+    min-width: 680px;
+}
+
+.p-akuma__frame-table thead th {
+    background: rgba(157,78,221,0.12);
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: center;
+    border-bottom: 1px solid var(--akuma-border);
+    white-space: nowrap;
+}
+
+.p-akuma__frame-table thead th:first-child,
+.p-akuma__frame-table thead th:nth-child(2) {
+    text-align: left;
+}
+
+.p-akuma__frame-table tbody td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-bottom: 1px solid rgba(157,78,221,0.08);
+    vertical-align: middle;
+    text-align: center;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.p-akuma__frame-table tbody td:first-child,
+.p-akuma__frame-table tbody td:nth-child(2) {
+    text-align: left;
+    color: var(--text-primary);
+}
+
+.p-akuma__frame-table tbody tr:last-child td { border-bottom: none; }
+.p-akuma__frame-table tbody tr:hover td { background: var(--akuma-05); }
+
+/* ガード時硬直差 */
+.p-akuma__frame-adv { font-weight: 700; }
+.p-akuma__frame-adv--plus  { color: #81C784; }
+.p-akuma__frame-adv--minus { color: #E57373; }
+.p-akuma__frame-adv--zero  { color: var(--text-muted); }
+
+/* 属性バッジ */
+.p-akuma__attr-badge {
+    display: inline-flex;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: var(--radius-full);
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+
+.p-akuma__attr-badge--mid  { background: rgba(0,176,255,0.12); border-color: #00B0FF; color: #4FC3F7; }
+.p-akuma__attr-badge--low  { background: rgba(76,175,80,0.12); border-color:#4CAF50; color: #81C784; }
+.p-akuma__attr-badge--high { background: rgba(244,67,54,0.12); border-color:#F44336; color: #E57373; }
+.p-akuma__attr-badge--throw{ background: rgba(255,111,0,0.12); border-color:var(--akuma-gold); color: #FFCC80; }
+.p-akuma__attr-badge--proj { background: rgba(157,78,221,0.12); border-color:var(--akuma-purple); color:#CE93D8; }
+
+/* ========================================================
+ * K. タブナビゲーション（コンボ/セットアップ切替）
+ * ====================================================== */
+
+.p-akuma__tabs {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+    border-bottom: 1px solid var(--akuma-border);
+}
+
+.p-akuma__tab-btn {
+    padding: var(--spacing-md) var(--spacing-xl);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    cursor: pointer;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+    margin-bottom: -1px;
+}
+
+.p-akuma__tab-btn:hover,
+.p-akuma__tab-btn.is-active {
+    color: var(--akuma-purple);
+    border-bottom-color: var(--akuma-purple);
+}
+
+.p-akuma__tab-panel { display: none; }
+.p-akuma__tab-panel.is-active { display: block; }
+
+/* ========================================================
+ * L. コンテキストバナー（オーバーライド用）
+ * ====================================================== */
+
+.p-akuma__override-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: linear-gradient(135deg, rgba(157,78,221,0.15) 0%, rgba(198,40,40,0.08) 100%);
+    border: 1px solid var(--akuma-purple);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.p-akuma__override-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.p-akuma__override-text {
+    font-size: var(--font-size-sm);
+    color: #CE93D8;
+    line-height: var(--line-height-loose);
+}
+
+.p-akuma__override-text strong {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+/* ========================================================
+ * M. レスポンシブ
+ * ====================================================== */
+
+@media (max-width: 768px) {
+    .p-akuma__hero-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xl);
+    }
+
+    .p-akuma__hero-portrait-img,
+    .p-akuma__hero-portrait-placeholder {
+        width: 120px;
+        height: 120px;
+    }
+
+    .p-akuma__hero-name-jp {
+        font-size: var(--font-size-2xl);
+    }
+
+    .p-akuma__swot-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .p-akuma__tactics-grid,
+    .p-akuma__setup-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .p-akuma__matchup-grid {
+        grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+    }
+
+    .p-akuma__lethal-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .p-akuma__hero-tags {
+        gap: 4px;
+    }
+
+    .p-akuma__hero-tag {
+        font-size: 10px;
+        padding: 2px 8px;
+    }
+
+    .p-akuma__lethal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .p-akuma__matchup-grid {
+        grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+    }
+}
+
+/* ========================================================
+ * N. コマンドアイコン（combo.css / matchup.css と共通定義）
+ *    convertCommandToIcons() が出力するクラスのスタイル。
+ *    akuma.css は combo.css を読み込まないため、ここに再定義する。
+ * ====================================================== */
+
+/* レシピ全体のコンテナ */
+.p-combo__recipe-icons {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    line-height: 1;
+}
+
+/* ──────────────────────────────────────────
+ * 画像アイコン共通 (.c-cmd-img)
+ * ────────────────────────────────────────── */
+.c-cmd-img {
+    display: inline-block;
+    vertical-align: middle;
+    object-fit: contain;
+    image-rendering: auto;
+}
+
+/* 方向矢印 */
+.c-cmd-img--dir {
+    width: 24px;
+    height: 24px;
+}
+
+/* 溜め方向矢印 */
+.c-cmd-img--charge {
+    width: 24px;
+    height: 24px;
+    filter: hue-rotate(200deg) saturate(1.5) brightness(1.2);
+}
+
+/* ボタンアイコン */
+.c-cmd-img--btn {
+    width: 22px;
+    height: 22px;
+}
+
+/* 修飾アイコン（HOLD等）*/
+.c-cmd-img--mod {
+    width: 20px;
+    height: 20px;
+    opacity: 0.8;
+}
+
+/* 特殊（360等）*/
+.c-cmd-img--special {
+    width: 24px;
+    height: 24px;
+}
+
+/* シンボル（+・or・N等）*/
+.c-cmd-img--sym {
+    width: 20px;
+    height: 20px;
+}
+
+/* ──────────────────────────────────────────
+ * テキストバッジ (.c-cmd-badge)
+ * ────────────────────────────────────────── */
+.c-cmd-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 2px 6px;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    vertical-align: middle;
+}
+
+.c-cmd-badge--od      { background: rgba(255,145,0,0.20);  border-color: #FF9100; color: #FF9100; }
+.c-cmd-badge--nr      { background: rgba(0,176,255,0.20);  border-color: #00B0FF; color: #00B0FF; }
+.c-cmd-badge--cr      { background: rgba(0,176,255,0.15);  border-color: #00B0FF; color: #00B0FF;
+                         font-size: 10px; max-width: 9em; white-space: normal; text-align: center; line-height: 1.2; }
+.c-cmd-badge--jump    { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3); color: var(--text-muted); }
+.c-cmd-badge--walk    { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.25); color: var(--text-muted); }
+.c-cmd-badge--bj      { background: rgba(0,200,83,0.10);   border-color: #00C853; color: #00C853; }
+.c-cmd-badge--bs      { background: rgba(0,200,83,0.10);   border-color: #00C853; color: #00C853; }
+.c-cmd-badge--delay   { background: rgba(255,145,0,0.12);  border-color: #FF9100; color: #FF9100; }
+.c-cmd-badge--auto    { background: rgba(255,214,0,0.12);  border-color: #FFD600; color: #FFD600; font-size: 10px; }
+.c-cmd-badge--unknown { background: var(--bg-tertiary);    border-color: var(--border-color); color: var(--text-muted); }
+.c-cmd-badge--or      { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.2); color: var(--text-muted); font-style: italic; font-size: 10px; }
+
+/* ──────────────────────────────────────────
+ * 区切り・連続入力・修飾子
+ * ────────────────────────────────────────── */
+
+/* 技区切り → */
+.c-cmd-sep {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    padding: 0 6px;
+    vertical-align: middle;
+}
+
+/* 派生区切り ⇒ */
+.c-cmd-sep--derive {
+    color: var(--secondary);
+    opacity: 0.7;
+    font-size: 11px;
+    padding: 0 4px;
+}
+
+/* + 記号 */
+.c-cmd-plus {
+    color: var(--text-muted);
+    font-size: 11px;
+    padding: 0 1px;
+    vertical-align: middle;
+}
+
+/* ジャンプ修飾子 j. */
+.c-cmd-mod--jump {
+    color: var(--text-muted);
+    font-size: 11px;
+    vertical-align: middle;
+}
+
+/* 繰り返し ×N〜M */
+.c-cmd-repeat {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 1px 5px;
+    vertical-align: middle;
+}
+
+/* 丸括弧テキスト () — convertCommandToIcons が出力するグループ括弧 */
+.c-cmd-text {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    vertical-align: middle;
+}

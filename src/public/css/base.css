@@ -1,0 +1,494 @@
+/**
+ * Base Styles - SF6攻略サイト
+ * 
+ * @description
+ * リセットCSS、基本的なタイポグラフィ、レイアウトコンテナ、ユーティリティクラスを定義します。
+ * 
+ * @structure
+ * - リセットCSS
+ * - タイポグラフィ（h1-h6, p, a）
+ * - レイアウトコンテナ（l-container）
+ * - セクション（section）
+ * - ユーティリティクラス（u-*）
+ * - アニメーション定義
+ * - スクロールバーカスタマイズ
+ * 
+ * @naming-convention
+ * - l-*: レイアウトクラス
+ * - u-*: ユーティリティクラス
+ * 
+ * @updated 2026-02-09
+ */
+
+/* ==================== リセット ==================== */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    overflow-x: hidden;
+    transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+/* ==================== タイポグラフィ ==================== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 900;
+    line-height: var(--line-height-tight);
+    margin-bottom: var(--spacing-md);
+}
+
+h1 {
+    font-size: var(--font-size-4xl);
+}
+
+h2 {
+    font-size: var(--font-size-3xl);
+}
+
+h3 {
+    font-size: var(--font-size-2xl);
+}
+
+h4 {
+    font-size: var(--font-size-xl);
+}
+
+h5 {
+    font-size: var(--font-size-lg);
+}
+
+h6 {
+    font-size: var(--font-size-base);
+}
+
+p {
+    margin-bottom: var(--spacing-md);
+}
+
+a {
+    color: var(--secondary);
+    transition: color var(--transition-fast);
+    position: relative;
+    z-index: 99;
+}
+
+a:hover {
+    color: var(--secondary-hover);
+}
+
+/* ==================== リスト ==================== */
+ul,
+ol {
+    list-style: none;
+}
+
+/* ==================== 画像 ==================== */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ==================== ボタン ==================== */
+button {
+    font-family: var(--font-primary);
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+/* ==================== レイアウトコンテナ ==================== */
+.l-container {
+    max-width: var(--max-width-xl);
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.l-container--sm {
+    max-width: var(--max-width-sm);
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.l-container--md {
+    max-width: var(--max-width-md);
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.l-container--lg {
+    max-width: var(--max-width-lg);
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+/* ==================== セクション ==================== */
+.section {
+    padding: var(--spacing-3xl) 0;
+}
+
+.section-dark {
+    background: var(--bg-secondary);
+}
+
+.section-darker {
+    background: var(--bg-primary);
+}
+
+/* ==================== ユーティリティクラス ==================== */
+
+/* テキスト整列 */
+.u-text-left {
+    text-align: left;
+}
+
+.u-text-center {
+    text-align: center;
+}
+
+.u-text-right {
+    text-align: right;
+}
+
+/* フォントサイズ */
+.u-text-sm {
+    font-size: var(--font-size-sm);
+}
+
+.u-text-base {
+    font-size: var(--font-size-base);
+}
+
+.u-text-lg {
+    font-size: var(--font-size-lg);
+}
+
+.u-text-xl {
+    font-size: var(--font-size-xl);
+}
+
+.u-text-2xl {
+    font-size: var(--font-size-2xl);
+}
+
+.u-text-3xl {
+    font-size: var(--font-size-3xl);
+}
+
+/* フォントウェイト */
+.u-font-normal {
+    font-weight: 400;
+}
+
+.u-font-medium {
+    font-weight: 500;
+}
+
+.u-font-bold {
+    font-weight: 700;
+}
+
+.u-font-black {
+    font-weight: 900;
+}
+
+/* カラー */
+.u-text-primary {
+    color: var(--text-primary);
+}
+
+.u-text-secondary {
+    color: var(--text-secondary);
+}
+
+.u-text-muted {
+    color: var(--text-muted);
+}
+
+.u-text-accent {
+    color: var(--accent-gold);
+}
+
+.u-text-error {
+    color: var(--error);
+}
+
+.u-text-success {
+    color: var(--success);
+}
+
+/* 背景色 */
+.u-bg-primary {
+    background: var(--bg-primary);
+}
+
+.u-bg-secondary {
+    background: var(--bg-secondary);
+}
+
+.u-bg-tertiary {
+    background: var(--bg-tertiary);
+}
+
+/* スペーシング */
+.u-mt-0 {
+    margin-top: 0;
+}
+
+.u-mt-sm {
+    margin-top: var(--spacing-sm);
+}
+
+.u-mt-md {
+    margin-top: var(--spacing-md);
+}
+
+.u-mt-lg {
+    margin-top: var(--spacing-lg);
+}
+
+.u-mt-xl {
+    margin-top: var(--spacing-xl);
+}
+
+.u-mb-0 {
+    margin-bottom: 0;
+}
+
+.u-mb-sm {
+    margin-bottom: var(--spacing-sm);
+}
+
+.u-mb-md {
+    margin-bottom: var(--spacing-md);
+}
+
+.u-mb-lg {
+    margin-bottom: var(--spacing-lg);
+}
+
+.u-mb-xl {
+    margin-bottom: var(--spacing-xl);
+}
+
+.u-p-0 {
+    padding: 0;
+}
+
+.u-p-sm {
+    padding: var(--spacing-sm);
+}
+
+.u-p-md {
+    padding: var(--spacing-md);
+}
+
+.u-p-lg {
+    padding: var(--spacing-lg);
+}
+
+.u-p-xl {
+    padding: var(--spacing-xl);
+}
+
+/* 表示/非表示 */
+.u-hidden {
+    display: none;
+}
+
+.u-block {
+    display: block;
+}
+
+.u-inline {
+    display: inline;
+}
+
+.u-inline-block {
+    display: inline-block;
+}
+
+.u-flex {
+    display: flex;
+}
+
+.u-grid {
+    display: grid;
+}
+
+/* Flexbox */
+.u-flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.u-flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.u-flex-col {
+    flex-direction: column;
+}
+
+/* グリッド */
+.u-gap-sm {
+    gap: var(--spacing-sm);
+}
+
+.u-gap-md {
+    gap: var(--spacing-md);
+}
+
+.u-gap-lg {
+    gap: var(--spacing-lg);
+}
+
+.u-gap-xl {
+    gap: var(--spacing-xl);
+}
+
+/* ==================== レスポンシブユーティリティ ==================== */
+
+/* モバイル（デフォルト） */
+.u-hide-mobile {
+    display: none;
+}
+
+/* タブレット以上 */
+@media (min-width: 768px) {
+    .u-hide-mobile {
+        display: block;
+    }
+
+    .u-hide-tablet-up {
+        display: none;
+    }
+}
+
+/* デスクトップ以上 */
+@media (min-width: 1024px) {
+    .u-hide-desktop {
+        display: none;
+    }
+}
+
+/* ==================== アニメーション ==================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(30px, -30px) rotate(5deg);
+    }
+
+    50% {
+        transform: translate(-20px, 20px) rotate(-5deg);
+    }
+
+    75% {
+        transform: translate(20px, 15px) rotate(3deg);
+    }
+}
+
+/* アニメーションクラス */
+.u-animate-fade-in {
+    animation: fadeIn 0.5s ease;
+}
+
+.u-animate-fade-in-up {
+    animation: fadeInUp 0.8s ease both;
+}
+
+.u-animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+/* ==================== スクロールバー ==================== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-gold);
+    border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-orange);
+}
