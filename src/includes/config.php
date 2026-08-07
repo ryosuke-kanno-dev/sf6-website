@@ -6,12 +6,12 @@
 // サイト基本情報
 define('SITE_NAME', 'SF6攻略ガイド');
 define('SITE_DESCRIPTION', '初心者がマスターを目指し、特定のキャラ（豪鬼）を極めるまでの成長を支援する、データ駆動型攻略サイト');
-define('SITE_URL', 'http://localhost/SF6_WebSite/new-sf6-page');
+define('SITE_URL', 'http://localhost/SF6_WebSite');
 define('SITE_VERSION', '2.0.0');
 
 // パス設定
 define('BASE_PATH', __DIR__ . '/../..');
-define('DATA_PATH', BASE_PATH . '/data');
+define('DATA_PATH', BASE_PATH . '/src/data');
 define('INCLUDES_PATH', BASE_PATH . '/src/includes');
 
 // データファイルパス

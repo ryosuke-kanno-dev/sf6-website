@@ -1,0 +1,14 @@
+RewriteEngine On
+
+# ルートディレクトリへのアクセスは home として処理
+RewriteRule ^$ src/public/index.php?p=home [QSA,L]
+# css, img, js, videos などの静的ファイルへのアクセスは、自動的に src/public/ 内へルーティング
+RewriteRule ^(css|img|js|videos)/(.*)$ src/public/$1/$2 [L]
+
+# URLにアクセスされた際、もし対象がファイルやディレクトリとして実在していれば、そのまま処理
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# それ以外（URLパス等）は、すべて src/public/index.php にパラメータ ?p=... として転送
+RewriteRule ^(.*)$ src/public/index.php?p=$1 [QSA,L]

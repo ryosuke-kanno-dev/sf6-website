@@ -6,7 +6,7 @@
  */
 
 // 1. 設定ファイルの読み込み
-require_once __DIR__ . '/../src/includes/config.php';
+require_once __DIR__ . '/../includes/config.php';
 
 // 2. ルーティング処理
 // デフォルトページは 'home' (旧 index.php)
@@ -15,7 +15,7 @@ $page = isset($_GET['p']) && $_GET['p'] !== '' ? $_GET['p'] : 'home';
 // 不正なパス文字（ディレクトリトラバーサル攻撃など）を防ぐ
 $page = basename($page);
 
-$pagePath = __DIR__ . '/../src/pages/' . $page . '.php';
+$pagePath = __DIR__ . '/../pages/' . $page . '.php';
 
 // 3. ページの読み込み
 if (file_exists($pagePath)) {
