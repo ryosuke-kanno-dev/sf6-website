@@ -1,0 +1,306 @@
+/* ===================================================
+   パターンA：骨組み・レイアウト専用CSS
+   （色指定は含まれません）
+   =================================================== */
+
+/* 1. 基本リセット & コンテナ構造 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.app-container {
+  max-width: 1440px;
+  height: 100vh;
+  height: 100dvh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  border-left-width: 1px;
+  border-left-style: solid;
+  border-right-width: 1px;
+  border-right-style: solid;
+}
+
+/* 2. 共通ヘッダー */
+.site-header {
+  height: 55px;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  flex-shrink: 0;
+}
+
+.header-logo {
+  font-weight: bold;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+}
+
+.header-utility input {
+  padding: 6px 12px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+/* 3. メインヒーロー領域 */
+.hero-container {
+  flex: 1;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 0;
+}
+
+.hero-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-bottom-width: 3px;
+  border-bottom-style: solid;
+  padding-bottom: 4px;
+  text-align: center;
+}
+
+.menu-carousel {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  max-width: 1100px;
+  justify-content: center;
+}
+
+.carousel-arrow {
+  font-size: 1.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.menu-card {
+  flex: 1;
+  max-width: 190px;
+  height: 110px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-card .menu-num {
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.menu-card .menu-name {
+  font-size: 1.05rem;
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+.menu-card:hover, .menu-card.active {
+  transform: translateY(-4px);
+}
+
+/* サブメニュー展開エリア */
+.sub-menu-box {
+  width: 100%;
+  max-width: 600px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 6px;
+  padding: 12px 20px;
+  text-align: center;
+}
+
+.sub-menu-title {
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sub-menu-links {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.sub-menu-links a {
+  padding: 6px 14px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+/* ガイドバー */
+.guide-bar {
+  width: 100%;
+  max-width: 1100px;
+  border-width: 1px;
+  border-style: solid;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.guide-bar .icon {
+  font-weight: bold;
+}
+
+/* 4. 下部 セカンダリコンテンツ */
+.bottom-section {
+  height: 180px;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.section-box {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 6px;
+  padding: 12px 15px;
+  overflow-y: auto;
+}
+
+.section-title {
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  padding-bottom: 4px;
+}
+
+.info-list {
+  list-style: none;
+  font-size: 0.85rem;
+}
+
+.info-list li {
+  margin-bottom: 4px;
+}
+
+.char-tag-wrapper {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.char-tag {
+  border-width: 1px;
+  border-style: solid;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+/* フッター */
+.site-footer {
+  border-top-width: 1px;
+  border-top-style: solid;
+  padding: 10px;
+  text-align: center;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* 5. スマホ用レスポンシブスタイル */
+@media (max-width: 768px) {
+  html, body {
+    height: auto;
+    overflow: auto;
+  }
+  .app-container {
+    height: auto;
+    min-height: 100vh;
+  }
+  .hero-container {
+    padding: 20px 15px;
+    gap: 15px;
+  }
+  .hero-title {
+    font-size: 1.2rem;
+  }
+  .carousel-arrow {
+    display: none;
+  }
+  .carousel-track {
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 5px 0 10px 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+  .menu-card {
+    flex: 0 0 140px;
+    height: 95px;
+  }
+  .sub-menu-box {
+    padding: 10px 12px;
+  }
+  .sub-menu-links a {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+  }
+  .bottom-section {
+    height: auto;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 15px;
+  }
+  .section-box {
+    max-height: 200px;
+  }
+}

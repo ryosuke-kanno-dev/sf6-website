@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>【完成版・レスポンシブ対応】共通2カラムフレームワーク（パターン B）</title>
+  
+  <!-- 1. レイアウト・配置専用CSS -->
+  <link rel="stylesheet" href="css/layouts/pattern-b-layout.css">
+  
+  <!-- 2. カラーテーマ専用CSS（ここを差し替えて色を変更） -->
+  <link rel="stylesheet" href="css/themes/theme-cyber-purple.css">
+</head>
+<body>
+
+<div class="app-container">
+
+  <!-- 1. 共通上部ヘッダー -->
+  <header class="site-header">
+    <div class="header-logo">[ロゴ] SF6 PORTAL</div>
+    <nav>
+      <ul class="header-nav">
+        <li><a href="#">0. ホーム</a></li>
+        <li><a href="#">1. 初期設定</a></li>
+        <li><a href="#">2. トレモ練習</a></li>
+        <li><a href="#" class="active">3. キャラ攻略</a></li>
+        <li><a href="#">4. ロードマップ</a></li>
+        <li><a href="#">5. 用語集</a></li>
+      </ul>
+    </nav>
+    <div class="header-utility">
+      <input type="text" placeholder="キーワード検索...">
+    </div>
+
+    <!-- スマホ用メニューボタン -->
+    <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+  </header>
+
+  <!-- 2. メイン領域（2カラム） -->
+  <div class="main-wrapper">
+    
+    <!-- 左サイドバー -->
+    <aside class="sidebar" id="sidebar">
+      
+      <!-- ① メニューディレクトリ -->
+      <div class="sidebar-section">
+        <div class="sidebar-title">メニュー</div>
+        <ul class="sidebar-menu">
+          <li><a href="#">1. 初期設定・環境</a></li>
+          <li><a href="#">2. トレモ練習メニュー</a></li>
+          <li><a href="#" class="active">3. キャラクター攻略</a></li>
+          <li><a href="#">4. 上達ロードマップ</a></li>
+          <li><a href="#">5. 格ゲー用語集</a></li>
+        </ul>
+      </div>
+
+      <!-- ② 選択中キャラクター & 全画面選択ボタン -->
+      <div class="sidebar-section">
+        <div class="sidebar-title">選択中のキャラクター</div>
+        
+        <div class="current-char-card">
+          <div>
+            <div class="char-selected-label">SELECTED</div>
+            <div class="char-selected-name">ルーク (LUKE)</div>
+          </div>
+          <div class="char-icon-small">L</div>
+        </div>
+
+        <button class="char-open-btn" onclick="toggleCharModal(true)">
+          全30+キャラから変更する 🔍
+        </button>
+      </div>
+
+      <!-- ③ ページ内目次 -->
+      <div class="sidebar-section">
+        <div class="sidebar-title">ページ内目次</div>
+        <ul class="sidebar-menu">
+          <li><a href="#">・基本コンボレシピ</a></li>
+          <li><a href="#">・パニカン確定ルート</a></li>
+          <li><a href="#">・対空・確定反撃</a></li>
+        </ul>
+      </div>
+
+    </aside>
+
+    <!-- 右メイン領域 -->
+    <main class="content-area">
+      
+      <div class="page-header">
+        <div class="breadcrumb">ホーム &gt; キャラ攻略 &gt; ルーク</div>
+        <h1 class="page-title">3. ルーク (LUKE) 攻略まとめ</h1>
+        <p class="page-desc">ルークのコンボ・確定反撃・フレームデータの統合ガイド</p>
+      </div>
+
+      <!-- タブナビゲーション（※3. キャラ攻略などで表示） -->
+      <div class="tab-navigation">
+        <button class="tab-btn active">【自キャラ用】コンボ集</button>
+        <button class="tab-btn">【対策用】キャラ対策・確反</button>
+        <button class="tab-btn">【データ】フレーム表</button>
+      </div>
+
+      <!-- メインコンテンツ領域（各ページでパーツ差し替え） -->
+      <div class="content-block">
+        <p><strong>[メインコンテンツ表示エリア]</strong></p>
+        <p>ここに各ページの「動画プレイヤー」「コマンド表」「用語集リスト」などのパーツをはめ込みます。</p>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- 3. フッター -->
+  <footer class="site-footer">
+    &copy; 2026 SF6 攻略ポータル | ファンメイド非公式サイト
+  </footer>
+
+</div>
+
+
+<!-- ===================================================
+     全画面キャラクター選択モーダル本体
+     =================================================== -->
+<div class="char-modal-overlay" id="charModal">
+  <div class="char-modal-content">
+    
+    <div class="modal-header">
+      <div>
+        <h2 class="modal-title">CHARACTER SELECT</h2>
+        <p class="modal-desc">攻略情報を表示したいキャラクターを選択してください（全30+キャラ対応）</p>
+      </div>
+      <button class="modal-close-btn" onclick="toggleCharModal(false)">✕</button>
+    </div>
+
+    <div class="modal-char-grid">
+      <div class="modal-char-card selected"><div class="char-icon-placeholder">L</div>ルーク</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">R</div>リュウ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">C</div>春麗</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">G</div>ガイル</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">K</div>ケン</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">J</div>ジュリ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">M</div>マリーザ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">D</div>ディージェイ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">C</div>キャミィ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">E</div>エドモンド本田</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">B</div>ブランカ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">Z</div>ザンギエフ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">J</div>JP</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">D</div>ダルシム</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">L</div>リリー</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">M</div>マノン</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">R</div>ラシード</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">A</div>A.K.I.</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">E</div>エド</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">G</div>豪鬼</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">E</div>エレナ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">M</div>舞</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">T</div>テリー</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">B</div>ベガ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">+</div>DLCキャラ1</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">+</div>DLCキャラ2</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // サイドバー（スマホメニュー）開閉
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('is-open');
+    document.body.style.overflow = sidebar.classList.contains('is-open') ? 'hidden' : '';
+  }
+
+  // モーダル開閉JavaScript
+  function toggleCharModal(isOpen) {
+    const modal = document.getElementById('charModal');
+    if (isOpen) {
+      modal.classList.add('is-active');
+      document.getElementById('sidebar').classList.remove('is-open');
+    } else {
+      modal.classList.remove('is-active');
+    }
+  }
+</script>
+
+</body>
+</html>

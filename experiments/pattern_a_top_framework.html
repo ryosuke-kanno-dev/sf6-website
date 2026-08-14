@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>トップページ（パターン A：1画面ジャスト収容版）</title>
+  <style>
+    /* ===================================================
+       1. 基本リセット & 1画面（100vh）固定設定
+       =================================================== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html, body {
+      height: 100%;
+      overflow: hidden; /* ★画面全体のスクロールバーを排除 */
+      font-family: sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    /* 全体コンテナ (1画面いっぱいに収める) */
+    .app-container {
+      max-width: 1440px;
+      height: 100vh; /* ★高さ100% */
+      margin: 0 auto;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+    }
+
+    /* ===================================================
+       2. 共通ヘッダー (高さ固定)
+       =================================================== */
+    .site-header {
+      height: 55px;
+      border-bottom: 2px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      background-color: #fff;
+      flex-shrink: 0;
+    }
+    .header-logo { font-weight: bold; font-size: 1.1rem; }
+    .header-utility input { padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 0.85rem; }
+
+    /* ===================================================
+       3. メインヒーロー領域（SF6 FIGHTING GROUND風）
+       =================================================== */
+    .hero-container {
+      flex: 1; /* ★残りの高さを全域使う */
+      background-color: #eee;
+      border-bottom: 2px solid #333;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 0; /* Flex崩れ防止 */
+    }
+
+    /* タイトルロゴ */
+    .hero-title {
+      font-size: 1.6rem;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-bottom: 3px solid #333;
+      padding-bottom: 4px;
+    }
+
+    /* カルーセルエリア (スクロールバー無しの完璧な整列) */
+    .menu-carousel {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+      max-width: 1100px;
+      justify-content: center;
+    }
+    .carousel-arrow {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #888;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* ★修正ポイント: overflow-xを解除し、Flexで画面幅に自動フィッティング */
+    .carousel-track {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* 各メニュー項目（カード） */
+    .menu-card {
+      flex: 1; /* ★5枚のカードが画面幅に合わせて自動調整 */
+      max-width: 190px;
+      height: 110px;
+      border: 2px solid #ccc;
+      background-color: #fff;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: #333;
+    }
+    .menu-card .menu-num { font-size: 0.75rem; color: #888; font-weight: bold; }
+    .menu-card .menu-name { font-size: 1.05rem; font-weight: bold; margin-top: 4px; }
+
+    /* 選択中の強調 */
+    .menu-card:hover, .menu-card.active {
+      border-color: #000;
+      background-color: #e0e0e0;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    /* 中央下：サブメニュー展開エリア */
+    .sub-menu-box {
+      width: 100%;
+      max-width: 600px;
+      background-color: #fff;
+      border: 2px solid #333;
+      border-radius: 6px;
+      padding: 12px 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+    .sub-menu-title {
+      font-size: 0.75rem;
+      color: #888;
+      font-weight: bold;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .sub-menu-links {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .sub-menu-links a {
+      padding: 5px 14px;
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      color: #333;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+    .sub-menu-links a:hover {
+      background: #333;
+      color: #fff;
+    }
+
+    /* ガイドメッセージ */
+    .guide-bar {
+      width: 100%;
+      max-width: 1100px;
+      background-color: #333;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .guide-bar .icon { font-weight: bold; color: #aaa; }
+
+    /* ===================================================
+       4. 下部 セカンダリコンテンツ（お知らせ・注目）
+       =================================================== */
+    .bottom-section {
+      height: 180px; /* 高さ固定 */
+      padding: 15px 20px;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      background-color: #fff;
+      flex-shrink: 0;
+    }
+    .section-box {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 12px 15px;
+      background-color: #fafafa;
+      overflow-y: auto; /* 万が一溢れた場合のみ内部スクロール */
+    }
+    .section-title { font-size: 0.95rem; font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+
+    /* フッター */
+    .site-footer {
+      border-top: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #666;
+      background-color: #fafafa;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+
+  <!-- 1. 共通ヘッダー -->
+  <header class="site-header">
+    <div class="header-logo">[ロゴ] SF6 PORTAL</div>
+    <div class="header-utility">
+      <input type="text" placeholder="キーワード検索...">
+    </div>
+  </header>
+
+  <!-- 2. SF6本編風 ヒーローメインエリア（高さ可変でぴったり収まる） -->
+  <section class="hero-container">
+    
+    <div class="hero-title">FIGHTING PORTAL MENU</div>
+
+    <!-- カルーセルメニュー (1〜5：バーが出ないようFlex調整) -->
+    <div class="menu-carousel">
+      <div class="carousel-arrow">&laquo;</div>
+      
+      <div class="carousel-track">
+        <div class="menu-card" data-menu="1" onmouseover="updateMenu(1)">
+          <span class="menu-num">01. SETTINGS</span>
+          <span class="menu-name">初期設定</span>
+        </div>
+
+        <div class="menu-card" data-menu="2" onmouseover="updateMenu(2)">
+          <span class="menu-num">02. PRACTICE</span>
+          <span class="menu-name">トレモ練習</span>
+        </div>
+
+        <div class="menu-card active" data-menu="3" onmouseover="updateMenu(3)">
+          <span class="menu-num">03. CHARACTERS</span>
+          <span class="menu-name">キャラ攻略</span>
+        </div>
+
+        <div class="menu-card" data-menu="4" onmouseover="updateMenu(4)">
+          <span class="menu-num">04. ROADMAP</span>
+          <span class="menu-name">ロードマップ</span>
+        </div>
+
+        <div class="menu-card" data-menu="5" onmouseover="updateMenu(5)">
+          <span class="menu-num">05. GLOSSARY</span>
+          <span class="menu-name">用語集</span>
+        </div>
+      </div>
+
+      <div class="carousel-arrow">&raquo;</div>
+    </div>
+
+    <!-- 中央下：選択中メニューのサブ展開枠 -->
+    <div class="sub-menu-box">
+      <div class="sub-menu-title" id="subMenuTitle">3. キャラ攻略 - QUICK JUMP</div>
+      <div class="sub-menu-links" id="subMenuLinks"></div>
+    </div>
+
+    <!-- 最下部：ガイドメッセージ -->
+    <div class="guide-bar">
+      <span class="icon">💬</span>
+      <span id="guideText">全キャラクターのコンボレシピ・確定反撃・フレームデータを検索できます。</span>
+    </div>
+
+  </section>
+
+  <!-- 3. 下部サブエリア -->
+  <div class="bottom-section">
+    <div class="section-box">
+      <div class="section-title">最新更新情報 / 注目のコンボレシピ</div>
+      <ul style="list-style: none; font-size: 0.85rem; color: #555;">
+        <li style="margin-bottom: 4px;">・[2026/08/14] ルークの基本〜応用コンボ動画を更新しました</li>
+        <li style="margin-bottom: 4px;">・[2026/08/10] 初心者向け「1. 初期おすすめキーコンフィグ」を追加</li>
+        <li>・[2026/08/05] 格ゲー用語集に「パニカン」「ドライブリバーサル」を追加</li>
+      </ul>
+    </div>
+
+    <div class="section-box">
+      <div class="section-title">ピックアップキャラ</div>
+      <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+        <div style="border:1px solid #ccc; padding:4px 10px; background:#fff; font-size:0.8rem; border-radius:4px;">ルーク</div>
+        <div style="border:1px solid #ccc; padding:4px 10px; background:#fff; font-size:0.8rem; border-radius:4px;">リュウ</div>
+        <div style="border:1px solid #ccc; padding:4px 10px; background:#fff; font-size:0.8rem; border-radius:4px;">ケン</div>
+        <div style="border:1px solid #ccc; padding:4px 10px; background:#fff; font-size:0.8rem; border-radius:4px;">春麗</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. フッター -->
+  <footer class="site-footer">
+    &copy; 2026 SF6 攻略ポータル | ファンメイド非公式サイト
+  </footer>
+
+</div>
+
+<!-- JavaScript -->
+<script>
+  const menuData = {
+    1: {
+      title: "1. 初期設定・環境構想 - QUICK JUMP",
+      links: ["キーコンフィグ設定", "画面・グラフィック", "サウンド設定"],
+      guide: "グラフィック設定や入力遅延軽減など、スト6を始める前にやっておくべき必須設定です。"
+    },
+    2: {
+      title: "2. トレモ練習メニュー - QUICK JUMP",
+      links: ["対空練習", "確定反撃練習", "画面端抜け練習"],
+      guide: "トレーニングモードのダミー設定や、効率的な反復練習レシピをまとめています。"
+    },
+    3: {
+      title: "3. キャラ攻略 - QUICK JUMP",
+      links: ["ルーク", "リュウ", "ケン", "春麗", "全30+キャラ一覧..."],
+      guide: "全キャラクターのコンボレシピ・確定反撃・フレームデータを検索できます。"
+    },
+    4: {
+      title: "4. 上達ロードマップ - QUICK JUMP",
+      links: ["ルーキー〜シルバー", "ゴールド〜プラチナ", "ダイヤ〜マスター"],
+      guide: "自分のランクに合わせた目標・立ち回りの考え方・練習メニューのロードマップです。"
+    },
+    5: {
+      title: "5. 格ゲー用語集 - QUICK JUMP",
+      links: ["50音検索", "システム用語", "フレーム知識"],
+      guide: "「パニカン」「キャンセル」「フレーム」など、スト6や格ゲーで使われる用語の辞書です。"
+    }
+  };
+
+  function updateMenu(id) {
+    document.querySelectorAll('.menu-card').forEach(card => card.classList.remove('active'));
+    const activeCard = document.querySelector(`.menu-card[data-menu="${id}"]`);
+    if(activeCard) activeCard.classList.add('active');
+
+    const data = menuData[id];
+    document.getElementById('subMenuTitle').textContent = data.title;
+    document.getElementById('guideText').textContent = data.guide;
+
+    const linksContainer = document.getElementById('subMenuLinks');
+    linksContainer.innerHTML = '';
+    data.links.forEach(linkText => {
+      const a = document.createElement('a');
+      a.href = "#";
+      a.textContent = linkText;
+      linksContainer.appendChild(a);
+    });
+  }
+
+  updateMenu(3);
+</script>
+
+</body>
+</html>

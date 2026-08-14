@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>【完成版・レスポンシブ対応】共通2カラムフレームワーク（パターン B）</title>
+  <style>
+    /* ===================================================
+       1. 基本リセット & 共通レイアウト
+       =================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* 全体コンテナ (1440px 中央寄せ) */
+    .app-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      background-color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+    }
+
+    /* ===================================================
+       2. 共通上部ヘッダー
+       =================================================== */
+    .site-header {
+      height: 60px;
+      border-bottom: 2px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      position: sticky;
+      top: 0;
+      background-color: #fff;
+      z-index: 100;
+    }
+    .header-logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+      width: 220px;
+    }
+    .header-nav {
+      display: flex;
+      gap: 15px;
+      list-style: none;
+    }
+    .header-nav a {
+      text-decoration: none;
+      color: #666;
+      font-size: 0.9rem;
+      padding: 5px 8px;
+    }
+    .header-nav a.active {
+      color: #000;
+      font-weight: bold;
+      border-bottom: 2px solid #000;
+    }
+    .header-utility input {
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+
+    /* モバイル用ハンバーガーボタン（初期は非表示） */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    /* ===================================================
+       3. メインレイアウト（2カラム構造）
+       =================================================== */
+    .main-wrapper {
+      display: flex;
+      flex: 1;
+    }
+
+    /* 左固定サイドバー */
+    .sidebar {
+      width: 280px;
+      border-right: 1px solid #ccc;
+      padding: 20px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 60px;
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+      background-color: #fafafa;
+      transition: transform 0.3s ease;
+    }
+    .sidebar-section {
+      margin-bottom: 25px;
+    }
+    .sidebar-title {
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: #888;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* サイドバーメニュー */
+    .sidebar-menu {
+      list-style: none;
+    }
+    .sidebar-menu li a {
+      display: block;
+      padding: 8px 10px;
+      text-decoration: none;
+      color: #444;
+      font-size: 0.9rem;
+      border-radius: 4px;
+      margin-bottom: 2px;
+    }
+    .sidebar-menu li a:hover {
+      background-color: #eee;
+    }
+    .sidebar-menu li a.active {
+      background-color: #e0e0e0;
+      font-weight: bold;
+      color: #000;
+    }
+
+    /* 選択中キャラ表示ブロック & モーダル起動ボタン */
+    .current-char-card {
+      border: 2px solid #000;
+      padding: 10px;
+      background: #fff;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .char-open-btn {
+      width: 100%;
+      padding: 9px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .char-open-btn:hover {
+      background: #333;
+    }
+
+    /* 右メインコンテンツエリア */
+    .content-area {
+      flex: 1;
+      padding: 30px;
+      min-width: 0;
+    }
+    .breadcrumb {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 8px;
+    }
+    .page-header {
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    .page-title {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+
+    /* タブ切り替え（3. キャラ攻略などで使用） */
+    .tab-navigation {
+      display: flex;
+      gap: 10px;
+      border-bottom: 2px solid #ccc;
+      margin-bottom: 20px;
+    }
+    .tab-btn {
+      padding: 10px 20px;
+      border: none;
+      background: none;
+      font-size: 0.95rem;
+      font-weight: bold;
+      color: #666;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+    }
+    .tab-btn.active {
+      color: #000;
+      border-bottom-color: #000;
+    }
+
+    /* 中身のパーツ挿入用プレースホルダー */
+    .content-block {
+      border: 2px dashed #ccc;
+      padding: 50px;
+      text-align: center;
+      color: #888;
+      background-color: #fafafa;
+      border-radius: 4px;
+    }
+
+    /* フッター */
+    .site-footer {
+      border-top: 1px solid #ccc;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #666;
+      background-color: #fafafa;
+    }
+
+    /* ===================================================
+       4. 全画面キャラクター選択モーダル (フルスクリーン)
+       =================================================== */
+    .char-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .char-modal-overlay.is-active {
+      display: flex;
+    }
+    .char-modal-content {
+      width: 90%;
+      max-width: 1100px;
+      max-height: 85vh;
+      background: #fff;
+      border-radius: 8px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+    .modal-close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+    .modal-char-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+    .modal-char-card {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 15px 10px;
+      text-align: center;
+      cursor: pointer;
+      background-color: #fafafa;
+      transition: all 0.2s;
+    }
+    .modal-char-card:hover {
+      border-color: #000;
+      background-color: #eee;
+      transform: translateY(-2px);
+    }
+    .modal-char-card.selected {
+      border: 2px solid #000;
+      background-color: #e0e0e0;
+      font-weight: bold;
+    }
+    .char-icon-placeholder {
+      width: 50px;
+      height: 50px;
+      background: #ccc;
+      margin: 0 auto 8px auto;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    /* ===================================================
+       ★ 5. スマホ用レスポンシブスタイル (画面幅 768px 以下)
+       =================================================== */
+    @media (max-width: 768px) {
+      /* ヘッダー調整 */
+      .header-nav, .header-utility { display: none; } /* PC用ナビを非表示 */
+      .mobile-menu-btn { display: block; } /* ハンバーガーボタン表示 */
+
+      /* サイドバーを画面左外に隠し、ドロワー化 */
+      .sidebar {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 280px;
+        height: calc(100vh - 60px);
+        z-index: 90;
+        transform: translateX(-100%); /* 画面外へ待機 */
+        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+      }
+      .sidebar.is-open {
+        transform: translateX(0); /* メニュー開閉 */
+      }
+
+      /* コンテンツエリアを全幅表示 */
+      .content-area {
+        padding: 15px;
+      }
+      .page-title {
+        font-size: 1.4rem;
+      }
+
+      /* タブ表示を横スクロール対応 */
+      .tab-navigation {
+        justify-content: flex-start;
+        overflow-x: auto;
+      }
+      .tab-btn {
+        white-space: nowrap;
+      }
+
+      /* モーダル調整 */
+      .char-modal-content {
+        width: 95%;
+        padding: 15px;
+      }
+      .modal-char-grid {
+        grid-template-columns: repeat(3, 1fr); /* スマホは3列で見やすく */
+      }
+      .char-modal-overlay {
+       height: 100vh;
+       height: 100dvh; /* スマホのアドレスバー伸縮に対応 */
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+
+  <!-- 1. 共通上部ヘッダー -->
+  <header class="site-header">
+    <div class="header-logo">[ロゴ] SF6 PORTAL</div>
+    <nav>
+      <ul class="header-nav">
+        <li><a href="#">0. ホーム</a></li>
+        <li><a href="#">1. 初期設定</a></li>
+        <li><a href="#">2. トレモ練習</a></li>
+        <li><a href="#" class="active">3. キャラ攻略</a></li>
+        <li><a href="#">4. ロードマップ</a></li>
+        <li><a href="#">5. 用語集</a></li>
+      </ul>
+    </nav>
+    <div class="header-utility">
+      <input type="text" placeholder="キーワード検索...">
+    </div>
+
+    <!-- スマホ用メニューボタン -->
+    <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+  </header>
+
+  <!-- 2. メイン領域（2カラム） -->
+  <div class="main-wrapper">
+    
+    <!-- 左サイドバー -->
+    <aside class="sidebar" id="sidebar">
+      
+      <!-- 【復活】① メニューディレクトリ -->
+      <div class="sidebar-section">
+        <div class="sidebar-title">メニュー</div>
+        <ul class="sidebar-menu">
+          <li><a href="#">1. 初期設定・環境</a></li>
+          <li><a href="#">2. トレモ練習メニュー</a></li>
+          <li><a href="#" class="active">3. キャラクター攻略</a></li>
+          <li><a href="#">4. 上達ロードマップ</a></li>
+          <li><a href="#">5. 格ゲー用語集</a></li>
+        </ul>
+      </div>
+
+      <!-- ② 選択中キャラクター & 全画面選択ボタン -->
+      <div class="sidebar-section">
+        <div class="sidebar-title">選択中のキャラクター</div>
+        
+        <div class="current-char-card">
+          <div>
+            <div style="font-size: 0.7rem; color: #888;">SELECTED</div>
+            <div style="font-weight: bold; font-size: 1.05rem;">ルーク (LUKE)</div>
+          </div>
+          <div style="width:32px; height:32px; background:#eee; border:1px solid #ccc; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.8rem;">L</div>
+        </div>
+
+        <button class="char-open-btn" onclick="toggleCharModal(true)">
+          全30+キャラから変更する 🔍
+        </button>
+      </div>
+
+      <!-- ③ ページ内目次 -->
+      <div class="sidebar-section">
+        <div class="sidebar-title">ページ内目次</div>
+        <ul class="sidebar-menu">
+          <li><a href="#">・基本コンボレシピ</a></li>
+          <li><a href="#">・パニカン確定ルート</a></li>
+          <li><a href="#">・対空・確定反撃</a></li>
+        </ul>
+      </div>
+
+    </aside>
+
+    <!-- 右メイン領域 -->
+    <main class="content-area">
+      
+      <div class="page-header">
+        <div class="breadcrumb">ホーム &gt; キャラ攻略 &gt; ルーク</div>
+        <h1 class="page-title">3. ルーク (LUKE) 攻略まとめ</h1>
+        <p>ルークのコンボ・確定反撃・フレームデータの統合ガイド</p>
+      </div>
+
+      <!-- タブナビゲーション（※3. キャラ攻略で表示） -->
+      <div class="tab-navigation">
+        <button class="tab-btn active">【自キャラ用】コンボ集</button>
+        <button class="tab-btn">【対策用】キャラ対策・確反</button>
+        <button class="tab-btn">【データ】フレーム表</button>
+      </div>
+
+      <!-- メインコンテンツ領域（各ページでパーツ差し替え） -->
+      <div class="content-block">
+        <p><strong>[メインコンテンツ表示エリア]</strong></p>
+        <p>ここに各ページの「動画プレイヤー」「コマンド表」「用語集リスト」などのパーツをはめ込みます。</p>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- 3. フッター -->
+  <footer class="site-footer">
+    &copy; 2026 SF6 攻略ポータル | ファンメイド非公式サイト
+  </footer>
+
+</div>
+
+
+<!-- ===================================================
+     全画面キャラクター選択モーダル本体
+     =================================================== -->
+<div class="char-modal-overlay" id="charModal">
+  <div class="char-modal-content">
+    
+    <div class="modal-header">
+      <div>
+        <h2 style="font-size: 1.4rem;">CHARACTER SELECT</h2>
+        <p style="font-size: 0.85rem; color: #666;">攻略情報を表示したいキャラクターを選択してください（全30+キャラ対応）</p>
+      </div>
+      <button class="modal-close-btn" onclick="toggleCharModal(false)">✕</button>
+    </div>
+
+    <div class="modal-char-grid">
+      <div class="modal-char-card selected"><div class="char-icon-placeholder">L</div>ルーク</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">R</div>リュウ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">C</div>春麗</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">G</div>ガイル</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">K</div>ケン</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">J</div>ジュリ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">M</div>マリーザ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">D</div>ディージェイ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">C</div>キャミィ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">E</div>エドモンド本田</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">B</div>ブランカ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">Z</div>ザンギエフ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">J</div>JP</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">D</div>ダルシム</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">L</div>リリー</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">M</div>マノン</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">R</div>ラシード</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">A</div>A.K.I.</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">E</div>エド</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">G</div>豪鬼</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">E</div>エレナ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">M</div>舞</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">T</div>テリー</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">B</div>ベガ</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">+</div>DLCキャラ1</div>
+      <div class="modal-char-card"><div class="char-icon-placeholder">+</div>DLCキャラ2</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // サイドバー（スマホメニュー）開閉
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('is-open');
+    // 開いている時は背景スクロールを止める（任意）
+    document.body.style.overflow = sidebar.classList.contains('is-open') ? 'hidden' : '';
+  }
+
+  // モーダル開閉JavaScript
+  function toggleCharModal(isOpen) {
+    const modal = document.getElementById('charModal');
+    if (isOpen) {
+      modal.classList.add('is-active');
+      // サイドバーが開いていたら閉じる
+      document.getElementById('sidebar').classList.remove('is-open');
+    } else {
+      modal.classList.remove('is-active');
+    }
+  }
+</script>
+
+</body>
+</html>

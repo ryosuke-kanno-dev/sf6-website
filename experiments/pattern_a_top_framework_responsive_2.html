@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>トップページ（パターン A：レスポンシブ完全対応版）</title>
+  
+  <!-- 1. レイアウト・配置専用CSS -->
+  <link rel="stylesheet" href="css/layouts/pattern-a-layout.css">
+  
+  <!-- 2. カラーテーマ専用CSS（ここを差し替えて色を変更） -->
+  <link rel="stylesheet" href="css/themes/theme-cyber-purple.css">
+</head>
+<body>
+
+<div class="app-container">
+
+  <!-- 1. 共通ヘッダー -->
+  <header class="site-header">
+    <div class="header-logo">[ロゴ] SF6 PORTAL</div>
+    <div class="header-utility">
+      <input type="text" placeholder="検索...">
+    </div>
+  </header>
+
+  <!-- 2. SF6本編風 ヒーローメインエリア -->
+  <section class="hero-container">
+    
+    <div class="hero-title">FIGHTING PORTAL MENU</div>
+
+    <!-- カルーセルメニュー (スマホ時はフリック操作) -->
+    <div class="menu-carousel">
+      <div class="carousel-arrow">&laquo;</div>
+      
+      <div class="carousel-track">
+        <!-- ホバー(PC) & タップ(スマホ) 両対応 -->
+        <div class="menu-card" data-menu="1" onmouseover="updateMenu(1)" onclick="updateMenu(1)">
+          <span class="menu-num">01. SETTINGS</span>
+          <span class="menu-name">初期設定</span>
+        </div>
+
+        <div class="menu-card" data-menu="2" onmouseover="updateMenu(2)" onclick="updateMenu(2)">
+          <span class="menu-num">02. PRACTICE</span>
+          <span class="menu-name">トレモ練習</span>
+        </div>
+
+        <div class="menu-card active" data-menu="3" onmouseover="updateMenu(3)" onclick="updateMenu(3)">
+          <span class="menu-num">03. CHARACTERS</span>
+          <span class="menu-name">キャラ攻略</span>
+        </div>
+
+        <div class="menu-card" data-menu="4" onmouseover="updateMenu(4)" onclick="updateMenu(4)">
+          <span class="menu-num">04. ROADMAP</span>
+          <span class="menu-name">ロードマップ</span>
+        </div>
+
+        <div class="menu-card" data-menu="5" onmouseover="updateMenu(5)" onclick="updateMenu(5)">
+          <span class="menu-num">05. GLOSSARY</span>
+          <span class="menu-name">用語集</span>
+        </div>
+      </div>
+
+      <div class="carousel-arrow">&raquo;</div>
+    </div>
+
+    <!-- 中央下：選択中メニューのサブ展開枠 -->
+    <div class="sub-menu-box">
+      <div class="sub-menu-title" id="subMenuTitle">3. キャラ攻略 - QUICK JUMP</div>
+      <div class="sub-menu-links" id="subMenuLinks"></div>
+    </div>
+
+    <!-- 最下部：ガイドメッセージ -->
+    <div class="guide-bar">
+      <span class="icon">💬</span>
+      <span id="guideText">全キャラクターのコンボレシピ・確定反撃・フレームデータを検索できます。</span>
+    </div>
+
+  </section>
+
+  <!-- 3. 下部サブエリア -->
+  <div class="bottom-section">
+    <div class="section-box">
+      <div class="section-title">最新更新情報 / 注目のコンボレシピ</div>
+      <ul class="info-list">
+        <li>・[2026/08/14] ルークの基本〜応用コンボ動画を更新しました</li>
+        <li>・[2026/08/10] 初心者向け「1. 初期おすすめキーコンフィグ」を追加</li>
+        <li>・[2026/08/05] 格ゲー用語集に「パニカン」「ドライブリバーサル」を追加</li>
+      </ul>
+    </div>
+
+    <div class="section-box">
+      <div class="section-title">ピックアップキャラ</div>
+      <div class="char-tag-wrapper">
+        <div class="char-tag">ルーク</div>
+        <div class="char-tag">リュウ</div>
+        <div class="char-tag">ケン</div>
+        <div class="char-tag">春麗</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. フッター -->
+  <footer class="site-footer">
+    &copy; 2026 SF6 攻略ポータル | ファンメイド非公式サイト
+  </footer>
+
+</div>
+
+<!-- JavaScript -->
+<script>
+  const menuData = {
+    1: {
+      title: "1. 初期設定・環境構想 - QUICK JUMP",
+      links: ["キーコンフィグ設定", "画面・グラフィック", "サウンド設定"],
+      guide: "グラフィック設定や入力遅延軽減など、スト6を始める前にやっておくべき必須設定です。"
+    },
+    2: {
+      title: "2. トレモ練習メニュー - QUICK JUMP",
+      links: ["対空練習", "確定反撃練習", "画面端抜け練習"],
+      guide: "トレーニングモードのダミー設定や、効率的な反復練習レシピをまとめています。"
+    },
+    3: {
+      title: "3. キャラ攻略 - QUICK JUMP",
+      links: ["ルーク", "リュウ", "ケン", "春麗", "全30+キャラ一覧..."],
+      guide: "全キャラクターのコンボレシピ・確定反撃・フレームデータを検索できます。"
+    },
+    4: {
+      title: "4. 上達ロードマップ - QUICK JUMP",
+      links: ["ルーキー〜シルバー", "ゴールド〜プラチナ", "ダイヤ〜マスター"],
+      guide: "自分のランクに合わせた目標・立ち回りの考え方・練習メニューのロードマップです。"
+    },
+    5: {
+      title: "5. 格ゲー用語集 - QUICK JUMP",
+      links: ["50音検索", "システム用語", "フレーム知識"],
+      guide: "「パニカン」「キャンセル」「フレーム」など、スト6や格ゲーで使われる用語の辞書です。"
+    }
+  };
+
+  function updateMenu(id) {
+    document.querySelectorAll('.menu-card').forEach(card => card.classList.remove('active'));
+    const activeCard = document.querySelector(`.menu-card[data-menu="${id}"]`);
+    if(activeCard) activeCard.classList.add('active');
+
+    const data = menuData[id];
+    document.getElementById('subMenuTitle').textContent = data.title;
+    document.getElementById('guideText').textContent = data.guide;
+
+    const linksContainer = document.getElementById('subMenuLinks');
+    linksContainer.innerHTML = '';
+    data.links.forEach(linkText => {
+      const a = document.createElement('a');
+      a.href = "#";
+      a.textContent = linkText;
+      linksContainer.appendChild(a);
+    });
+  }
+
+  updateMenu(3);
+</script>
+
+</body>
+</html>
