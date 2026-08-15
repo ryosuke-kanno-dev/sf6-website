@@ -1,0 +1,52 @@
+/* --- combo-card.css --- */
+.combo-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+
+.combo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.combo-title {
+  color: var(--text-primary);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.combo-badge {
+  background-color: var(--bg-hero);
+  color: var(--accent-color);
+  border: 1px solid var(--border-color);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.combo-command {
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-color);
+  color: var(--accent-color);
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.combo-note {
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}

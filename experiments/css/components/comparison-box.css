@@ -1,0 +1,42 @@
+/* --- comparison-box.css --- */
+.comparison-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.comp-box {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.comp-box.pro {
+  border-top: 4px solid var(--accent-color); /* メリット側 */
+}
+
+.comp-box.con {
+  border-top: 4px solid var(--text-secondary); /* デメリット側 */
+}
+
+.comp-title {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.comp-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.comp-list li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}

@@ -9,7 +9,8 @@
   <link rel="stylesheet" href="css/layouts/pattern-a-layout.css">
   
   <!-- 2. カラーテーマ専用CSS（ここを差し替えて色を変更） -->
-  <link rel="stylesheet" href="css/themes/theme-cyber-purple.css">
+  <link rel="stylesheet" href="css/themes/theme-dynamic.css">
+  <link rel="stylesheet" href="css/components/components.css">
 </head>
 <body>
 
@@ -19,6 +20,10 @@
   <header class="site-header">
     <div class="header-logo">[ロゴ] SF6 PORTAL</div>
     <div class="header-utility">
+      <!-- テーマ切り替えボタンを追加 -->
+      <button id="theme-toggle-btn" class="theme-toggle-btn" type="button">
+        ☀️ Light
+      </button>
       <input type="text" placeholder="検索...">
     </div>
   </header>
@@ -157,6 +162,6 @@
 
   updateMenu(3);
 </script>
-
+<script src="js/theme-toggle.js"></script>
 </body>
 </html>

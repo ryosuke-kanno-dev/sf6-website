@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ページの説明文をここに書きます">
+  <title>ページのタイトル</title>
+  <link rel="stylesheet" href="css/components/components.css">
+</head>
+<body>
+  <!-- カードグリッド用 -->
+  <div class="card-grid">
+    <a href="#" class="grid-card">
+      <div class="grid-card-title"><span>🔰</span> スタートガイド</div>
+      <div class="grid-card-desc">動作環境やおすすめの操作タイプ（モダン/クラシック）、基本設定を解説。</div>
+    </a>
+    <a href="#" class="grid-card">
+      <div class="grid-card-title"><span>🎯</span> 練習法・トレモ</div>
+      <div class="grid-card-desc">レベル別のトレモ設定メニューと、効率的な上達練習法を一覧化。</div>
+    </a>
+  </div>
+
+  <!-- コンボ・技解説カード用 -->
+  <div class="combo-card">
+    <div class="combo-header">
+      <span class="combo-title">中央ノーゲージ基本コンボ</span>
+      <span class="combo-badge">難易度：★☆☆</span>
+    </div>
+    <div class="combo-command">しゃがみ弱P > 立ち弱P > 弱レイジングブル</div>
+    <p class="combo-note">※ヒット確認が容易な基本コンボ。ガード時は技を出し切らずに途中で止めましょう。</p>
+  </div>
+
+  <!-- 補足・注記ボックス用 -->
+  <div class="alert-box">
+    <div class="alert-title">💡 Point</div>
+    <div class="alert-content">
+      モダン操作の場合、簡易コマンドで使用すると威力が80%に補正されます。状況に応じてコマンド入力と使い分けるのがおすすめです。
+    </div>
+  </div>
+
+  <!-- ヒーローヘッダー -->
+  <div class="hero-header">
+    <h1 class="hero-header-title">🔰 スタートガイド</h1>
+    <p class="hero-header-desc">SF6の基本情報、おすすめ環境（デバイス/操作タイプ）、ゲーム内初期設定について解説します。</p>
+  </div>
+
+  <!-- データテーブル -->
+  <div class="table-container">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>技名</th>
+          <th>発生</th>
+          <th>ガード時</th>
+          <th>確定反撃</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>立ち中P</td>
+          <td>6F</td>
+          <td>-2F</td>
+          <td>なし</td>
+        </tr>
+        <tr>
+          <td>強レイジングブル</td>
+          <td>18F</td>
+          <td>-12F</td>
+          <td>しゃがみ中P等</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 検索・フィルターバー -->
+  <div class="filter-bar">
+    <input type="text" class="filter-input" placeholder="用語・技名で検索...">
+    <div class="filter-btn-group">
+      <button class="filter-btn active" type="button">すべて</button>
+      <button class="filter-btn" type="button">システム</button>
+      <button class="filter-btn" type="button">立ち回り</button>
+      <button class="filter-btn" type="button">フレーム</button>
+    </div>
+  </div>
+
+  <!-- アコーディオン -->
+  <details class="accordion-item">
+    <summary class="accordion-title">❓ キャンセルとは？</summary>
+    <div class="accordion-content">
+      通常技の攻撃モーションを途中で終了し、必殺技などの次の行動へ即座に移行させるテクニックのことです。
+    </div>
+  </details>
+  
+  <!-- ネクストステップ導線 -->
+  <div class="next-step-card">
+    <div class="next-step-info">
+      <div class="next-step-label">NEXT STEP</div>
+      <div class="next-step-title">基本設定が完了したら、効果的なトレーニング方法を確認しましょう</div>
+    </div>
+    <a href="practice.html" class="next-step-btn">練習法・トレモガイドへ →</a>
+  </div>
+
+  <!-- メリット・デメリット対比カード -->
+  <div class="comparison-container">
+    <div class="comp-box pro">
+      <div class="comp-title">メリット（良い点）</div>
+      <ul class="comp-list">
+        <li>・コマンド入力が圧倒的に速い</li>
+        <li>・対空やステップの反応速度が上がる</li>
+      </ul>
+    </div>
+    <div class="comp-box con">
+      <div class="comp-title">デメリット（気になる点）</div>
+      <ul class="comp-list">
+        <li>・価格が高く手に入りにくい</li>
+        <li>・操作の慣れに時間がかかる</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- キャラクター選択グリッド -->
+  <div class="char-select-grid">
+    <div class="char-select-card active">
+      <img src="assets/images/chars/luke.png" alt="ルーク" class="char-icon-img">
+      <div class="char-name">ルーク</div>
+    </div>
+    <div class="char-select-card">
+      <img src="assets/images/chars/jamie.png" alt="ジェイミー" class="char-icon-img">
+      <div class="char-name">ジェイミー</div>
+    </div>
+  </div>
+
+  <!-- タイムライン・ステップリスト -->
+  <div class="timeline-container">
+    <div class="timeline-item">
+      <div class="timeline-rank">STEP 1：ビギナー〜ブロンズ</div>
+      <div class="timeline-title">まず「負けない」基本守備を身につける</div>
+      <div class="timeline-desc">対空を出せるように練習し、無駄なジャンプを減らすことから始めます。</div>
+    </div>
+  </div>
+</body>
+</html>

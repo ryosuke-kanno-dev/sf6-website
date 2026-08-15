@@ -1,0 +1,25 @@
+/* --- hero-header.css --- */
+.hero-header {
+  background-color: var(--bg-hero);
+  border-bottom: 1px solid var(--border-color);
+  padding: 32px 24px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.hero-header-title {
+  color: var(--text-primary);
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  border-bottom: 2px solid var(--accent-color);
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+.hero-header-desc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-top: 8px;
+}
