@@ -1,0 +1,51 @@
+/* --- next-step-card.css --- */
+.next-step-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--accent-color);
+  border-left: 6px solid var(--accent-color);
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 32px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.next-step-info {
+  flex: 1;
+  min-width: 240px;
+}
+
+.next-step-label {
+  color: var(--accent-color);
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.next-step-title {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.next-step-btn {
+  background-color: var(--accent-color);
+  color: var(--btn-text-color);
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.next-step-btn:hover {
+  opacity: 0.9;
+  transform: translateX(4px);
+}

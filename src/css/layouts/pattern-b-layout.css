@@ -1,0 +1,373 @@
+/* ===================================================
+   パターンB：骨組み・レイアウト専用CSS
+   （色指定は含まれません）
+   =================================================== */
+
+/* 1. 基本リセット & 共通レイアウト */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+}
+
+.app-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  border-left-width: 1px;
+  border-left-style: solid;
+  border-right-width: 1px;
+  border-right-style: solid;
+}
+
+/* 2. 共通上部ヘッダー */
+.site-header {
+  height: 60px;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-logo {
+  font-weight: bold;
+  font-size: 1.2rem;
+  width: 220px;
+}
+
+.header-nav {
+  display: flex;
+  gap: 15px;
+  list-style: none;
+}
+
+.header-nav a {
+  text-decoration: none;
+  font-size: 0.9rem;
+  padding: 5px 8px;
+}
+
+.header-nav a.active {
+  font-weight: bold;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+}
+
+.header-utility input {
+  padding: 6px 12px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5px;
+}
+
+/* 3. メインレイアウト（2カラム構造） */
+.main-wrapper {
+  display: flex;
+  flex: 1;
+}
+
+/* 左固定サイドバー */
+.sidebar {
+  width: 280px;
+  border-right-width: 1px;
+  border-right-style: solid;
+  padding: 20px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 60px;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-section {
+  margin-bottom: 25px;
+}
+
+.sidebar-title {
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sidebar-menu {
+  list-style: none;
+}
+
+.sidebar-menu li a {
+  display: block;
+  padding: 8px 10px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  margin-bottom: 2px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.current-char-card {
+  border-width: 1px;
+  border-style: solid;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.char-selected-label {
+  font-size: 0.7rem;
+}
+
+.char-selected-name {
+  font-weight: bold;
+  font-size: 1.05rem;
+}
+
+.char-icon-small {
+  width: 32px;
+  height: 32px;
+  border-width: 1px;
+  border-style: solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.8rem;
+  border-radius: 4px;
+}
+
+.char-open-btn {
+  width: 100%;
+  padding: 9px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* 右メインコンテンツエリア */
+.content-area {
+  flex: 1;
+  padding: 30px;
+  min-width: 0;
+}
+
+.breadcrumb {
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+}
+
+.page-header {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+.page-title {
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+}
+
+.page-desc {
+  font-size: 0.9rem;
+}
+
+.tab-navigation {
+  display: flex;
+  gap: 10px;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-bottom-width: 3px;
+  border-bottom-style: solid;
+  border-bottom-color: transparent;
+  margin-bottom: -2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.content-block {
+  border-width: 2px;
+  border-style: dashed;
+  padding: 50px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.site-footer {
+  border-top-width: 1px;
+  border-top-style: solid;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+/* 4. モーダルレイアウト */
+.char-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.char-modal-overlay.is-active {
+  display: flex;
+}
+
+.char-modal-content {
+  width: 90%;
+  max-width: 1100px;
+  max-height: 85vh;
+  border-radius: 8px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  font-size: 1.4rem;
+}
+
+.modal-desc {
+  font-size: 0.85rem;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.modal-char-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.modal-char-card {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  padding: 15px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.modal-char-card:hover {
+  transform: translateY(-2px);
+}
+
+.char-icon-placeholder {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 8px auto;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* 5. スマホ用レスポンシブスタイル */
+@media (max-width: 768px) {
+  .header-nav, .header-utility { display: none; }
+  .mobile-menu-btn { display: block; }
+
+  .sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 280px;
+    height: calc(100vh - 60px);
+    z-index: 90;
+    transform: translateX(-100%);
+  }
+  .sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .content-area {
+    padding: 15px;
+  }
+  .page-title {
+    font-size: 1.4rem;
+  }
+
+  .tab-navigation {
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    white-space: nowrap;
+  }
+
+  .char-modal-content {
+    width: 95%;
+    padding: 15px;
+  }
+  .modal-char-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .char-modal-overlay {
+    height: 100vh;
+    height: 100dvh;
+  }
+}

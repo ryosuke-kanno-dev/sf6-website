@@ -1,0 +1,40 @@
+/* --- char-select-grid.css --- */
+.char-select-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.char-select-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.char-select-card:hover,
+.char-select-card.active {
+  border-color: var(--accent-color);
+  background-color: var(--bg-card-active);
+  transform: translateY(-2px);
+}
+
+.char-icon-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--bg-main);
+  margin-bottom: 6px;
+}
+
+.char-name {
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: bold;
+}

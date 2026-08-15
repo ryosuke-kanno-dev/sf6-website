@@ -1,0 +1,32 @@
+/* --- accordion.css --- */
+.accordion-item {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.accordion-title {
+  padding: 14px 16px;
+  color: var(--text-primary);
+  font-weight: bold;
+  cursor: pointer;
+  background-color: var(--bg-card);
+  transition: background-color 0.2s ease;
+  user-select: none;
+}
+
+.accordion-title:hover {
+  background-color: var(--bg-card-active);
+  color: var(--accent-color);
+}
+
+.accordion-content {
+  padding: 16px;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  background-color: var(--bg-main);
+}

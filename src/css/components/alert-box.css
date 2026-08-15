@@ -1,0 +1,33 @@
+/* --- alert-box.css --- */
+.alert-box {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--accent-color); /* 左側のアクセント線 */
+  border-radius: 0 8px 8px 0;
+  padding: 16px;
+  margin: 20px 0;
+}
+
+.alert-title {
+  color: var(--accent-color);
+  font-weight: bold;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.alert-content {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* 警告・危険用スタイル（バリエーション） */
+.alert-box.warning {
+  border-left-color: #e53e3e;
+}
+.alert-box.warning .alert-title {
+  color: #e53e3e;
+}
