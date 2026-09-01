@@ -85,7 +85,60 @@
   font-weight: bold;
   margin-bottom: 10px;
   letter-spacing: 1px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
+
+/* --- command-icon.css (command_converter.php が出力するアイコン表示) --- */
+.p-combo__recipe-icons {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+}
+
+.c-cmd-img {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin: 0 2px;
+  object-fit: contain;
+  display: inline-block;
+}
+
+.c-cmd-img--dir {
+  width: 20px;
+  height: 20px;
+}
+
+.c-cmd-badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--bg-hero);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin: 0 2px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  font-family: inherit;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.c-cmd-badge--unknown {
+  border-color: var(--text-secondary);
+  opacity: 0.8;
+}
+
+.c-cmd-text {
+  color: var(--text-secondary);
+  font-weight: normal;
+  margin: 0 1px;
+}
+
 
 .combo-note {
   color: var(--text-secondary);

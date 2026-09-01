@@ -1,7 +1,7 @@
 <?php
 // データベース接続設定
 $host = 'localhost';
-$dbname = 'sf6'; // 旧仕様書で指定されていたDB名
+$dbname = 'sf6';
 $username = 'root';
 $password = '';  // XAMPP等の初期パスワード（設定に合わせて変更してください）
 $charset = 'utf8mb4';
