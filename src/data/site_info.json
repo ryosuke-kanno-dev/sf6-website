@@ -1,0 +1,110 @@
+﻿{
+    "siteName": "SF6 攻略ガイド",
+    "siteDescription": "初心者がマスターを目指し、特定のキャラ（豪鬼）を極めるまでの成長を支援する、データ駆動型攻略サイト",
+    "siteUrl": "https://example.com/sf6-guide",
+    "version": "1.0.0",
+    "lastUpdated": "2026-01-10",
+    "hero": {
+        "badge": "Street Fighter 6",
+        "title": "最速で上達する<br>SF6完全攻略",
+        "subtitle": "初心者から上級者まで、あなたのランクに合わせた最適な練習法を提供\nデータ駆動で確実に強くなる",
+        "primaryCta": {
+            "text": "ランク診断を始める",
+            "url": "roadmap"
+        },
+        "secondaryCta": {
+            "text": "練習メニューを見る",
+            "url": "training"
+        }
+    },
+    "features": [
+        {
+            "number": "01",
+            "icon": "🎯",
+            "title": "目的別設計",
+            "description": "「上達したい」「練習したい」「調べたい」という目的から逆算。迷わず必要な情報にたどり着けます。",
+            "points": [
+                "直感的なナビゲーション",
+                "目的別カテゴリ分け",
+                "検索不要のUI設計"
+            ]
+        },
+        {
+            "number": "02",
+            "icon": "🔄",
+            "title": "回遊設計",
+            "description": "練習→コンボ→対策が自然につながる設計。「次に何をすべきか」が必ず提示されます。",
+            "points": [
+                "関連コンテンツ自動表示",
+                "学習フロー最適化",
+                "迷わない導線設計"
+            ]
+        },
+        {
+            "number": "03",
+            "icon": "⚡",
+            "title": "実践重視",
+            "description": "全ての情報は「実戦で使える」ことを最優先。トレモで完結せず、勝利に直結する内容だけを厳選。",
+            "points": [
+                "実戦データベース",
+                "プロ選手監修コンテンツ",
+                "成功条件の明確化"
+            ]
+        }
+    ],
+    "quickNav": [
+        {
+            "id": "roadmap",
+            "icon": "📈",
+            "title": "上達する",
+            "description": "ランク別ロードマップと弱点チェックで、次に何をすべきかが分かる",
+            "url": "roadmap",
+            "tags": [
+                "ランク診断",
+                "弱点分析",
+                "個別最適化"
+            ]
+        },
+        {
+            "id": "training",
+            "icon": "🎯",
+            "title": "練習する",
+            "description": "目的別のトレーニングメニュー。今日やることがすぐに決まる",
+            "url": "training",
+            "tags": [
+                "目的別メニュー",
+                "成功条件明確",
+                "次ステップ提示"
+            ]
+        },
+        {
+            "id": "database",
+            "icon": "📚",
+            "title": "調べる",
+            "description": "コンボ集・キャラ対策・用語集。知りたい情報がすぐに見つかる",
+            "url": "combo",
+            "tags": [
+                "コンボDB",
+                "対策情報",
+                "用語解説"
+            ]
+        },
+        {
+            "id": "character",
+            "icon": "🥋",
+            "title": "キャラ別",
+            "description": "使用キャラの徹底攻略。勝ち筋から立ち回りまで完全網羅",
+            "url": "character/",
+            "tags": [
+                "勝ち筋解説",
+                "ランク別",
+                "対策付き"
+            ]
+        }
+    ],
+    "socialLinks": {
+        "twitter": "https://twitter.com/sf6guide",
+        "youtube": "https://youtube.com/@sf6guide",
+        "discord": "https://discord.gg/sf6guide"
+    }
+}

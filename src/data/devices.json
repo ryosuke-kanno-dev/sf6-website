@@ -1,0 +1,107 @@
+[
+  {
+    "type":"gamepad",
+    "title":"ゲームパッド",
+    "merit":["価格がお手頃","別のゲームにも使用可能","すでに持っている人が多い","持ち運びが楽","海外プロが多く使っている"],
+    "demerit":["背面ボタンの有無やや十字キー部分の形で性能に差が出る"],
+    "recommend":["十字キーの部分はなるべく円になって繋がっている物がおすすめ"],
+    "controller":[
+      {
+        "name":"ホリ(HORI) ファイティングコマンダー OCTA",
+        "img":"hori-pad",
+        "amazon":"https://www.amazon.co.jp/dp/B09P9GQ126/?tag=sakidori_o_0012064-22",
+        "rakuten":"https://hb.afl.rakuten.co.jp/ichiba/14b4eeb6.f9556126.14b4eeb7.41d5a597/?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2Ffa61326832ea03b598f6fa1893991392%2F&amp;link_type=hybrid_url",
+        "pluspoint":["コンバーターなしでPS4,PS5で使用可能","アナログスティック(十字キー)がつぶれた形でスライド入力がしやすい","上面にボタンが6つありボタンが足らないなどが起こらない","価格が抑えめで手に入れやすい","ストリートファイター6とのコラボ商品も販売されている"],
+        "minuspoint":["背面ボタンがない","ボタンのクリック音が多少大きい"]
+      },
+      {
+        "name":"マイクロソフト(Microsoft) Xbox Elite ワイヤレス コントローラー",
+        "img":"xbox-pad",
+        "amazon":"https://www.amazon.co.jp/dp/B0BCVRV6CW/?tag=sakidori_o_0012064-22",
+        "rakuten":"https://hb.afl.rakuten.co.jp/ichiba/14b4eeb6.f9556126.14b4eeb7.41d5a597/?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2Ff0eeb915863c914a626d30ad05610405%2F&amp;link_type=hybrid_url",
+        "pluspoint":["標準的な形なので使いやすい","背面ボタンの拡張が可能","アナログスティックが円形で使いやすい"],
+        "minuspoint":["値段がまあまあ高い","PS4,PS5で使用するにはコンバーターが必要"]
+      },
+      {
+        "name":"ヴィクトリクス(Victrix) Pro BFG Wireless Gaming Controller",
+        "img":"victrix-pad",
+        "amazon":"https://www.amazon.co.jp/dp/B0CRZ7KFKZ/?tag=sakidori_o_0012064-22",
+        "rakuten":"https://hb.afl.rakuten.co.jp/ichiba/14b4eeb6.f9556126.14b4eeb7.41d5a597/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fpdpgaming-victrix%2F052-002-bk-jp%2F&amp;link_type=hybrid_url",
+        "pluspoint":["コンバーターなしでPS4,PS5で使用可能","自分のスタイルに合わせてカスタマイズが自由自在","背面ボタンも4つある","無線通信も可能","有名配信者が使用している"],
+        "minuspoint":["値段が高い","壊れやすいといわれている"]
+      }
+    ]
+  },
+  {
+    "type":"lever",
+    "title":"アーケードコントローラー(レバー)",
+    "merit":["ゲームセンターのような形でプレイすることができる","本体が丈夫で壊れにくい","見た目が良くオブジェクトとしても優秀","ゲームセンターなどと一緒"],
+    "demerit":["高い、安くても1万円くらいからでいいやつだと3万円くらいする","操作感になれにくい","基本格闘ゲームにしか使えない","重量がある"],
+    "recommend":["レバーのアケコンを買う場合まずは実際に触ってみるのがおすすめ"],
+    "controller":[
+      {
+        "name":"ホリ(HORI) ファイティングスティックα",
+        "img":"hori-lever",
+        "amazon":"https://www.amazon.co.jp/dp/B09P9L38GX/?tag=sakidori_o_0007257-22",
+        "rakuten":"https://hb.afl.rakuten.co.jp/ichiba/14b4eeb6.f9556126.14b4eeb7.41d5a597/?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2F0904f3a224aa699d044b5ca484e04385%2F%3Fscid%3Daf_pc_etc%26sc2id%3Daf_117_1_10001720&amp;link_type=hybrid_url",
+        "pluspoint":["コンバーターなしでPS4,PS5で使用可能","メンテナンスがしやすい","天板のシートを簡単に変更可能","SF6とのコラボ天板シートもある","ほかのに比べ少し軽い"],
+        "minuspoint":["USBケーブル収納時配線が丸見えになっていしまう"]
+      },
+      {
+        "name":"Victrix by PDP Pro FS Arcade Fight Stick for PlayStation 5",
+        "img":"victrix-lever",
+        "amazon":"https://af.moshimo.com/af/c/click?a_id=4452954&amp;p_id=170&amp;pc_id=185&amp;pl_id=27060&amp;url=https%3A%2F%2Fwww.amazon.co.jp%2Fdp%2FB0B3VQXXJR",
+        "rakuten":"https://af.moshimo.com/af/c/click?a_id=4452952&amp;p_id=54&amp;pc_id=54&amp;pl_id=27059&amp;url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2FVictrix%2520%25E3%2582%25A2%25E3%2582%25B1%25E3%2582%25B3%25E3%2583%25B3Victrix%2520by%2520PDP%2520Pro%2520FS%2520Arcade%2520Fight%2520Stick%2520for%2520PlayStation%25205%2520-%2520Purple%2F",
+        "pluspoint":["コンバーターなしでPS4,PS5で使用可能","メンテナンスがしやすい","有名配信者が使用している"],
+        "minuspoint":["ほかのに比べ一番大きく重量がある","値段が高い"]
+      },
+      {
+        "name":"Qanba（クァンバ） アケコン Obsidian2 Arcade Joystick",
+        "img":"qanba-lever",
+        "amazon":"https://www.amazon.co.jp/gp/search?ie=UTF8&amp;keywords=%E3%82%AF%E3%82%A1%E3%83%B3%E3%83%90+%E3%82%AA%E3%83%96%E3%82%B7%E3%83%87%E3%82%A3%E3%82%A2%E3%83%B3+%E3%82%A2%E3%83%BC%E3%82%B1%E3%83%BC%E3%83%89+%E3%82%B8%E3%83%A7%E3%82%A4%E3%82%B9%E3%83%86%E3%82%A3%E3%83%83%E3%82%AF&amp;tag=rviews02-22&amp;index=blended&amp;linkCode=ure&amp;creative=6339",
+        "rakuten":"https://hb.afl.rakuten.co.jp/hgc/g00uh296.b0t4j73b.g00uh296.b0t4kdc8/Rinker_t_20240108131053?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbaikeerzhenkeai%2Fakekon2023%2F&amp;m=http%3A%2F%2Fm.rakuten.co.jp%2Fbaikeerzhenkeai%2Fi%2F10000018%2F&amp;rafcid=wsc_i_is_1072519005678805351",
+        "pluspoint":["コンバーターなしでPS4,PS5で使用可能","サイズや重量は真ん中くらい","レバーを収納する場所がある"],
+        "minuspoint":["メンテナンスがほかのに比べしにくい"]
+      }
+    ]
+  },
+  {
+    "type":"leverless",
+    "title":"レバーレスコントローラー",
+    "merit":["日本のプロで一番の使用率","コマンド入力が早い","キーボードと形が似ているのでfpsなど経験がある人には触りやすい","様々な簡易入力が存在する"],
+    "demerit":["デメリットは基本アーケードコントローラーと同様","高い、安くても1万円くらいからでいいやつだと3万円くらいする","基本格闘ゲームにしか使えない"],
+    "recommend":["ボタン数やカスタマイズ性、ボタンの種類などで差が出る"],
+    "controller":[
+      {
+        "name":"Hit Box レバーレスゲームコントローラー",
+        "img":"hitbox-leverless",
+        "amazon":"https://www.amazon.co.jp/dp/B078GBDZX6/?tag=sakidori_o_0007257-22",
+        "rakuten":"https://hb.afl.rakuten.co.jp/ichiba/14b4eeb6.f9556126.14b4eeb7.41d5a597/?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2F00dae43e18f04b768e1dc81f3868c1d5%2F%3Fscid%3Daf_pc_etc%26sc2id%3Daf_117_1_10001720&amp;link_type=hybrid_url",
+        "pluspoint":["コンバーターなしでPS4,PS5で使用可能","有名プロゲーマーが使用","公式から穴をあけずボタンを追加できる「COMBO Extensions」が発売"],
+        "minuspoint":["ほかに比べメンテナンスがしにくい","本体とケーブルが特殊接続"]
+      },
+      {
+        "name":"パンクワークショップ(PUNK WORKSHOP) ",
+        "img":"punkworkshop-leverless",
+        "official":"https://punkworkshop.jp/products/ultrabox-brook",
+        "pluspoint":["有名プロゲーマーが使用","ボタン数が多い","メンテナンスがしやすい","天板のシートを変更可能"],
+        "minuspoint":["PS対応だと値段が高い","PC限定版だとPSで使用するにはコンバーターが必要になる"]
+      },
+      {
+        "name":"ヴィクトリクス(Victrix) Victrix Pro FS-12 052-008-BTN",
+        "img":"victrix-leverless",
+        "amazon":"https://www.amazon.co.jp/dp/B0B3VQKGHW/?tag=sakidori_o_0007257-22",
+        "rakuten":"https://hb.afl.rakuten.co.jp/ichiba/14b4eeb6.f9556126.14b4eeb7.41d5a597/?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2Fe6bca5a7c6a1cc4ed8a5cd46c93867c5%2F%3Fscid%3Daf_pc_etc%26sc2id%3Daf_117_1_10001720&amp;link_type=hybrid_url",
+        "pluspoint":["コンバーターなしでPS4,PS5で使用可能","メンテナンスがしやすい"],
+        "minuspoint":["値段が高い","カスタマイズ性がない","ボタンの増設ができない"]
+      }
+    ]
+  },
+  {
+    "type":"keyboard",
+    "title":"キーボード",
+    "merit":["PCを持っていれば持っている","レバーレスよりキーボードの方が馴染む人もいる","キーが多く設定しやすい"],
+    "demerit":["操作性はレバーレスコントローラーの基本下位互換になってしまう","特定の入力方法がしにくい"],
+    "recommend":["ゲーミングキーボードなら基本なんでも平気だと思います。","ラピッドトリガー搭載だと少し使用感が変わるかも"]
+  }
+]
