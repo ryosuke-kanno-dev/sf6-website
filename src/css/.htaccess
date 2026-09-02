@@ -1,0 +1,46 @@
+# =====================================================
+# SF6 PORTAL - src/.htaccess
+# クリーンURL設定 & セキュリティ制御
+# =====================================================
+RewriteEngine On
+
+# --- ① .php付きURLへ直接アクセスされた場合、拡張子なしURLへ301リダイレクト ---
+#     例: /character.php?char=luke -> /character?char=luke
+#     （SEO対策：重複コンテンツ防止・URLの正規化）
+RewriteCond %{THE_REQUEST} \s/+(.+)\.php[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# --- ② 拡張子なしURLでアクセスされた場合、実体の.phpファイルへ内部的に書き換える ---
+#     例: /character?char=luke -> character.php?char=luke（ブラウザのURLは変わらない）
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+# =====================================================
+# セキュリティ設定
+# =====================================================
+
+# ディレクトリ一覧表示を禁止
+Options -Indexes
+
+# 機密ファイル拡張子（設定・ドキュメント・ログ等）への直接アクセスを禁止
+<FilesMatch "\.(md|sql|log|ini|bak|env|config)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# .env ファイル（今後追加された場合の保険）への直接アクセスを禁止
+<Files ".env">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</Files>

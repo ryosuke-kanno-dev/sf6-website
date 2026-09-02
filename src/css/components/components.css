@@ -331,6 +331,41 @@
   background-color: var(--bg-main);
 }
 
+/* --- glossary-content.css (glossary.json content ブロック描画用) --- */
+.glossary-desc {
+  color: var(--text-primary);
+  font-weight: bold;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.glossary-block-title {
+  color: var(--text-primary);
+  font-weight: bold;
+  font-size: 0.88rem;
+  margin: 14px 0 6px;
+}
+
+.glossary-block-text {
+  margin-bottom: 10px;
+}
+
+.glossary-block-list {
+  margin: 0 0 10px;
+  padding-left: 1.4em;
+}
+
+.glossary-block-list li {
+  margin-bottom: 4px;
+}
+
+/* --- training-block-heading.css (training.php の ■見出し行) --- */
+.training-block-heading {
+  color: var(--text-primary);
+  display: inline-block;
+  margin-top: 4px;
+}
+
 /* --- next-step-card.css --- */
 .next-step-card {
   background-color: var(--bg-card);
@@ -508,4 +543,106 @@
   color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.6;
+}
+
+/* --- char-modal.css (キャラクター選択モーダル：構造・配置) --- */
+.char-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.char-modal-overlay.is-active {
+  display: flex;
+}
+
+.char-modal-content {
+  width: 100%;
+  max-width: 900px;
+  max-height: 85vh;
+  border-radius: 10px;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 0 0 4px;
+}
+
+.modal-desc {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+}
+
+.modal-char-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.modal-char-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 14px 8px;
+  text-align: center;
+  font-size: 0.85rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.char-icon-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.char-thumb-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border-color);
+}
+
+@media (max-width: 768px) {
+  .modal-char-grid {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  }
 }

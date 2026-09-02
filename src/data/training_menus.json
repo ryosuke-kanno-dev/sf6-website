@@ -1,64 +1,52 @@
-﻿{
-    "menus": [
-        {
-            "id": "anti-air-001",
-            "title": "対空練習",
-            "category": "basic",
-            "category_label": "基礎操作",
-            "rank": "beginner",
-            "rank_label": "ビギナー〜ブロンズ",
-            "duration": 5,
-            "objective": "ジャンプ攻撃を落とす基礎技術を習得",
-            "dummy_setting": "■ダミー設定\nアクション: ランダムジャンプ攻撃\n距離: 中距離\n\n■練習方法\n1. ジャンプを見てから対空技を出す\n2. 10回中7回成功を目標",
-            "tips": "・音で覚える（ジャンプの効果音）\n・早めに技を振る意識\n・昇龍拳が難しければまず大パンチから",
-            "related_matchup": "matchup?focus=anti-air",
-            "tags": [
-                "初心者",
-                "必須",
-                "5分以内"
-            ],
-            "problem": "defense",
-            "difficulty": 1
-        },
-        {
-            "id": "throw-escape-001",
-            "title": "投げ抜け練習",
-            "category": "defense",
-            "category_label": "防御練習",
-            "rank": "beginner",
-            "rank_label": "ビギナー〜ブロンズ",
-            "duration": 5,
-            "objective": "投げられる前に投げ抜けできるようになる",
-            "dummy_setting": "■ダミー設定\nアクション: レコード - 投げ\n距離: 密着\n\n■練習方法\n1. 投げのモーションを見る\n2. LP+LKを同時押し\n3. 10回中8回成功を目標",
-            "tips": "・投げのモーションは相手が手を伸ばす\n・LP+LKは「遅らせグラップ」を推奨\n・早すぎると技が出てしまう",
-            "related_matchup": "matchup?focus=throw",
-            "tags": [
-                "初心者",
-                "必須",
-                "5分以内"
-            ],
-            "problem": "defense",
-            "difficulty": 1
-        },
-        {
-            "id": "oki-001",
-            "title": "起き攻め練習",
-            "category": "offense",
-            "category_label": "攻め練習",
-            "rank": "silver",
-            "rank_label": "シルバー〜ゴールド",
-            "duration": 10,
-            "objective": "ダウンを取った後の攻撃を重ねる",
-            "dummy_setting": "■ダミー設定\nアクション: レコード - ダウン\n受け身: ランダム\n\n■練習方法\n1. ダウンさせる\n2. 起き上がりに技を重ねる\n3. ガードorヒットを確認",
-            "tips": "・受け身のタイミングは3パターン\n・中段と下段を使い分ける\n・ドライブインパクトも有効",
-            "related_matchup": "matchup?focus=okizeme",
-            "tags": [
-                "中級",
-                "攻め",
-                "10分"
-            ],
-            "problem": "finish",
-            "difficulty": 2
-        }
-    ]
+{
+  "menus": [
+    {
+      "id": "anti-air-001",
+      "title": "対空練習",
+      "category": "basic",
+      "category_label": "基礎操作",
+      "rank": "beginner",
+      "rank_label": "ビギナー〜ブロンズ",
+      "duration": 5,
+      "objective": "ジャンプ攻撃を落とす基礎技術を習得",
+      "dummy_setting": "■ダミー設定\nアクション: ランダムジャンプ攻撃\n距離: 中距離\n\n■練習方法\n1. ジャンプを見てから対空技を出す\n2. 10回中7回成功を目標",
+      "tips": "・音で覚える（ジャンプの効果音）\n・早めに技を振る意識\n・昇龍拳が難しければまず大パンチから",
+      "related_matchup": "matchup?focus=anti-air",
+      "tags": ["初心者", "必須", "5分以内"],
+      "problem": "defense",
+      "difficulty": 1
+    },
+    {
+      "id": "throw-escape-001",
+      "title": "投げ抜け練習",
+      "category": "defense",
+      "category_label": "防御練習",
+      "rank": "beginner",
+      "rank_label": "ビギナー〜ブロンズ",
+      "duration": 5,
+      "objective": "投げられる前に投げ抜けできるようになる",
+      "dummy_setting": "■ダミー設定\nアクション: レコード - 投げ\n距離: 密着\n\n■練習方法\n1. 投げのモーションを見る\n2. LP+LKを同時押し\n3. 10回中8回成功を目標",
+      "tips": "・投げのモーションは相手が手を伸ばす\n・LP+LKは「遅らせグラップ」を推奨\n・早すぎると技が出てしまう",
+      "related_matchup": "matchup?focus=throw",
+      "tags": ["初心者", "必須", "5分以内"],
+      "problem": "defense",
+      "difficulty": 1
+    },
+    {
+      "id": "oki-001",
+      "title": "起き攻め練習",
+      "category": "offense",
+      "category_label": "攻め練習",
+      "rank": "silver",
+      "rank_label": "シルバー〜ゴールド",
+      "duration": 10,
+      "objective": "ダウンを取った後の攻撃を重ねる",
+      "dummy_setting": "■ダミー設定\nアクション: レコード - ダウン\n受け身: ランダム\n\n■練習方法\n1. ダウンさせる\n2. 起き上がりに技を重ねる\n3. ガードorヒットを確認",
+      "tips": "・受け身のタイミングは3パターン\n・中段と下段を使い分ける\n・ドライブインパクトも有効",
+      "related_matchup": "matchup?focus=okizeme",
+      "tags": ["中級", "攻め", "10分"],
+      "problem": "finish",
+      "difficulty": 2
+    }
+  ]
 }
