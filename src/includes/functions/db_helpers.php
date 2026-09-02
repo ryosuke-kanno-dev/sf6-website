@@ -34,6 +34,7 @@ function getCombosByCharId($pdo, $char_id) {
 //    frame.guard_adv は VARCHAR（'-3' 等の数値のほか 'D'（ダウン）や '—'（該当なし）を含む）のため、
 //    CAST(... AS SIGNED) で数値変換した上で比較・ソートする。
 //    'D' や '—' は数値変換すると 0 になるため、この条件では自然に除外される。
+//    ASC ソートにより、マイナスが大きい（＝確定反撃が取りやすい）技から順に並ぶ（例: -12, -8, -3...）。
 function getPunishableFramesByCharId($pdo, $char_id) {
     $stmt = $pdo->prepare(
         "SELECT * FROM frame
@@ -43,4 +44,38 @@ function getPunishableFramesByCharId($pdo, $char_id) {
     );
     $stmt->execute([$char_id]);
     return $stmt->fetchAll();
+}
+
+// 5. 指定キャラクターの全技フレームデータを取得（通常技・特殊技・必殺技・SA すべて）
+//    frame.sort_order は「100きざみ推奨」の表示順カラム（frame テーブル定義書より）のため、これで整列する。
+function getFrameDataByCharId($pdo, $char_id) {
+    $stmt = $pdo->prepare("SELECT * FROM frame WHERE character_id = ? ORDER BY sort_order ASC");
+    $stmt->execute([$char_id]);
+    return $stmt->fetchAll();
+}
+
+// 6. キャラクターの対策総評（matchup）を取得（character_id につき1行）
+function getMatchupByCharId($pdo, $char_id) {
+    $stmt = $pdo->prepare("SELECT * FROM matchup WHERE character_id = ?");
+    $stmt->execute([$char_id]);
+    $result = $stmt->fetch();
+    return $result !== false ? $result : null;
+}
+
+// 7. キャラクターに対する対策コラム一覧（matchup_guides）を取得
+//    opponent_char_id ＝「このガイドが対策として書かれている対象キャラ」のID。
+//    sort_order で整列（同カラム内での表示順もこれに従う想定）。
+function getMatchupGuidesByCharId($pdo, $char_id) {
+    $stmt = $pdo->prepare("SELECT * FROM matchup_guides WHERE opponent_char_id = ? ORDER BY sort_order ASC");
+    $stmt->execute([$char_id]);
+    return $stmt->fetchAll();
+}
+
+// 8. 上記2つ（総評＋コラム一覧）をまとめて取得するオーケストレーター関数
+//    ['matchup' => 総評データ（無ければ null）, 'guides' => コラム配列]
+function getMatchupGuideByCharId($pdo, $char_id) {
+    return [
+        'matchup' => getMatchupByCharId($pdo, $char_id),
+        'guides'  => getMatchupGuidesByCharId($pdo, $char_id),
+    ];
 }

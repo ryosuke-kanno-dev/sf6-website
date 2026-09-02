@@ -139,7 +139,6 @@
   margin: 0 1px;
 }
 
-
 .combo-note {
   color: var(--text-secondary);
   font-size: 0.88rem;
@@ -544,7 +543,6 @@
   font-size: 0.9rem;
   line-height: 1.6;
 }
-
 /* --- char-modal.css (キャラクター選択モーダル：構造・配置) --- */
 .char-modal-overlay {
   display: none;
@@ -645,4 +643,30 @@
   .modal-char-grid {
     grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   }
+}
+
+/* --- frame-advantage.css (フレーム硬直差の色分け表示) --- */
+.frame-plus {
+  color: #2e9e5b;
+  font-weight: bold;
+}
+
+.frame-minus {
+  color: #e5484d;
+  font-weight: bold;
+}
+
+/* --- tab-content.css (character.php のタブ切り替え表示) --- */
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  animation: tabFadeIn 0.2s ease;
+}
+
+@keyframes tabFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
