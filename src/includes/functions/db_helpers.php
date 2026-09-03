@@ -10,6 +10,33 @@ if (!function_exists('h')) {
     }
 }
 
+// Parsedown（Markdownパーサー）の読み込み
+require_once __DIR__ . '/Parsedown.php';
+
+/**
+ * DB内のMarkdown/プレーンテキスト（combos.memo, matchup.overview 等）を安全にHTML変換する共通関数。
+ * - setSafeMode(true)   : 本文中の生HTMLタグをエスケープする（XSS対策）
+ * - setBreaksEnabled(true): 空行を挟まない単一の改行（実改行コード）も <br> に変換する
+ * - Parsedownに渡す前に、DBに実改行ではなく文字列としての "\n"（バックスラッシュ+n）が
+ *   保存されているケースを実改行に正規化する（CSVインポート等でエスケープシーケンスが
+ *   文字としてそのまま登録されてしまうケースへの対処）。
+ */
+if (!function_exists('renderMarkdown')) {
+    function renderMarkdown(?string $text): string {
+        if ($text === null || $text === '') {
+            return '';
+        }
+
+        // 文字列としての "\r\n" / "\n" / "\r"（バックスラッシュ+文字）を実改行に正規化
+        $normalized = str_replace(['\\r\\n', '\\n', '\\r'], "\n", $text);
+
+        $parsedown = Parsedown::instance();
+        $parsedown->setSafeMode(true);
+        $parsedown->setBreaksEnabled(true);
+        return $parsedown->text($normalized);
+    }
+}
+
 // 1. 全キャラクター一覧の取得
 function getAllCharacters($pdo) {
     $stmt = $pdo->query("SELECT * FROM characters ORDER BY sort_order ASC");

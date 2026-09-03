@@ -647,12 +647,12 @@
 
 /* --- frame-advantage.css (フレーム硬直差の色分け表示) --- */
 .frame-plus {
-  color: #2e9e5b;
+  color: #22c55e;
   font-weight: bold;
 }
 
 .frame-minus {
-  color: #e5484d;
+  color: #ef4444;
   font-weight: bold;
 }
 

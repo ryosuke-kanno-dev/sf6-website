@@ -50,6 +50,41 @@ if (!function_exists('translateDifficulty')) {
 }
 
 /**
+ * combos を「中央コンボ」「画面端コンボ」「パニカン・確定反撃始動」の3カテゴリに分類する。
+ * 優先順位：hit_type='Punish' を最優先（確定反撃・パニカン始動という文脈が最も重要なため）、
+ * 次に position='Corner'、それ以外は「中央コンボ」扱い。
+ */
+if (!function_exists('comboCategoryKey')) {
+    function comboCategoryKey(array $combo): string {
+        if (($combo['hit_type'] ?? '') === 'Punish') {
+            return 'punish';
+        }
+        if (($combo['position'] ?? '') === 'Corner') {
+            return 'corner';
+        }
+        return 'center';
+    }
+}
+
+if (!function_exists('comboCategoryLabel')) {
+    function comboCategoryLabel(string $key): string {
+        $map = [
+            'center' => '中央コンボ',
+            'corner' => '画面端コンボ',
+            'punish' => 'パニカン・確定反撃始動',
+        ];
+        return $map[$key] ?? $key;
+    }
+}
+
+if (!function_exists('comboCategoryOrder')) {
+    function comboCategoryOrder(): array {
+        return ['center', 'corner', 'punish'];
+    }
+}
+
+
+/**
  * frame.guard_adv / frame.hit_adv（VARCHAR、'-3' 等の数値表記や 'D'・'—' を含む）の
  * 先頭数値を判定し、プラスなら緑、マイナスなら赤のCSSクラス名を返す。
  * 'D'（ダウン）や '—'（該当なし）は先頭に数値が無いため、(int)キャストで 0 扱いとなり中立表示になる。
@@ -132,6 +167,8 @@ if (!function_exists('matchupConditionTagLabel')) {
 
 /**
  * key_points / overview / matchup_guides.content 用のレンダラー。
+ * - DB内の改行が実改行ではなく、文字列としてのバックスラッシュn（"\\n"）で
+ *   保存されているケースがあるため、まず実改行へ正規化する。
  * - "- " で始まる行 → <ul><li> の箇条書きとしてグループ化
  * - "■" で始まる行 → 太字見出し
  * - それ以外の行 → 通常テキスト（<br>区切り）
@@ -139,6 +176,9 @@ if (!function_exists('matchupConditionTagLabel')) {
  */
 if (!function_exists('renderMatchupMultiline')) {
     function renderMatchupMultiline(string $text): string {
+        // 文字列としての "\r\n" / "\n" / "\r"（バックスラッシュ+文字）を実改行に正規化
+        $text = str_replace(['\\r\\n', '\\n', '\\r'], "\n", $text);
+
         $lines  = preg_split('/\r\n|\r|\n/', $text);
         $html   = '';
         $inList = false;
@@ -179,6 +219,34 @@ if (!function_exists('renderMatchupMultiline')) {
     }
 }
 
+/**
+ * characters.profile_text 等の紹介文用レンダラー。
+ * 改行の正規化は renderMatchupMultiline() 側で行うため、ここではそのまま委譲する。
+ */
+if (!function_exists('renderProfileText')) {
+    function renderProfileText(string $text): string {
+        return renderMatchupMultiline($text);
+    }
+}
+
+/**
+ * combos.memo（コンボ注釈・補足コメント）表示用のレンダラー。
+ * renderMarkdown()（Parsedown経由）でHTML変換した上で、先頭に「※」を付与する。
+ * Parsedownの出力は <p>...</p> で始まるブロック要素のため、単純に文字列連結すると
+ * "※" が段落の外側に浮いてしまう。そのため最初の <p> タグの直後に "※" を挿し込む。
+ */
+if (!function_exists('renderComboMemo')) {
+    function renderComboMemo(string $memo): string {
+        $html = renderMarkdown($memo);
+        if (preg_match('/^<p>/', $html)) {
+            $html = preg_replace('/^<p>/', '<p>※', $html, 1);
+        } else {
+            $html = '※' . $html;
+        }
+        return $html;
+    }
+}
+
 // 2. URLパラメータからキャラクタースラッグを取得（未指定・不正時は 'luke' をデフォルトに）
 $char_slug = isset($_GET['char']) ? trim($_GET['char']) : 'luke';
 
@@ -210,6 +278,12 @@ $all_frames    = getFrameDataByCharId($pdo, $character['id']);
 $punish_combos = array_values(array_filter($combos, function ($combo) {
     return ($combo['hit_type'] ?? '') === 'Punish';
 }));
+
+// コンボ集タブ用：中央／画面端／パニカン・確定反撃始動 の3カテゴリにグループ化
+$combosByCategory = [];
+foreach ($combos as $combo) {
+    $combosByCategory[comboCategoryKey($combo)][] = $combo;
+}
 
 // キャラ対策総評（matchup）＋対策コラム一覧（matchup_guides）の取得
 $matchup_data   = getMatchupGuideByCharId($pdo, $character['id']);
@@ -273,7 +347,7 @@ include 'includes/head.php';
     <div class="hero-header">
       <h1 class="hero-header-title">🔰 <?php echo h($selected_char); ?> 概要</h1>
       <p class="hero-header-desc">
-        <?php echo h($character['profile_text'] ?? 'キャラクター紹介文は準備中です。'); ?>
+        <?php echo renderProfileText($character['profile_text'] ?? 'キャラクター紹介文は準備中です。'); ?>
       </p>
     </div>
 
@@ -287,37 +361,46 @@ include 'includes/head.php';
           <div class="alert-content">現在、<?php echo h($selected_char); ?> のコンボデータは登録されていません。</div>
         </div>
       <?php else: ?>
-        <div id="combo">
-          <?php foreach ($combos as $combo): ?>
-            <div class="combo-card">
-              <div class="combo-header">
-                <span class="combo-title">
-                  <?php echo h(buildComboSituationLabel($combo)); ?>
-                  <?php if (!empty($combo['is_recommended'])): ?>
-                    <span class="combo-badge" style="margin-left:6px;">おすすめ</span>
+        <?php foreach (comboCategoryOrder() as $categoryKey): ?>
+          <?php if (empty($combosByCategory[$categoryKey])): continue; endif; ?>
+          <h3 class="glossary-block-title" style="font-size:1.05rem; margin-top:20px;">
+            <?php echo h(comboCategoryLabel($categoryKey)); ?>
+            <span style="color:var(--text-secondary); font-weight:normal; font-size:0.8rem;">
+              （<?php echo count($combosByCategory[$categoryKey]); ?>件）
+            </span>
+          </h3>
+          <div class="card-grid" id="combo-<?php echo h($categoryKey); ?>">
+            <?php foreach ($combosByCategory[$categoryKey] as $combo): ?>
+              <div class="combo-card">
+                <div class="combo-header">
+                  <span class="combo-title">
+                    <?php echo h(buildComboSituationLabel($combo)); ?>
+                    <?php if (!empty($combo['is_recommended'])): ?>
+                      <span class="combo-badge" style="margin-left:6px;">おすすめ</span>
+                    <?php endif; ?>
+                  </span>
+                  <span class="combo-badge">難易度：<?php echo h(translateDifficulty($combo['difficulty'])); ?></span>
+                </div>
+
+                <div class="combo-command">
+                  <?php echo convertCommandToIcons($combo['recipe']); ?>
+                </div>
+
+                <div class="combo-meta" style="display:flex; gap:16px; margin-bottom:8px; font-size:0.85rem; color:var(--text-secondary);">
+                  <span>ダメージ：<strong style="color:var(--text-primary);"><?php echo (int)$combo['damage']; ?></strong></span>
+                  <span>消費ドライブ：<strong style="color:var(--text-primary);"><?php echo (int)$combo['drive_gauge']; ?></strong></span>
+                  <?php if (!empty($combo['sa_gauge'])): ?>
+                    <span>消費SA：<strong style="color:var(--text-primary);"><?php echo (int)$combo['sa_gauge']; ?></strong></span>
                   <?php endif; ?>
-                </span>
-                <span class="combo-badge">難易度：<?php echo h(translateDifficulty($combo['difficulty'])); ?></span>
-              </div>
+                </div>
 
-              <div class="combo-command">
-                <?php echo convertCommandToIcons($combo['recipe']); ?>
-              </div>
-
-              <div class="combo-meta" style="display:flex; gap:16px; margin-bottom:8px; font-size:0.85rem; color:var(--text-secondary);">
-                <span>ダメージ：<strong style="color:var(--text-primary);"><?php echo (int)$combo['damage']; ?></strong></span>
-                <span>消費ドライブ：<strong style="color:var(--text-primary);"><?php echo (int)$combo['drive_gauge']; ?></strong></span>
-                <?php if (!empty($combo['sa_gauge'])): ?>
-                  <span>消費SA：<strong style="color:var(--text-primary);"><?php echo (int)$combo['sa_gauge']; ?></strong></span>
+                <?php if (!empty($combo['memo'])): ?>
+                  <div class="combo-note"><?php echo renderComboMemo($combo['memo']); ?></div>
                 <?php endif; ?>
               </div>
-
-              <?php if (!empty($combo['memo'])): ?>
-                <p class="combo-note">※<?php echo h($combo['memo']); ?></p>
-              <?php endif; ?>
-            </div>
-          <?php endforeach; ?>
-        </div>
+            <?php endforeach; ?>
+          </div>
+        <?php endforeach; ?>
       <?php endif; ?>
     </div>
 
@@ -444,7 +527,7 @@ include 'includes/head.php';
                     <?php echo convertCommandToIcons($combo['recipe']); ?>
                   </div>
                   <?php if (!empty($combo['memo'])): ?>
-                    <p class="combo-note">※<?php echo h($combo['memo']); ?></p>
+                    <div class="combo-note"><?php echo renderComboMemo($combo['memo']); ?></div>
                   <?php endif; ?>
                 </div>
               <?php endforeach; ?>
