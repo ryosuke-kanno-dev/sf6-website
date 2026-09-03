@@ -666,6 +666,72 @@
   animation: tabFadeIn 0.2s ease;
 }
 
+/* --- device-product-card.css (guide.php デバイス比較：製品カード) --- */
+.device-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.device-product-card {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 14px;
+  background-color: var(--bg-main);
+  display: flex;
+  flex-direction: column;
+}
+
+.device-product-thumb {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.device-product-thumb-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  border: 1px dashed var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: var(--text-secondary);
+  background-color: var(--bg-hero);
+}
+
+.device-product-name {
+  font-weight: bold;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.device-product-points {
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+  padding-left: 1.2em;
+}
+
+.device-product-points li {
+  margin-bottom: 2px;
+}
+
+.device-product-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 10px;
+}
+
 @keyframes tabFadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
