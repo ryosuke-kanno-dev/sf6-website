@@ -460,6 +460,23 @@
   line-height: 1.5;
 }
 
+/* メリット/デメリット見出しは、フレーム表と同じ frame-plus / frame-minus の色を流用して統一する */
+.comp-sub-title {
+  font-weight: bold;
+  font-size: 0.85rem;
+  margin: 10px 0 4px;
+}
+
+.comp-recommend {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background-color: var(--bg-hero);
+  border-left: 3px solid var(--accent-color);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
 /* --- char-select-grid.css --- */
 .char-select-grid {
   display: grid;
@@ -735,4 +752,99 @@
 @keyframes tabFadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
+}
+
+/* --- tutorial-content.css (tutorials.json 由来のインライン強度バッジ) --- */
+.weak, .medium, .strength, .AUTO, .SP {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 0.9em;
+  color: #fff;
+}
+.weak     { background-color: #4A90E2; }
+.medium   { background-color: #d69e00; }
+.strength { background-color: #D0021B; }
+.AUTO     { background-color: #9013FE; }
+.SP       { background-color: #2ECC71; color: #062b17; }
+
+/* --- tutorial-media.css (チュートリアルの画像・動画・プレースホルダー) --- */
+.tutorial-media-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.tutorial-media-item img,
+.tutorial-media-item video {
+  max-width: 220px;
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  display: block;
+}
+
+.tutorial-media-placeholder {
+  width: 220px;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  border: 1px dashed var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  background-color: var(--bg-hero);
+}
+
+.tutorial-subcontent {
+  margin: 10px 0 10px 0.8em;
+  padding-left: 10px;
+  border-left: 2px solid var(--border-color);
+}
+
+.tutorial-subcontent-head {
+  font-weight: bold;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+/* --- roadmap-rank.css (roadmap.php ランクバッジ・チェックリスト) --- */
+.rank-badge {
+  display: inline-block;
+  padding: 3px 14px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+.roadmap-checklist {
+  list-style: none;
+  padding-left: 0;
+  margin: 10px 0;
+}
+
+.roadmap-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.roadmap-checklist input[type="checkbox"] {
+  margin-top: 3px;
+  accent-color: var(--accent-color);
+  flex-shrink: 0;
+}
+
+.roadmap-rank-card {
+  border-left: 4px solid var(--accent-color);
 }

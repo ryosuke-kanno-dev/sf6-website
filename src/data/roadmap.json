@@ -1,0 +1,72 @@
+[
+    {
+        "id": "beginner",
+        "title": "ビギナー〜ブロンズ",
+        "subtitle": "まず「負けない」を目指す",
+        "icon": "🥉",
+        "rank_label": "ビギナー〜ブロンズ",
+        "color": "#CD7F32",
+        "md_file": "beginner.md",
+        "recommend_training": [
+            "anti-air-001",
+            "throw-escape-001"
+        ],
+        "goals": [
+            "対空を毎試合3回落とす",
+            "投げ抜けを反射的にできるようにする",
+            "ドライブインパクトを返せる"
+        ]
+    },
+    {
+        "id": "silver",
+        "title": "シルバー〜ゴールド",
+        "subtitle": "「勝ち筋」を作る",
+        "icon": "🥈",
+        "rank_label": "シルバー〜ゴールド",
+        "color": "#C0C0C0",
+        "md_file": "silver.md",
+        "recommend_training": [
+            "anti-air-001",
+            "oki-001"
+        ],
+        "goals": [
+            "コンボを2〜3本安定させる",
+            "起き攻めの択を覚える",
+            "暴れのタイミングを覚える"
+        ]
+    },
+    {
+        "id": "platinum",
+        "title": "プラチナ〜ダイヤ",
+        "subtitle": "「読み合い」を制する",
+        "icon": "💎",
+        "rank_label": "プラチナ〜ダイヤ",
+        "color": "#00BFFF",
+        "md_file": "platinum.md",
+        "recommend_training": [
+            "oki-001"
+        ],
+        "goals": [
+            "相手のパターンを試合中に読む",
+            "ドライブゲージ管理を意識する",
+            "SAのコンボ組み込みを習得"
+        ]
+    },
+    {
+        "id": "master",
+        "title": "マスター",
+        "subtitle": "「一貫性」を磨く",
+        "icon": "👑",
+        "rank_label": "マスター",
+        "color": "#FFD700",
+        "md_file": "master.md",
+        "recommend_training": [
+            "oki-001"
+        ],
+        "goals": [
+            "マッチアップ知識を深める",
+            "ドライブゲージの読み合いを極める",
+            "メンタルコントロールを意識する"
+        ]
+    }
+]
