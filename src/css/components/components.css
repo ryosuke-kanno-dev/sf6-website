@@ -1,3 +1,8 @@
+/* --- smooth-scroll.css (ページ内アンカーリンクのスムーズスクロール) --- */
+html {
+  scroll-behavior: smooth;
+}
+
 /* --- card-grid.css --- */
 .card-grid {
   display: grid;
@@ -683,6 +688,11 @@
   animation: tabFadeIn 0.2s ease;
 }
 
+@keyframes tabFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 /* --- device-product-card.css (guide.php デバイス比較：製品カード) --- */
 .device-product-grid {
   display: grid;
@@ -747,11 +757,6 @@
   gap: 6px;
   margin-top: auto;
   padding-top: 10px;
-}
-
-@keyframes tabFadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
 }
 
 /* --- tutorial-content.css (tutorials.json 由来のインライン強度バッジ) --- */
@@ -832,16 +837,21 @@
 .roadmap-checklist li {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: 10px;
+  padding: 10px 12px;
   margin-bottom: 8px;
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
   font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
+  color: var(--text-primary);
+  line-height: 1.6;
 }
 
-.roadmap-checklist input[type="checkbox"] {
-  margin-top: 3px;
-  accent-color: var(--accent-color);
+.roadmap-check-icon {
+  color: var(--accent-color);
+  font-size: 1rem;
+  line-height: 1.6;
   flex-shrink: 0;
 }
 

@@ -34,13 +34,28 @@ $selected_char_icon = isset($selected_char_icon) ? $selected_char_icon : 'L';
     </button>
   </div>
 
-  <!-- ③ ページ内目次 -->
-  <div class="sidebar-section">
-    <div class="sidebar-title">ページ内目次</div>
-    <ul class="sidebar-menu">
-      <li><a href="#combo">・基本コンボレシピ</a></li>
-      <li><a href="#punish">・パニカン確定ルート</a></li>
-      <li><a href="#anti-air">・対空・確定反撃</a></li>
-    </ul>
-  </div>
+  <!-- ③ ページ内目次（ページごとに出し分け） -->
+  <?php if ($current_page === 'character'): ?>
+    <div class="sidebar-section">
+      <div class="sidebar-title">ページ内目次</div>
+      <ul class="sidebar-menu">
+        <li><a href="#combo">・基本コンボレシピ</a></li>
+        <li><a href="#punish">・パニカン確定ルート</a></li>
+        <li><a href="#anti-air">・対空・確定反撃</a></li>
+      </ul>
+    </div>
+  <?php elseif ($current_page === 'roadmap' && !empty($roadmapData)): ?>
+    <div class="sidebar-section">
+      <div class="sidebar-title">ページ内目次</div>
+      <ul class="sidebar-menu">
+        <?php foreach ($roadmapData as $rank): ?>
+          <li>
+            <a href="#rank-<?php echo htmlspecialchars($rank['id'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+              ・<?php echo htmlspecialchars($rank['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?>
+            </a>
+          </li>
+        <?php endforeach; ?>
+      </ul>
+    </div>
+  <?php endif; ?>
 </aside>

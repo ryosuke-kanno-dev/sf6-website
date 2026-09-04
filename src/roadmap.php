@@ -249,7 +249,7 @@ include 'includes/head.php';
                 <div class="glossary-block-title">✅ マスターすべき要素・課題</div>
                 <ul class="roadmap-checklist">
                   <?php foreach ($rank['checklist'] as $checkItem): ?>
-                    <li><input type="checkbox" disabled> <span><?php echo h($checkItem); ?></span></li>
+                    <li><span class="roadmap-check-icon">✅</span> <span><?php echo h($checkItem); ?></span></li>
                   <?php endforeach; ?>
                 </ul>
               <?php endif; ?>
