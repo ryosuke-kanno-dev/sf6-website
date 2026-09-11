@@ -56,6 +56,22 @@ if (!function_exists('renderGlossaryContentBlock')) {
     }
 }
 
+/**
+ * glossary.json の category（日本語）を、アンカーリンク用の英語スラッグに変換する。
+ * 未知のカテゴリは "category-N" のような連番スラッグにフォールバックする。
+ */
+if (!function_exists('glossaryCategorySlug')) {
+    function glossaryCategorySlug(string $category, int $fallbackIndex): string {
+        $map = [
+            'システム'   => 'system',
+            '基礎'       => 'basic',
+            '立ち回り'   => 'neutral',
+            'テクニック' => 'technique',
+        ];
+        return $map[$category] ?? ('category-' . $fallbackIndex);
+    }
+}
+
 // ページごとの設定値
 $page_title   = "5. 格ゲー用語集 | SF6 PORTAL";
 $current_page = "glossary";
@@ -121,35 +137,50 @@ include 'includes/head.php';
         <div class="alert-content">現在、登録されている用語がありません。</div>
       </div>
     <?php else: ?>
+      <?php
+        // カテゴリごとにグループ化（登場順を維持しつつグループ化する）
+        $termsByCategory = [];
+        foreach ($glossaryTerms as $item) {
+            $cat = $item['category'] ?? '';
+            $termsByCategory[$cat][] = $item;
+        }
+      ?>
       <div id="glossaryList">
-        <?php foreach ($glossaryTerms as $item): ?>
-          <?php
-            $term        = $item['term'] ?? '(名称未設定)';
-            $kana        = $item['kana'] ?? '';
-            $category    = $item['category'] ?? '';
-            $description = $item['description'] ?? '';
-            $content     = $item['content'] ?? [];
-          ?>
-          <details class="accordion-item" data-term="<?php echo h(mb_strtolower($term . ' ' . $kana, 'UTF-8')); ?>">
-            <summary class="accordion-title">
-              ❓ <?php echo h($term); ?>
-              <?php if ($kana !== ''): ?>
-                <span style="font-size:0.75rem; font-weight:normal; color:var(--text-secondary);">（<?php echo h($kana); ?>）</span>
-              <?php endif; ?>
-              <?php if ($category !== ''): ?>
-                <span class="combo-badge" style="margin-left:8px; font-size:0.7rem;"><?php echo h($category); ?></span>
-              <?php endif; ?>
-            </summary>
-            <div class="accordion-content">
-              <?php if ($description !== ''): ?>
-                <p class="glossary-desc"><?php echo nl2br(h($description)); ?></p>
-              <?php endif; ?>
+        <?php $categoryIndex = 0; ?>
+        <?php foreach ($termsByCategory as $categoryName => $termsInCategory): ?>
+          <?php $categoryIndex++; ?>
+          <h2 class="glossary-block-title" id="<?php echo h(glossaryCategorySlug($categoryName, $categoryIndex)); ?>" style="font-size:1.05rem; margin-top:20px;">
+            <?php echo $categoryName !== '' ? h($categoryName) : '未分類'; ?>
+          </h2>
+          <?php foreach ($termsInCategory as $item): ?>
+            <?php
+              $term        = $item['term'] ?? '(名称未設定)';
+              $kana        = $item['kana'] ?? '';
+              $category    = $item['category'] ?? '';
+              $description = $item['description'] ?? '';
+              $content     = $item['content'] ?? [];
+            ?>
+            <details class="accordion-item" data-term="<?php echo h(mb_strtolower($term . ' ' . $kana, 'UTF-8')); ?>">
+              <summary class="accordion-title">
+                ❓ <?php echo h($term); ?>
+                <?php if ($kana !== ''): ?>
+                  <span style="font-size:0.75rem; font-weight:normal; color:var(--text-secondary);">（<?php echo h($kana); ?>）</span>
+                <?php endif; ?>
+                <?php if ($category !== ''): ?>
+                  <span class="combo-badge" style="margin-left:8px; font-size:0.7rem;"><?php echo h($category); ?></span>
+                <?php endif; ?>
+              </summary>
+              <div class="accordion-content">
+                <?php if ($description !== ''): ?>
+                  <p class="glossary-desc"><?php echo nl2br(h($description)); ?></p>
+                <?php endif; ?>
 
-              <?php foreach ($content as $block): ?>
-                <?php echo renderGlossaryContentBlock($block); ?>
-              <?php endforeach; ?>
-            </div>
-          </details>
+                <?php foreach ($content as $block): ?>
+                  <?php echo renderGlossaryContentBlock($block); ?>
+                <?php endforeach; ?>
+              </div>
+            </details>
+          <?php endforeach; ?>
         <?php endforeach; ?>
       </div>
     <?php endif; ?>

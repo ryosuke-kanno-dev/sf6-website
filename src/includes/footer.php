@@ -9,15 +9,27 @@
 <script>
   function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
-    sidebar.classList.toggle('is-open');
-    document.body.style.overflow = sidebar.classList.contains('is-open') ? 'hidden' : '';
+    if (sidebar) {
+      // 左サイドバーがあるページ（guide/training/character/roadmap/glossary）
+      sidebar.classList.toggle('is-open');
+      document.body.style.overflow = sidebar.classList.contains('is-open') ? 'hidden' : '';
+      return;
+    }
+    // 左サイドバーが無いページ（index.php）は、ヘッダーナビ自体を開閉する
+    const headerNav = document.querySelector('.site-header .header-nav');
+    if (headerNav) {
+      headerNav.classList.toggle('is-open');
+    }
   }
 
   function toggleCharModal(isOpen) {
     const modal = document.getElementById('charModal');
+    const sidebar = document.getElementById('sidebar');
     if (isOpen) {
       modal.classList.add('is-active');
-      document.getElementById('sidebar').classList.remove('is-open');
+      if (sidebar) {
+        sidebar.classList.remove('is-open');
+      }
     } else {
       modal.classList.remove('is-active');
     }

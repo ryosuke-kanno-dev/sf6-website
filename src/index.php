@@ -15,7 +15,8 @@ include 'includes/head.php';
 
 <!-- 5. SF6本編風 ヒーローメインエリア -->
 <section class="hero-container">
-  
+
+  <div class="hero-tagline">STREET FIGHTER 6 まとめ攻略データベース</div>
   <div class="hero-title">FIGHTING PORTAL MENU</div>
 
   <!-- カルーセルメニュー -->
@@ -103,9 +104,9 @@ include 'includes/head.php';
     2: {
       title: "2. トレモ練習メニュー - QUICK JUMP",
       links: [
-        { name: "対空練習", url: "training.php#anti-air" },
-        { name: "確定反撃練習", url: "training.php#punish" },
-        { name: "画面端抜け練習", url: "training.php#corner" }
+        { name: "対空練習", url: "training.php#anti-air-001" },
+        { name: "投げ抜け練習", url: "training.php#throw-escape-001" },
+        { name: "起き攻め練習", url: "training.php#oki-001" }
       ],
       guide: "トレーニングモードのダミー設定や、効率的な反復練習レシピをまとめています。"
     },
@@ -123,18 +124,19 @@ include 'includes/head.php';
     4: {
       title: "4. 上達ロードマップ - QUICK JUMP",
       links: [
-        { name: "ルーキー〜シルバー", url: "roadmap.php#step1" },
-        { name: "ゴールド〜プラチナ", url: "roadmap.php#step2" },
-        { name: "ダイヤ〜マスター", url: "roadmap.php#step3" }
+        { name: "ビギナー", url: "roadmap.php#rank-beginner" },
+        { name: "アイアン・ブロンズ", url: "roadmap.php#rank-iron_bronze" },
+        { name: "シルバー・ゴールド", url: "roadmap.php#rank-silver_gold" },
+        { name: "プラチナ・ダイヤ〜マスター", url: "roadmap.php#rank-platinum_diamond" }
       ],
       guide: "自分のランクに合わせた目標・立ち回りの考え方・練習メニューのロードマップです。"
     },
     5: {
       title: "5. 格ゲー用語集 - QUICK JUMP",
       links: [
-        { name: "50音検索", url: "glossary.php#index" },
         { name: "システム用語", url: "glossary.php#system" },
-        { name: "フレーム知識", url: "glossary.php#frame" }
+        { name: "基礎用語", url: "glossary.php#basic" },
+        { name: "立ち回り用語", url: "glossary.php#neutral" }
       ],
       guide: "「パニカン」「キャンセル」「フレーム」など、スト6や格ゲーで使われる用語の辞書です。"
     }

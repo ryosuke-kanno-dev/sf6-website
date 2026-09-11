@@ -148,7 +148,7 @@ include 'includes/head.php';
                 $relatedUrl = preg_replace('/^([^?]+)/', '$1.php', $relatedUrl, 1);
             }
           ?>
-          <div class="grid-card" data-difficulty="<?php echo h($rank); ?>">
+          <div class="grid-card" id="<?php echo h($item['id'] ?? ''); ?>" data-difficulty="<?php echo h($rank); ?>">
             <div class="grid-card-title">
               <span>🎯</span> <?php echo h($title); ?>
             </div>

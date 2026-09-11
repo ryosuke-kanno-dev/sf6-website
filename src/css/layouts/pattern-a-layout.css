@@ -39,6 +39,7 @@ html, body {
   justify-content: space-between;
   padding: 0 20px;
   flex-shrink: 0;
+  position: relative;
 }
 
 .header-logo {
@@ -54,6 +55,40 @@ html, body {
   border-radius: 4px;
   font-size: 0.85rem;
   outline: none;
+}
+
+.header-nav {
+  display: flex;
+  gap: 15px;
+  list-style: none;
+}
+
+.header-nav a {
+  text-decoration: none;
+  font-size: 0.9rem;
+  padding: 5px 8px;
+  white-space: nowrap;
+}
+
+.header-nav a.active {
+  font-weight: bold;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+}
+
+.header-utility {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5px;
 }
 
 /* 3. メインヒーロー領域 */
@@ -77,6 +112,14 @@ html, body {
   border-bottom-width: 3px;
   border-bottom-style: solid;
   padding-bottom: 4px;
+  text-align: center;
+}
+
+.hero-tagline {
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   text-align: center;
 }
 
@@ -263,6 +306,57 @@ html, body {
     height: auto;
     min-height: 100vh;
   }
+
+  /* --- ヘッダー：ハンバーガーメニュー化 --- */
+  .site-header {
+    height: auto;
+    min-height: 55px;
+    flex-wrap: wrap;
+    padding: 10px 15px;
+    row-gap: 8px;
+  }
+  .header-logo {
+    order: 1;
+  }
+  .header-utility {
+    order: 2;
+    flex: 1;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .header-utility input {
+    flex: 1;
+    min-width: 0;
+    max-width: 140px;
+  }
+  .mobile-menu-btn {
+    display: block;
+    order: 3;
+  }
+  .header-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 4px 15px 10px;
+    z-index: 200;
+  }
+  .header-nav.is-open {
+    display: flex;
+  }
+  .header-nav a {
+    padding: 12px 4px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* --- ヒーローエリア --- */
   .hero-container {
     padding: 20px 15px;
     gap: 15px;
@@ -273,27 +367,33 @@ html, body {
   .carousel-arrow {
     display: none;
   }
+
+  /* --- メニューカード：横スクロールをやめて2列グリッドに --- */
   .carousel-track {
-    justify-content: flex-start;
-    overflow-x: auto;
-    padding: 5px 0 10px 0;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  .carousel-track::-webkit-scrollbar {
-    display: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    overflow-x: visible;
+    padding: 0;
   }
   .menu-card {
-    flex: 0 0 140px;
+    flex: unset;
+    max-width: none;
     height: 95px;
   }
+
   .sub-menu-box {
     padding: 10px 12px;
   }
   .sub-menu-links a {
     font-size: 0.8rem;
-    padding: 4px 10px;
+    padding: 8px 12px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
   }
+
+  /* --- 下部セクション：余白とタップサイズの確保 --- */
   .bottom-section {
     height: auto;
     grid-template-columns: 1fr;
@@ -301,6 +401,32 @@ html, body {
     padding: 15px;
   }
   .section-box {
-    max-height: 200px;
+    max-height: none;
+  }
+  .info-list li {
+    padding: 6px 0;
+    line-height: 1.6;
+  }
+  .char-tag-wrapper {
+    gap: 10px;
+  }
+  .char-tag {
+    min-height: 44px;
+    padding: 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.85rem;
+  }
+}
+
+/* 6. タブレット用（769px〜1023px）：3列グリッド */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .carousel-track {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .menu-card {
+    max-width: none;
   }
 }

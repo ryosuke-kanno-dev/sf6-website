@@ -39,9 +39,10 @@ $selected_char_icon = isset($selected_char_icon) ? $selected_char_icon : 'L';
     <div class="sidebar-section">
       <div class="sidebar-title">ページ内目次</div>
       <ul class="sidebar-menu">
-        <li><a href="#combo">・基本コンボレシピ</a></li>
-        <li><a href="#punish">・パニカン確定ルート</a></li>
-        <li><a href="#anti-air">・対空・確定反撃</a></li>
+        <li><a href="#tab-combos" onclick="document.querySelector('.tab-btn[data-tab-target=tab-combos]')?.click();">・基本コンボレシピ</a></li>
+        <li><a href="#tab-matchup" onclick="document.querySelector('.tab-btn[data-tab-target=tab-matchup]')?.click();">・キャラ対策総評</a></li>
+        <li><a href="#anti-air" onclick="document.querySelector('.tab-btn[data-tab-target=tab-matchup]')?.click();">・確定反撃リスト</a></li>
+        <li><a href="#tab-framedata" onclick="document.querySelector('.tab-btn[data-tab-target=tab-framedata]')?.click();">・フレーム表</a></li>
       </ul>
     </div>
   <?php elseif ($current_page === 'roadmap' && !empty($roadmapData)): ?>
