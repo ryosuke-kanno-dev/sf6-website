@@ -325,7 +325,7 @@ include 'includes/head.php';
 <div class="main-wrapper">
 
   <!-- 左サイドバー読み込み -->
-  <?php include 'includes/sidebar.php'; ?>
+  <?php include 'includes/char-sidebar.php'; ?>
 
   <!-- 右メインコンテンツ領域 -->
   <main class="content-area">

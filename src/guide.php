@@ -198,7 +198,15 @@ include 'includes/head.php';
 <div class="main-wrapper">
 
   <!-- 左サイドバー読み込み -->
-  <?php include 'includes/sidebar.php'; ?>
+  <?php
+    $page_toc = [
+        ['href' => '#operation-types', 'label' => '操作タイプを選ぶ'],
+        ['href' => '#settings',        'label' => 'ゲーム内設定'],
+        ['href' => '#devices',         'label' => 'デバイスを選ぶ'],
+        ['href' => '#tutorials',       'label' => 'チュートリアル解説'],
+    ];
+    include 'includes/toc-sidebar.php';
+  ?>
 
   <!-- 右メインコンテンツ領域 -->
   <main class="content-area">

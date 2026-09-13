@@ -102,7 +102,27 @@ if (!file_exists($glossaryJsonPath)) {
     }
 }
 
-// 2. Head部分の読み込み
+// 2. カテゴリごとにグループ化（登場順を維持しつつグループ化する。TOC生成にも使うため先に行う）
+$termsByCategory = [];
+if ($glossaryLoadError === null) {
+    foreach ($glossaryTerms as $item) {
+        $cat = $item['category'] ?? '';
+        $termsByCategory[$cat][] = $item;
+    }
+}
+
+// 3. サイドバー用のページ内目次を組み立てる
+$page_toc = [];
+$tocIndex = 0;
+foreach ($termsByCategory as $categoryName => $termsInCategory) {
+    $tocIndex++;
+    $page_toc[] = [
+        'href'  => '#' . glossaryCategorySlug($categoryName, $tocIndex),
+        'label' => $categoryName !== '' ? $categoryName : '未分類',
+    ];
+}
+
+// 4. Head部分の読み込み
 include 'includes/head.php';
 ?>
 
@@ -110,7 +130,7 @@ include 'includes/head.php';
 
 <div class="main-wrapper">
 
-  <?php include 'includes/sidebar.php'; ?>
+  <?php include 'includes/toc-sidebar.php'; ?>
 
   <main class="content-area">
 
@@ -137,14 +157,6 @@ include 'includes/head.php';
         <div class="alert-content">現在、登録されている用語がありません。</div>
       </div>
     <?php else: ?>
-      <?php
-        // カテゴリごとにグループ化（登場順を維持しつつグループ化する）
-        $termsByCategory = [];
-        foreach ($glossaryTerms as $item) {
-            $cat = $item['category'] ?? '';
-            $termsByCategory[$cat][] = $item;
-        }
-      ?>
       <div id="glossaryList">
         <?php $categoryIndex = 0; ?>
         <?php foreach ($termsByCategory as $categoryName => $termsInCategory): ?>

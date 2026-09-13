@@ -16,7 +16,7 @@ body {
 }
 
 .app-container {
-  max-width: 1440px;
+  max-width: 1520px;
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
@@ -27,60 +27,71 @@ body {
   border-right-style: solid;
 }
 
-/* 2. 共通上部ヘッダー */
+/* 2. 共通上部ヘッダー（トップページ側のサイズ感と統一） */
 .site-header {
-  height: 60px;
-  border-bottom-width: 2px;
+  border-bottom-width: 1px;
   border-bottom-style: solid;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 14px 32px;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 40;
 }
 
 .header-logo {
-  font-weight: bold;
-  font-size: 1.2rem;
-  width: 220px;
+  font-weight: 600;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-mark {
+  width: 20px;
+  height: 20px;
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%);
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 .header-nav {
   display: flex;
-  gap: 15px;
+  gap: 28px;
   list-style: none;
 }
 
 .header-nav a {
   text-decoration: none;
-  font-size: 0.9rem;
-  padding: 5px 8px;
+  font-size: 14px;
+  padding-bottom: 4px;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: transparent;
+  white-space: nowrap;
 }
 
 .header-nav a.active {
-  font-weight: bold;
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
+  font-weight: normal;
 }
 
 .header-utility input {
-  padding: 6px 12px;
+  padding: 7px 12px;
   border-width: 1px;
   border-style: solid;
-  border-radius: 4px;
-  font-size: 0.85rem;
+  font-size: 13px;
   outline: none;
+  width: 180px;
 }
 
 .mobile-menu-btn {
   display: none;
   background: none;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   cursor: pointer;
-  padding: 5px;
+  padding: 8px 10px;
 }
 
 /* 3. メインレイアウト（2カラム構造） */
@@ -97,8 +108,8 @@ body {
   padding: 20px;
   flex-shrink: 0;
   position: sticky;
-  top: 60px;
-  height: calc(100vh - 60px);
+  top: 58px;
+  height: calc(100vh - 58px);
   overflow-y: auto;
   transition: transform 0.3s ease;
 }
@@ -127,6 +138,11 @@ body {
   border-radius: 4px;
   margin-bottom: 2px;
   transition: background-color 0.2s, color 0.2s;
+}
+
+.sidebar-menu li.sidebar-submenu a {
+  padding: 6px 10px 6px 22px;
+  font-size: 0.8rem;
 }
 
 .current-char-card {
@@ -333,10 +349,10 @@ body {
 
   .sidebar {
     position: fixed;
-    top: 60px;
+    top: 58px;
     left: 0;
     width: 280px;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 58px);
     z-index: 90;
     transform: translateX(-100%);
   }

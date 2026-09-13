@@ -294,6 +294,12 @@ body::before {
   color: var(--accent-color);
   font-weight: bold;
 }
+.sidebar-menu li.sidebar-submenu a {
+  color: var(--text-secondary);
+}
+.sidebar-menu li.sidebar-submenu a:hover {
+  color: var(--accent-color);
+}
 .current-char-card {
   border-color: var(--border-color);
   background-color: var(--bg-card);

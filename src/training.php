@@ -93,7 +93,12 @@ include 'includes/head.php';
 
 <div class="main-wrapper">
 
-  <?php include 'includes/sidebar.php'; ?>
+  <?php
+    // このページは章立てされた構成ではなく単一の一覧のため、目次は用意しない
+    // （toc-sidebar.php は $page_toc が空の場合、何も出力しない）
+    $page_toc = [];
+    include 'includes/toc-sidebar.php';
+  ?>
 
   <main class="content-area">
 

@@ -73,14 +73,19 @@ $og_image_url = preg_match('#^https?://#i', $og_image)
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <!-- レイアウト・配置専用CSS (動的読み込み) -->
+  <!-- レイアウト・配置専用CSS (動的読み込み・キャッシュバスティング付き) -->
   <?php foreach ($extra_css as $css_file): ?>
-    <link rel="stylesheet" href="<?php echo h($css_file); ?>">
+    <?php $cssFsPath = __DIR__ . '/../' . $css_file; ?>
+    <link rel="stylesheet" href="<?php echo h($css_file); ?><?php echo file_exists($cssFsPath) ? '?v=' . filemtime($cssFsPath) : ''; ?>">
   <?php endforeach; ?>
 
   <!-- カラーテーマ & コンポーネントCSS -->
-  <link rel="stylesheet" href="css/themes/theme-dynamic.css">
-  <link rel="stylesheet" href="css/components/components.css">
+  <?php
+    $themeCssPath      = __DIR__ . '/../css/themes/theme-dynamic.css';
+    $componentsCssPath = __DIR__ . '/../css/components/components.css';
+  ?>
+  <link rel="stylesheet" href="css/themes/theme-dynamic.css<?php echo file_exists($themeCssPath) ? '?v=' . filemtime($themeCssPath) : ''; ?>">
+  <link rel="stylesheet" href="css/components/components.css<?php echo file_exists($componentsCssPath) ? '?v=' . filemtime($componentsCssPath) : ''; ?>">
 </head>
 <body>
 <div class="app-container">
