@@ -69,6 +69,10 @@ $og_image_url = preg_match('#^https?://#i', $og_image)
   <meta name="twitter:description" content="<?php echo h($page_description); ?>">
   <meta name="twitter:image" content="<?php echo h($og_image_url); ?>">
 
+  <!-- Webフォント -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
   <!-- レイアウト・配置専用CSS (動的読み込み) -->
   <?php foreach ($extra_css as $css_file): ?>
     <link rel="stylesheet" href="<?php echo h($css_file); ?>">

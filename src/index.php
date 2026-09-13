@@ -8,49 +8,89 @@ $extra_css = ['css/layouts/pattern-a-layout.css'];
 
 // 3. Head部分の読み込み
 include 'includes/head.php';
+
+// 4. DB接続・ヘルパー関数（ピックアップキャラのサムネイル表示用）
+require_once 'includes/db.php';
+require_once 'includes/functions/db_helpers.php';
+
+// 5. 更新情報データの読み込み（BOM付きUTF-8ファイルに対応）
+$updatesJsonRaw = file_get_contents(__DIR__ . '/data/updates.json');
+$updatesJsonRaw = preg_replace('/^\xEF\xBB\xBF/', '', $updatesJsonRaw);
+$allUpdates = json_decode($updatesJsonRaw, true) ?: [];
+
+// 豪鬼特設ページの案内バナー用データ（url: "akuma" のエントリを専用に使う）
+$akumaUpdate = null;
+foreach ($allUpdates as $u) {
+    if (($u['url'] ?? '') === 'akuma') { $akumaUpdate = $u; break; }
+}
+
+// 「最新更新情報」欄には、豪鬼の分を除いた直近3件を表示する
+$listUpdates = array_values(array_filter($allUpdates, fn($u) => ($u['url'] ?? '') !== 'akuma'));
+$listUpdates = array_slice($listUpdates, 0, 3);
+
+// updates.json の url は combo.php / matchup.php など旧ページ構成のままのため、
+// character.php への統合後の構成にマッピングする
+function mapUpdateUrl(string $url): string {
+    if ($url === 'akuma') return 'akuma.php';
+    if (preg_match('/^combo\?chara=(.+)$/', $url, $m)) return 'character.php?char=' . urlencode($m[1]);
+    if (preg_match('/^matchup\?opponent=(.+)$/', $url, $m)) return 'character.php?char=' . urlencode($m[1]) . '#tab-matchup';
+    if (preg_match('/^training\?/', $url)) return 'training.php';
+    if (preg_match('/^roadmap\?rank=(.+)$/', $url, $m)) return 'roadmap.php#rank-' . $m[1];
+    if (preg_match('/^guide#(.+)$/', $url, $m)) return 'guide.php#' . $m[1];
+    return h($url) . '.php';
+}
+
+// カテゴリ名 → タグバッジの表示（「コンボ」系だけアクセントカラーにする）
+function updateTagClass(string $category): string {
+    return (mb_strpos($category, 'コンボ') !== false) ? 'update-tag tag-combo' : 'update-tag';
+}
+
+// ピックアップキャラ（先頭4キャラを表示。サムネイルは file_exists() で自動フォールバック）
+$pickupCharacters = array_slice(getAllCharacters($pdo), 0, 4);
 ?>
 
-<!-- 4. 共通ヘッダー読み込み -->
+<!-- 6. 共通ヘッダー読み込み -->
 <?php include 'includes/header.php'; ?>
 
-<!-- 5. SF6本編風 ヒーローメインエリア -->
+<!-- 7. SF6本編風 ヒーローメインエリア -->
 <section class="hero-container">
 
   <div class="hero-tagline">STREET FIGHTER 6 まとめ攻略データベース</div>
   <div class="hero-title">FIGHTING PORTAL MENU</div>
 
-  <!-- カルーセルメニュー -->
+  <!-- メインメニュー（カルーセルではなく常時5件表示。ホバー/クリックでQUICK JUMPの中身が切り替わる） -->
   <div class="menu-carousel">
-    <div class="carousel-arrow">&laquo;</div>
-    
     <div class="carousel-track">
       <div class="menu-card" data-menu="1" onmouseover="updateMenu(1)" onclick="updateMenu(1)">
+        <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="18" height="11" rx="1"/><path d="M7 11h.01M11 11h.01M15 11h.01M7 14h10"/></svg>
         <span class="menu-num">01. SETTINGS</span>
         <span class="menu-name">初期設定</span>
       </div>
 
       <div class="menu-card" data-menu="2" onmouseover="updateMenu(2)" onclick="updateMenu(2)">
+        <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
         <span class="menu-num">02. PRACTICE</span>
         <span class="menu-name">トレモ練習</span>
       </div>
 
       <div class="menu-card active" data-menu="3" onmouseover="updateMenu(3)" onclick="updateMenu(3)">
+        <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 20c1-4 4-6 6.5-6s5.5 2 6.5 6"/></svg>
         <span class="menu-num">03. CHARACTERS</span>
         <span class="menu-name">キャラ攻略</span>
       </div>
 
       <div class="menu-card" data-menu="4" onmouseover="updateMenu(4)" onclick="updateMenu(4)">
+        <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6l6-2 6 2 4-2v14l-4 2-6-2-6 2z"/><path d="M10 4v14M16 6v14"/></svg>
         <span class="menu-num">04. ROADMAP</span>
         <span class="menu-name">ロードマップ</span>
       </div>
 
       <div class="menu-card" data-menu="5" onmouseover="updateMenu(5)" onclick="updateMenu(5)">
+        <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h11a3 3 0 013 3v13H8a3 3 0 01-3-3z"/><path d="M5 17a3 3 0 003 3h11"/></svg>
         <span class="menu-num">05. GLOSSARY</span>
         <span class="menu-name">用語集</span>
       </div>
     </div>
-
-    <div class="carousel-arrow">&raquo;</div>
   </div>
 
   <!-- 中央下：選択中メニューのサブ展開枠 -->
@@ -67,29 +107,73 @@ include 'includes/head.php';
 
 </section>
 
-<!-- 6. 下部サブエリア -->
+<!-- 豪鬼特設ページ 案内バナー -->
+<?php if ($akumaUpdate): ?>
+<div class="akuma-promo-banner">
+  <span class="promo-badge">SPECIAL</span>
+  <div style="flex:1;">
+    <div class="promo-title">豪鬼を極める者へ</div>
+    <div class="promo-sub"><?php echo h($akumaUpdate['excerpt']); ?></div>
+  </div>
+  <a href="<?php echo h(mapUpdateUrl($akumaUpdate['url'])); ?>" class="promo-btn">特設ページへ →</a>
+</div>
+<?php endif; ?>
+
+<!-- パッチノート要約 -->
+<div class="patch-note-box">
+  <div class="patch-note-head">
+    <span class="patch-ver">Ver.2.030 対応済み</span>
+    <span class="patch-status">✔ フレームデータ・キャラ対策を最新Verに反映済み</span>
+  </div>
+  <ul>
+    <li>ドライブラッシュのガード硬直差を調整（+2F → +1F）</li>
+    <li>春麗のEX百裂脚のダメージが減少</li>
+    <li>新システム調整に伴う共通の立ち回り変化を反映</li>
+  </ul>
+</div>
+
+<!-- 8. 下部サブエリア -->
 <div class="bottom-section">
   <div class="section-box">
     <div class="section-title">最新更新情報 / 注目のコンボレシピ</div>
     <ul class="info-list">
-      <li>・[2026/08/14] ルークの基本〜応用コンボ動画を更新しました</li>
-      <li>・[2026/08/10] 初心者向け「1. 初期おすすめキーコンフィグ」を追加</li>
-      <li>・[2026/08/05] 格ゲー用語集に「パニカン」「ドライブリバーサル」を追加</li>
+      <?php foreach ($listUpdates as $u): ?>
+        <li>
+          <span class="<?php echo h(updateTagClass($u['category'] ?? '')); ?>"><?php echo h($u['category'] ?? ''); ?></span>
+          <span class="update-date"><?php echo h(str_replace('-', '/', $u['date'] ?? '')); ?></span>
+          <a href="<?php echo h(mapUpdateUrl($u['url'] ?? '')); ?>" style="color:inherit; text-decoration:none;"><?php echo h($u['title'] ?? ''); ?></a>
+        </li>
+      <?php endforeach; ?>
     </ul>
   </div>
 
   <div class="section-box">
     <div class="section-title">ピックアップキャラ</div>
     <div class="char-tag-wrapper">
-      <a href="character.php?char=luke" class="char-tag">ルーク</a>
-      <a href="character.php?char=ryu" class="char-tag">リュウ</a>
-      <a href="character.php?char=ken" class="char-tag">ケン</a>
-      <a href="character.php?char=chunli" class="char-tag">春麗</a>
+      <?php foreach ($pickupCharacters as $char): ?>
+        <?php
+          $slug   = $char['char_slug'] ?? '';
+          $nameJp = $char['name_jp'] ?? '';
+          $nameEn = $char['name_en'] ?? $nameJp;
+          $icon   = mb_strtoupper(mb_substr($nameEn !== '' ? $nameEn : $nameJp, 0, 1, 'UTF-8'), 'UTF-8');
+          $thumbRelPath = 'img/character/' . $slug . '_ss02.jpg';
+          $thumbFsPath  = __DIR__ . '/img/character/' . $slug . '_ss02.jpg';
+          $hasThumbnail = ($slug !== '' && file_exists($thumbFsPath));
+        ?>
+        <a href="character.php?char=<?php echo urlencode($slug); ?>" class="char-tag">
+          <?php if ($hasThumbnail): ?>
+            <img class="char-tag-thumb" src="<?php echo h($thumbRelPath); ?>" alt="">
+          <?php else: ?>
+            <span class="char-tag-thumb-fallback"><?php echo h($icon); ?></span>
+          <?php endif; ?>
+          <?php echo h($nameJp); ?>
+        </a>
+      <?php endforeach; ?>
     </div>
   </div>
 </div>
 
-<!-- 7. トップページ専用カルーセル動作用JavaScript -->
+<!-- 9. トップページ専用カルーセル動作用JavaScript -->
 <script>
   const menuData = {
     1: {
@@ -165,5 +249,5 @@ include 'includes/head.php';
   updateMenu(3);
 </script>
 
-<!-- 8. 共通フッター読み込み -->
+<!-- 10. 共通フッター読み込み -->
 <?php include 'includes/footer.php'; ?>

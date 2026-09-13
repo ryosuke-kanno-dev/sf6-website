@@ -3,6 +3,10 @@
   </footer>
 </div>
 
+<button class="back-to-top" id="backToTop" aria-label="トップへ戻る">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
 <!-- __DIR__ を使うことで同じ includes フォルダ内のファイルを安全に読み込みます -->
 <?php include __DIR__ . '/char-modal.php'; ?>
 
@@ -34,6 +38,15 @@
       modal.classList.remove('is-active');
     }
   }
+
+  (function () {
+    const backToTop = document.getElementById('backToTop');
+    if (!backToTop) return;
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('show', window.scrollY > 400);
+    });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  })();
 </script>
 <script src="js/theme-toggle.js"></script>
 </body>

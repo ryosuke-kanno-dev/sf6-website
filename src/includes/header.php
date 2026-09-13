@@ -3,7 +3,7 @@
 $current_page = isset($current_page) ? $current_page : '';
 ?>
 <header class="site-header">
-  <div class="header-logo">[ロゴ] SF6 PORTAL</div>
+  <div class="header-logo"><span class="logo-mark"></span>SF6 PORTAL</div>
   <nav>
     <ul class="header-nav">
       <li><a href="index.php" class="<?php echo $current_page === 'home' ? 'active' : ''; ?>">0. ホーム</a></li>

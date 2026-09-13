@@ -12,421 +12,385 @@
 
 html, body {
   height: 100%;
-  overflow: hidden;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .app-container {
-  max-width: 1440px;
-  height: 100vh;
-  height: 100dvh;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  border-left-width: 1px;
-  border-left-style: solid;
-  border-right-width: 1px;
-  border-right-style: solid;
+  min-height: 100vh;
 }
 
 /* 2. 共通ヘッダー */
 .site-header {
-  height: 55px;
-  border-bottom-width: 2px;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom-width: 1px;
   border-bottom-style: solid;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
-  flex-shrink: 0;
-  position: relative;
+  padding: 14px 32px;
 }
 
 .header-logo {
-  font-weight: bold;
-  font-size: 1.1rem;
-  letter-spacing: 0.05em;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-mark {
+  width: 20px;
+  height: 20px;
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%);
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 .header-utility input {
-  padding: 6px 12px;
+  padding: 7px 12px;
   border-width: 1px;
   border-style: solid;
-  border-radius: 4px;
-  font-size: 0.85rem;
+  font-size: 13px;
   outline: none;
+  width: 180px;
 }
 
 .header-nav {
   display: flex;
-  gap: 15px;
+  gap: 28px;
   list-style: none;
 }
 
 .header-nav a {
   text-decoration: none;
-  font-size: 0.9rem;
-  padding: 5px 8px;
-  white-space: nowrap;
-}
-
-.header-nav a.active {
-  font-weight: bold;
+  font-size: 14px;
+  padding-bottom: 4px;
   border-bottom-width: 2px;
   border-bottom-style: solid;
+  border-bottom-color: transparent;
+  white-space: nowrap;
 }
 
 .header-utility {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
+}
+
+.theme-toggle-btn {
+  font-size: 13px;
+  padding: 7px 14px;
+  cursor: pointer;
 }
 
 .mobile-menu-btn {
   display: none;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   cursor: pointer;
-  padding: 5px;
+  padding: 8px 10px;
 }
 
 /* 3. メインヒーロー領域 */
 .hero-container {
-  flex: 1;
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 0;
-}
-
-.hero-title {
-  font-size: 1.6rem;
-  font-weight: 900;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  border-bottom-width: 3px;
-  border-bottom-style: solid;
-  padding-bottom: 4px;
+  position: relative;
   text-align: center;
+  padding: 40px 20px 30px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
 }
 
 .hero-tagline {
-  font-size: 0.8rem;
-  font-weight: bold;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-align: center;
+  font-size: 12px;
+  letter-spacing: 3px;
+}
+
+.hero-title {
+  font-size: 42px;
+  letter-spacing: 1px;
+  margin: 14px 0 18px;
 }
 
 .menu-carousel {
   display: flex;
   align-items: center;
-  gap: 15px;
-  width: 100%;
-  max-width: 1100px;
   justify-content: center;
-}
-
-.carousel-arrow {
-  font-size: 1.8rem;
-  font-weight: bold;
-  cursor: pointer;
-  user-select: none;
-  transition: color 0.2s;
+  gap: 18px;
+  padding: 4px 20px 6px;
 }
 
 .carousel-track {
-  display: flex;
-  gap: 12px;
-  width: 100%;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  max-width: 920px;
+  margin: 0 auto;
 }
 
 .menu-card {
-  flex: 1;
-  max-width: 190px;
-  height: 110px;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 6px;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  padding: 22px 16px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  border-width: 1px;
+  border-style: solid;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
   text-decoration: none;
+  position: relative;
   -webkit-tap-highlight-color: transparent;
 }
 
+.menu-icon {
+  width: 26px;
+  height: 26px;
+}
+
 .menu-card .menu-num {
-  font-size: 0.75rem;
-  font-weight: bold;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  display: block;
+  margin-bottom: 6px;
 }
 
 .menu-card .menu-name {
-  font-size: 1.05rem;
-  font-weight: bold;
-  margin-top: 4px;
-}
-
-.menu-card:hover, .menu-card.active {
-  transform: translateY(-4px);
+  font-size: 15px;
+  font-weight: 700;
 }
 
 /* サブメニュー展開エリア */
 .sub-menu-box {
-  width: 100%;
-  max-width: 600px;
+  max-width: 640px;
+  margin: 30px auto 0;
   border-width: 1px;
   border-style: solid;
-  border-radius: 6px;
-  padding: 12px 20px;
+  padding: 20px 28px 24px;
   text-align: center;
 }
 
 .sub-menu-title {
-  font-size: 0.75rem;
-  font-weight: bold;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: 13px;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
 }
 
 .sub-menu-links {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
 }
 
 .sub-menu-links a {
-  padding: 6px 14px;
+  padding: 9px 16px;
   border-width: 1px;
   border-style: solid;
-  border-radius: 4px;
   text-decoration: none;
-  font-size: 0.85rem;
-  font-weight: bold;
-  transition: all 0.2s;
+  font-size: 13px;
+  transition: border-color 0.2s, color 0.2s;
 }
 
 /* ガイドバー */
 .guide-bar {
-  width: 100%;
-  max-width: 1100px;
-  border-width: 1px;
-  border-style: solid;
-  padding: 8px 16px;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  max-width: 800px;
+  margin: 16px auto 0;
+  padding: 0 12px;
+  font-size: 13px;
+  text-align: center;
 }
 
-.guide-bar .icon {
-  font-weight: bold;
+/* 豪鬼特設バナー */
+.akuma-promo-banner {
+  max-width: 1000px;
+  margin: 24px auto 0;
+  padding: 22px 30px 22px 26px;
+}
+
+.akuma-promo-banner .promo-badge {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  padding: 5px 10px;
+  flex-shrink: 0;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.akuma-promo-banner .promo-title {
+  font-size: 21px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.akuma-promo-banner .promo-sub {
+  font-size: 13.5px;
+}
+
+.akuma-promo-banner .promo-btn {
+  font-size: 13px;
+  padding: 11px 20px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* パッチノート要約 */
+.patch-note-box {
+  max-width: 900px;
+  margin: 20px auto 0;
+  padding: 18px 24px;
+}
+
+.patch-note-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.patch-note-box .patch-ver {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.patch-note-box .patch-status {
+  font-size: 12px;
+}
+
+.patch-note-box ul {
+  list-style: none;
+}
+
+.patch-note-box li {
+  font-size: 13px;
+  padding: 5px 0;
 }
 
 /* 4. 下部 セカンダリコンテンツ */
 .bottom-section {
-  height: 180px;
-  padding: 15px 20px;
+  max-width: 900px;
+  width: 100%;
+  margin: 20px auto 0;
+  padding: 0 20px;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1.4fr 1fr;
   gap: 20px;
-  flex-shrink: 0;
 }
 
 .section-box {
   border-width: 1px;
   border-style: solid;
-  border-radius: 6px;
-  padding: 12px 15px;
-  overflow-y: auto;
+  padding: 18px 22px;
 }
 
 .section-title {
-  font-size: 0.9rem;
-  font-weight: bold;
-  margin-bottom: 8px;
+  font-size: 15px;
+  margin-bottom: 12px;
   border-bottom-width: 1px;
   border-bottom-style: solid;
-  padding-bottom: 4px;
+  padding-bottom: 10px;
 }
 
 .info-list {
   list-style: none;
-  font-size: 0.85rem;
+  font-size: 13px;
 }
 
 .info-list li {
-  margin-bottom: 4px;
+  padding: 6px 0;
+}
+
+.update-tag {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0.3px;
+  padding: 3px 8px;
+  margin-right: 8px;
+}
+
+.update-date {
+  font-size: 12px;
+  margin-right: 8px;
 }
 
 .char-tag-wrapper {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .char-tag {
   border-width: 1px;
   border-style: solid;
-  padding: 4px 10px;
-  font-size: 0.8rem;
-  border-radius: 4px;
+  padding: 6px 14px 6px 8px;
+  font-size: 13px;
   cursor: pointer;
-  transition: border-color 0.2s;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
 }
 
 /* フッター */
 .site-footer {
   border-top-width: 1px;
   border-top-style: solid;
-  padding: 10px;
+  padding: 14px;
   text-align: center;
-  font-size: 0.75rem;
-  flex-shrink: 0;
+  font-size: 12px;
 }
 
-/* 5. スマホ用レスポンシブスタイル */
-@media (max-width: 768px) {
-  html, body {
-    height: auto;
-    overflow: auto;
-  }
-  .app-container {
-    height: auto;
-    min-height: 100vh;
-  }
+/* 5. レスポンシブ：タブレット（1024px以下） */
+@media (max-width: 1024px) {
+  .hero-container { padding: 30px 24px 26px; }
+  .carousel-track { grid-template-columns: repeat(3, 1fr); max-width: 560px; }
+  .bottom-section { grid-template-columns: 1fr; }
+}
 
-  /* --- ヘッダー：ハンバーガーメニュー化 --- */
-  .site-header {
-    height: auto;
-    min-height: 55px;
-    flex-wrap: wrap;
-    padding: 10px 15px;
-    row-gap: 8px;
-  }
-  .header-logo {
-    order: 1;
-  }
-  .header-utility {
-    order: 2;
-    flex: 1;
-    justify-content: flex-end;
-    gap: 8px;
-  }
-  .header-utility input {
-    flex: 1;
-    min-width: 0;
-    max-width: 140px;
-  }
-  .mobile-menu-btn {
-    display: block;
-    order: 3;
-  }
-  .header-nav {
-    display: none;
+/* 6. レスポンシブ：スマホ（768px以下） */
+@media (max-width: 768px) {
+  .site-header { padding: 12px 16px; }
+  .header-nav { display: none; }
+  .header-utility input { display: none; }
+  .mobile-menu-btn { display: block; }
+
+  .header-nav.is-open {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
+    padding: 8px 0;
+    z-index: 39;
+  }
+  .header-nav.is-open a {
+    padding: 13px 20px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-container { padding: 24px 16px 20px; }
+  .hero-title { font-size: 28px; }
+  .hero-tagline { font-size: 10px; letter-spacing: 2px; }
+
+  .akuma-promo-banner {
     flex-direction: column;
-    gap: 0;
-    padding: 4px 15px 10px;
-    z-index: 200;
+    align-items: flex-start;
+    gap: 14px;
   }
-  .header-nav.is-open {
-    display: flex;
-  }
-  .header-nav a {
-    padding: 12px 4px;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-  }
-
-  /* --- ヒーローエリア --- */
-  .hero-container {
-    padding: 20px 15px;
-    gap: 15px;
-  }
-  .hero-title {
-    font-size: 1.2rem;
-  }
-  .carousel-arrow {
-    display: none;
-  }
-
-  /* --- メニューカード：横スクロールをやめて2列グリッドに --- */
-  .carousel-track {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    overflow-x: visible;
-    padding: 0;
-  }
-  .menu-card {
-    flex: unset;
-    max-width: none;
-    height: 95px;
-  }
-
-  .sub-menu-box {
-    padding: 10px 12px;
-  }
-  .sub-menu-links a {
-    font-size: 0.8rem;
-    padding: 8px 12px;
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-  }
-
-  /* --- 下部セクション：余白とタップサイズの確保 --- */
-  .bottom-section {
-    height: auto;
-    grid-template-columns: 1fr;
-    gap: 15px;
-    padding: 15px;
-  }
-  .section-box {
-    max-height: none;
-  }
-  .info-list li {
-    padding: 6px 0;
-    line-height: 1.6;
-  }
-  .char-tag-wrapper {
-    gap: 10px;
-  }
-  .char-tag {
-    min-height: 44px;
-    padding: 8px 16px;
-    display: inline-flex;
-    align-items: center;
-    font-size: 0.85rem;
+  .akuma-promo-banner .promo-btn {
+    align-self: stretch;
+    text-align: center;
   }
 }
 
-/* 6. タブレット用（769px〜1023px）：3列グリッド */
-@media (min-width: 769px) and (max-width: 1023px) {
-  .carousel-track {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
-  .menu-card {
-    max-width: none;
-  }
+/* 7. レスポンシブ：極小スマホ（480px以下） */
+@media (max-width: 480px) {
+  .carousel-track { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .menu-card { padding: 18px 10px 16px; }
 }

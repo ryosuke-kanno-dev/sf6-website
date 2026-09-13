@@ -1,64 +1,121 @@
 /* ===================================================
-   動的テーマ切替用CSS (Black & White)
+   動的テーマ切替用CSS
+   （2026年デザインリニューアル版：オレンジレッド基調）
    =================================================== */
 
-/* デフォルト（Blackモード） */
+/* デフォルト（Darkモード） */
 :root,
 [data-theme="dark"] {
-  --bg-main: #1e2229;
-  --bg-container: #1e2229;
-  --bg-hero: #222730;
-  --bg-card: #252d28;
-  --bg-card-active: #2f3a33;
+  --bg-main: #14181A;
+  --bg-container: #14181A;
+  --bg-hero: #191E20;
+  --bg-card: #1D2325;
+  --bg-card-active: #2B2523;
 
-  --border-color: #384c3f;
-  --accent-color: #8fd694;
-  --accent-hover: #a5e0a9;
+  --border-color: #2B3230;
+  --border-color-soft: #232928;
+  --accent-color: #E2622D;
+  --accent-hover: #ED8058;
+  --accent-soft: rgba(226, 98, 45, 0.14);
+  --accent-line: rgba(226, 98, 45, 0.45);
+  --accent-wash: rgba(226, 98, 45, 0.07);
 
-  --text-primary: #e2e8f0;
-  --text-secondary: #94a3b8;
+  /* 機能色：フレームデータの有利/不利、メリット/デメリット等に固定で使用する。
+     ブランドカラー（accent-color）とは絶対に混同しないこと。 */
+  --pos-color: #4E9F6E;
+  --neg-color: #E2585B;
 
-  --shadow-color: rgba(0, 0, 0, 0.4);
-  --btn-text-color: #1e2229;
+  /* 豪鬼特設ページ専用アクセント（このページの中でのみ accent-color を上書きする） */
+  --akuma-accent: #C1447A;
+
+  --text-primary: #E7E5DE;
+  --text-secondary: #8E968F;
+
+  --shadow-color: rgba(0, 0, 0, 0.35);
+  --btn-text-color: #ffffff;
 }
 
-/* Whiteモード */
+/* Lightモード */
 [data-theme="light"] {
-  --bg-main: #efefef;
-  --bg-container: #efefef;
-  --bg-hero: #f8fafc;
-  --bg-card: #ffffff;
-  --bg-card-active: #ebf3fa;
+  --bg-main: #F1F0EA;
+  --bg-container: #F1F0EA;
+  --bg-hero: #E9E7DE;
+  --bg-card: #FFFFFF;
+  --bg-card-active: #F7EFEC;
 
-  --border-color: #cbd5e1;
-  --accent-color: #3581b8;
-  --accent-hover: #26547c;
+  --border-color: #DCD9CE;
+  --border-color-soft: #E7E4D9;
+  --accent-color: #B8461C;
+  --accent-hover: #8F3714;
+  --accent-soft: rgba(184, 70, 28, 0.08);
+  --accent-line: rgba(184, 70, 28, 0.5);
+  --accent-wash: rgba(184, 70, 28, 0.05);
 
-  --text-primary: #25283d;
-  --text-secondary: #64748b;
+  --pos-color: #2E7D4F;
+  --neg-color: #C23434;
 
-  --shadow-color: rgba(37, 40, 61, 0.08);
+  --akuma-accent: #8A2A4A;
+
+  --text-primary: #23261F;
+  --text-secondary: #6B7268;
+
+  --shadow-color: rgba(30, 30, 20, 0.08);
   --btn-text-color: #ffffff;
+}
+
+/* --- フォント --- */
+body {
+  font-family: 'Inter', 'Noto Sans JP', sans-serif;
+}
+.header-logo,
+.hero-title,
+.page-title,
+.section-title,
+.sub-menu-title,
+.menu-num,
+.char-selected-name {
+  font-family: 'Oswald', sans-serif;
 }
 
 /* --- 2. 共通ベーススタイル --- */
 body {
   background-color: var(--bg-main);
   color: var(--text-primary);
+  position: relative;
+}
+
+/* サイト全体にうっすらとしたテクスチャを敷く（要素を増やさず body の疑似要素で表現） */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 900px 500px at 50% 0%, var(--accent-soft), transparent 60%),
+    repeating-linear-gradient(115deg, transparent 0px, transparent 46px, var(--border-color-soft) 46px, var(--border-color-soft) 47px, transparent 47px, transparent 92px);
+  opacity: 0.9;
 }
 
 .app-container {
   background-color: var(--bg-container);
   border-color: var(--border-color);
+  position: relative;
+  z-index: 1;
 }
 
 /* ヘッダー */
 .site-header {
-  border-bottom-color: var(--accent-color);
+  border-bottom-color: var(--border-color);
   background-color: var(--bg-container);
 }
 .header-logo {
   color: var(--text-primary);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.logo-mark {
+  background: var(--accent-color);
 }
 .header-nav a {
   color: var(--text-secondary);
@@ -72,7 +129,7 @@ body {
 }
 .header-utility input {
   border-color: var(--border-color);
-  background-color: var(--bg-main);
+  background-color: var(--bg-card);
   color: var(--text-primary);
 }
 .header-utility input:focus {
@@ -80,6 +137,23 @@ body {
 }
 .mobile-menu-btn {
   color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  background: none;
+}
+.theme-toggle-btn {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
+}
+@media (max-width: 768px) {
+  .header-nav.is-open {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+  }
+  .header-nav.is-open a {
+    border-top: 1px solid var(--border-color-soft);
+  }
 }
 
 /* --- 3. パターンA（トップページ）固有パーツ --- */
@@ -88,45 +162,47 @@ body {
   border-bottom-color: var(--border-color);
 }
 .hero-title {
-  color: var(--text-primary); /* グラデーション非対応ブラウザ向けフォールバック */
-  background: linear-gradient(90deg, var(--accent-color), var(--accent-hover));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  border-bottom-color: var(--accent-color);
+  color: var(--text-primary);
+  font-weight: 700;
 }
 .hero-tagline {
   color: var(--text-secondary);
-}
-.carousel-arrow {
-  color: var(--text-secondary);
-}
-.carousel-arrow:hover {
-  color: var(--accent-color);
 }
 .menu-card {
   border-color: var(--border-color);
   background-color: var(--bg-card);
   color: var(--text-primary);
+  transition: border-color 0.2s, transform 0.18s ease, box-shadow 0.25s ease;
 }
 .menu-card .menu-num {
   color: var(--text-secondary);
 }
-.menu-card:hover,
+.menu-card:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-3px);
+  box-shadow: 0 0 0 1px var(--accent-line), 0 10px 22px -8px var(--shadow-color), 0 0 16px -3px var(--accent-line);
+}
 .menu-card.active {
   border-color: var(--accent-color);
   background-color: var(--bg-card-active);
-  background-image: linear-gradient(135deg, var(--bg-card-active) 0%, var(--bg-hero) 100%);
-  box-shadow: 0 6px 16px var(--shadow-color), 0 0 22px 1px var(--accent-color);
+  box-shadow: 0 0 0 1px var(--accent-line), 0 8px 20px var(--shadow-color), inset 0 2px 0 var(--accent-color);
+}
+.menu-card.active:hover {
+  transform: translateY(-3px);
 }
 .menu-card.active .menu-num,
 .menu-card.active .menu-name {
   color: var(--accent-color);
 }
+.menu-icon {
+  color: var(--accent-color);
+  display: block;
+  margin: 0 auto 12px;
+}
 .sub-menu-box {
   background-color: var(--bg-card);
   border-color: var(--border-color);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: none;
 }
 .sub-menu-title {
   color: var(--accent-color);
@@ -137,17 +213,65 @@ body {
   color: var(--text-primary);
 }
 .sub-menu-links a:hover {
-  background: var(--accent-color);
-  border-color: var(--accent-color);
-  color: #fff;
+  border-color: var(--accent-line);
+  color: var(--accent-color);
+  background: var(--bg-main);
 }
 .guide-bar {
-  background-color: var(--bg-main);
-  border-color: var(--border-color);
-  color: var(--text-primary);
+  background-color: transparent;
+  border-color: var(--border-color-soft);
+  color: var(--text-secondary);
 }
 .guide-bar .icon {
   color: var(--accent-color);
+}
+
+/* トップページ：豪鬼特設バナー */
+.akuma-promo-banner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--akuma-accent);
+}
+.akuma-promo-banner .promo-badge {
+  color: var(--akuma-accent);
+  border: 1px solid var(--akuma-accent);
+}
+.akuma-promo-banner .promo-btn {
+  color: var(--akuma-accent);
+  border: 1px solid var(--akuma-accent);
+}
+.akuma-promo-banner .promo-btn:hover {
+  background: var(--akuma-accent);
+  color: #fff;
+}
+
+/* トップページ：パッチノート要約 */
+.patch-note-box {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+}
+.patch-note-box .patch-ver {
+  color: var(--accent-color);
+}
+.patch-note-box li {
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-color-soft);
+}
+.patch-note-box li:first-child {
+  border-top: none;
+}
+
+/* カテゴリタグバッジ（更新情報リスト用） */
+.update-tag {
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+.update-tag.tag-combo {
+  color: var(--accent-color);
+  border-color: var(--accent-line);
 }
 
 /* --- 4. パターンB（2カラム共通）固有パーツ --- */
@@ -202,6 +326,7 @@ body {
 }
 .page-title {
   color: var(--text-primary);
+  font-weight: 700;
 }
 .page-desc {
   color: var(--text-secondary);
@@ -239,15 +364,19 @@ body {
 }
 .modal-title {
   color: var(--text-primary);
+  font-family: 'Oswald', sans-serif;
 }
 .modal-desc {
   color: var(--text-secondary);
 }
 .modal-close-btn {
   color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  background: none;
 }
 .modal-close-btn:hover {
   color: var(--accent-color);
+  border-color: var(--accent-line);
 }
 .modal-char-card {
   border-color: var(--border-color);
@@ -263,6 +392,7 @@ body {
   background-color: var(--bg-card-active);
   color: var(--accent-color);
   font-weight: bold;
+  box-shadow: 0 0 0 1px var(--accent-line), 0 0 14px -2px var(--accent-line);
 }
 .char-icon-placeholder {
   background-color: var(--bg-main);
@@ -281,6 +411,7 @@ body {
 .section-title {
   border-bottom-color: var(--border-color);
   color: var(--text-primary);
+  font-weight: 700;
 }
 .info-list {
   color: var(--text-secondary);
@@ -289,14 +420,92 @@ body {
   border-color: var(--border-color);
   background: var(--bg-main);
   color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 .char-tag:hover {
   border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+.char-tag-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.char-tag-thumb-fallback {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-color);
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 .site-footer {
   border-top-color: var(--border-color);
   color: var(--text-secondary);
   background-color: var(--bg-container);
+}
+
+/* 画像/GIFプレースホルダー（実素材が揃うまでの明示的な仮表示） */
+.media-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px dashed var(--border-color);
+  background: var(--bg-main);
+  color: var(--text-secondary);
+  font-size: 10px;
+  line-height: 1.4;
+}
+.media-placeholder .mp-icon {
+  font-size: 20px;
+  margin-bottom: 4px;
+  opacity: 0.6;
+}
+
+/* トップへ戻るボタン（全ページ共通） */
+.back-to-top {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 60;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-card);
+  border: 1px solid var(--accent-line);
+  color: var(--accent-color);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 0.25s, transform 0.25s, background 0.2s, color 0.2s;
+}
+.back-to-top.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.back-to-top:hover {
+  background: var(--accent-color);
+  color: #fff;
+}
+.back-to-top svg {
+  width: 18px;
+  height: 18px;
 }
 
 /* スマホドロワー影 */
