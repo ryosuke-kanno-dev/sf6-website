@@ -1,60 +1,5 @@
 <?php
-// HTMLエスケープ用ヘルパー（他ファイルの h() と衝突しないようガード）
-if (!function_exists('h')) {
-    function h($str): string {
-        return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8');
-    }
-}
-
-/**
- * glossary.json の content 配列内の1ブロック（type: text / list / table）をHTMLに変換する。
- * 未知の type は空文字を返す（表示崩れを防ぐ）。
- */
-if (!function_exists('renderGlossaryContentBlock')) {
-    function renderGlossaryContentBlock(array $block): string {
-        $type = $block['type'] ?? '';
-
-        switch ($type) {
-            case 'text':
-                return '<p class="glossary-block-text">' . nl2br(h($block['body'] ?? '')) . '</p>';
-
-            case 'list':
-                $html = '';
-                if (!empty($block['title'])) {
-                    $html .= '<div class="glossary-block-title">' . h($block['title']) . '</div>';
-                }
-                $html .= '<ul class="glossary-block-list">';
-                foreach (($block['items'] ?? []) as $li) {
-                    $html .= '<li>' . h($li) . '</li>';
-                }
-                $html .= '</ul>';
-                return $html;
-
-            case 'table':
-                $html = '';
-                if (!empty($block['title'])) {
-                    $html .= '<div class="glossary-block-title">' . h($block['title']) . '</div>';
-                }
-                $html .= '<div class="table-container"><table class="data-table"><thead><tr>';
-                foreach (($block['headers'] ?? []) as $header) {
-                    $html .= '<th>' . h($header) . '</th>';
-                }
-                $html .= '</tr></thead><tbody>';
-                foreach (($block['rows'] ?? []) as $row) {
-                    $html .= '<tr>';
-                    foreach ($row as $cell) {
-                        $html .= '<td>' . h($cell) . '</td>';
-                    }
-                    $html .= '</tr>';
-                }
-                $html .= '</tbody></table></div>';
-                return $html;
-
-            default:
-                return '';
-        }
-    }
-}
+require_once __DIR__ . '/includes/functions/content_blocks.php';
 
 /**
  * glossary.json の category（日本語）を、アンカーリンク用の英語スラッグに変換する。
@@ -63,12 +8,26 @@ if (!function_exists('renderGlossaryContentBlock')) {
 if (!function_exists('glossaryCategorySlug')) {
     function glossaryCategorySlug(string $category, int $fallbackIndex): string {
         $map = [
-            'システム'   => 'system',
-            '基礎'       => 'basic',
-            '立ち回り'   => 'neutral',
-            'テクニック' => 'technique',
+            'システム'     => 'system',
+            '基礎'         => 'basic',
+            '立ち回り'     => 'neutral',
+            'テクニック'   => 'technique',
+            '操作方式'     => 'operation',
+            '表記・コマンド' => 'notation',
+            'ゲームモード' => 'gamemode',
+            'スラング・俗語' => 'slang',
         ];
         return $map[$category] ?? ('category-' . $fallbackIndex);
+    }
+}
+
+/**
+ * カテゴリの表示順序（仕様書 glossary_schema.md 4章 の並びに固定）。
+ * データの出現順に依存させず、常にこの順序で表示する。
+ */
+if (!function_exists('glossaryCategoryOrder')) {
+    function glossaryCategoryOrder(): array {
+        return ['システム', '基礎', '立ち回り', 'テクニック', '操作方式', '表記・コマンド', 'ゲームモード', 'スラング・俗語'];
     }
 }
 
@@ -94,21 +53,31 @@ if (!file_exists($glossaryJsonPath)) {
         $decoded = json_decode($jsonRaw, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
             $glossaryLoadError = 'JSONの形式が不正です: ' . json_last_error_msg();
-        } elseif (!is_array($decoded)) {
-            $glossaryLoadError = 'JSONのルートが配列ではありません。';
+        } elseif (!is_array($decoded) || !isset($decoded['terms']) || !is_array($decoded['terms'])) {
+            $glossaryLoadError = 'JSONの構造が不正です（"terms" 配列が見つかりません）。';
         } else {
-            $glossaryTerms = $decoded;
+            $glossaryTerms = $decoded['terms'];
         }
     }
 }
 
-// 2. カテゴリごとにグループ化（登場順を維持しつつグループ化する。TOC生成にも使うため先に行う）
+// 2. カテゴリごとにグループ化する。表示順は glossaryCategoryOrder() の並びに固定し、
+//    定義に無いカテゴリ値が紛れていた場合は末尾に回す（黙って消さない）。
 $termsByCategory = [];
+$termsById       = [];
 if ($glossaryLoadError === null) {
+    foreach (glossaryCategoryOrder() as $catName) {
+        $termsByCategory[$catName] = [];
+    }
     foreach ($glossaryTerms as $item) {
         $cat = $item['category'] ?? '';
         $termsByCategory[$cat][] = $item;
+        if (!empty($item['id'])) {
+            $termsById[$item['id']] = $item;
+        }
     }
+    // 中身が0件のカテゴリは目次・見出しに出さない
+    $termsByCategory = array_filter($termsByCategory, fn($list) => !empty($list));
 }
 
 // 3. サイドバー用のページ内目次を組み立てる
@@ -166,20 +135,30 @@ include 'includes/head.php';
           </h2>
           <?php foreach ($termsInCategory as $item): ?>
             <?php
-              $term        = $item['term'] ?? '(名称未設定)';
-              $kana        = $item['kana'] ?? '';
-              $category    = $item['category'] ?? '';
-              $description = $item['description'] ?? '';
-              $content     = $item['content'] ?? [];
+              $termId       = $item['id'] ?? '';
+              $term         = $item['term'] ?? '(名称未設定)';
+              $reading      = $item['reading'] ?? '';
+              $abbreviation = $item['abbreviation'] ?? '';
+              $category     = $item['category'] ?? '';
+              $description  = $item['description'] ?? '';
+              $content      = $item['content'] ?? [];
+              $isCore       = ($item['tier'] ?? 'quick') === 'core';
+              $relatedTerms = $item['related_terms'] ?? [];
             ?>
-            <details class="accordion-item" data-term="<?php echo h(mb_strtolower($term . ' ' . $kana, 'UTF-8')); ?>">
+            <details class="accordion-item<?php echo $isCore ? ' is-core' : ''; ?>" id="<?php echo h($termId); ?>">
               <summary class="accordion-title">
                 ❓ <?php echo h($term); ?>
-                <?php if ($kana !== ''): ?>
-                  <span style="font-size:0.75rem; font-weight:normal; color:var(--text-secondary);">（<?php echo h($kana); ?>）</span>
+                <?php if ($reading !== ''): ?>
+                  <span style="font-size:0.75rem; font-weight:normal; color:var(--text-secondary);">（<?php echo h($reading); ?>）</span>
+                <?php endif; ?>
+                <?php if ($abbreviation !== ''): ?>
+                  <span class="abbr-tag"><?php echo h($abbreviation); ?></span>
                 <?php endif; ?>
                 <?php if ($category !== ''): ?>
                   <span class="combo-badge" style="margin-left:8px; font-size:0.7rem;"><?php echo h($category); ?></span>
+                <?php endif; ?>
+                <?php if ($isCore): ?>
+                  <span class="core-term-badge">主要用語</span>
                 <?php endif; ?>
               </summary>
               <div class="accordion-content">
@@ -190,6 +169,17 @@ include 'includes/head.php';
                 <?php foreach ($content as $block): ?>
                   <?php echo renderGlossaryContentBlock($block); ?>
                 <?php endforeach; ?>
+
+                <?php if (!empty($relatedTerms)): ?>
+                  <div class="related-terms-box">
+                    <span class="related-label">関連用語:</span>
+                    <?php foreach ($relatedTerms as $relId): ?>
+                      <?php if (isset($termsById[$relId])): ?>
+                        <a href="#<?php echo h($relId); ?>"><?php echo h($termsById[$relId]['term'] ?? $relId); ?></a>
+                      <?php endif; ?>
+                    <?php endforeach; ?>
+                  </div>
+                <?php endif; ?>
               </div>
             </details>
           <?php endforeach; ?>
@@ -200,7 +190,7 @@ include 'includes/head.php';
   </main>
 </div>
 
-<!-- 用語検索：クライアントサイドの簡易フィルタ（用語名・かな・本文を対象） -->
+<!-- 用語検索：クライアントサイドの簡易フィルタ（表示テキスト全体＝用語名・かな・略称・本文・関連用語を対象） -->
 <script>
   (function () {
     var input = document.getElementById('glossarySearchInput');

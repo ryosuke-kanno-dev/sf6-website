@@ -1,0 +1,988 @@
+{
+  "drills": [
+    {
+      "id": "anti-air-reaction",
+      "name": "対空反応練習",
+      "purpose": "相手のジャンプ攻撃に反応して、安定して対空技を出せるようにする。",
+      "category": "反応系",
+      "difficulty": "初級",
+      "recommended_opponent": "任意",
+      "related_systems": [
+        "anti-air"
+      ],
+      "dummy_setting": [
+        {
+          "item": "相手の動作",
+          "value": "ジャンプ"
+        }
+      ],
+      "records": [],
+      "reversal_setup": [],
+      "success_criteria": "ジャンプの初動を見てから、毎回同じ対空技を安定して出せる状態。",
+      "tips": "見てから出すのが難しい場合は、着地際に技を置いておく「置き対空」から練習すると習得しやすい。",
+      "parameter_setting": []
+    },
+    {
+      "id": "drive-impact-punish",
+      "name": "ドライブインパクト返し",
+      "purpose": "相手のドライブインパクトの発生を見てから、DI/投げ/バックステップで正しく対応できるようにする。",
+      "category": "反応系",
+      "difficulty": "中級",
+      "recommended_opponent": "任意",
+      "related_systems": [
+        "drive-impact"
+      ],
+      "dummy_setting": [],
+      "records": [],
+      "reversal_setup": [
+        {
+          "tab": "ダウンリバーサル",
+          "slots": [
+            {
+              "action_category": "共通行動",
+              "action": "ドライブインパクト",
+              "delay": "0F"
+            }
+          ]
+        }
+      ],
+      "success_criteria": "ランダム再生でも高い確率でDI返し・投げ・バックステップのいずれかを選んで対応できる。",
+      "tips": "最初は読み合いを考えず、常にDIで返す練習から始めると発生の見極めがしやすい。",
+      "parameter_setting": []
+    },
+    {
+      "id": "shimmy-response",
+      "name": "シミー(投げ・様子見)対応",
+      "purpose": "相手の投げモーションと様子見(投げすかし)を見分け、投げにはしゃがみガード、すかしには差し返しで対応する。",
+      "category": "反応系",
+      "difficulty": "中級",
+      "recommended_opponent": "リュウ",
+      "related_systems": [
+        "mixup",
+        "normal-throw"
+      ],
+      "dummy_setting": [],
+      "records": [
+        {
+          "key": "1",
+          "label": "垂直ジャンプ→生ラッシュ→強P→歩き投げ"
+        },
+        {
+          "key": "2",
+          "label": "垂直ジャンプ→生ラッシュ→強P→しゃがみ(様子見)"
+        }
+      ],
+      "reversal_setup": [
+        {
+          "tab": "ダウンリバーサル",
+          "slots": [
+            {
+              "action_category": "レコード",
+              "record_ref": "1",
+              "delay": "0F"
+            },
+            {
+              "action_category": "レコード",
+              "record_ref": "2",
+              "delay": "0F"
+            }
+          ]
+        }
+      ],
+      "success_criteria": "投げは安定してしゃがみガードでき、様子見には差し返しや暴れで反応できる。",
+      "tips": "投げられることを恐れず、まずは相手の動きを見る意識を作ることが第一歩。投げてくる直前の一瞬の踏み込み動作を見る意識を持つと、ガードしたまま投げ抜けの判断がしやすくなる。パリィ/投げ抜け/対空など複数の選択肢を使い分ける場合、同じ指を近い位置のボタンに添えておくと切り替えが速くなる。",
+      "parameter_setting": []
+    },
+    {
+      "id": "raw-rush-stop",
+      "name": "生ラッシュ止め",
+      "purpose": "接近してくるドライブラッシュに対し、ドライブリバーサルやOD無敵技で割り込んで止める。",
+      "category": "反応系",
+      "difficulty": "上級",
+      "recommended_opponent": "リュウ",
+      "related_systems": [
+        "drive-rush",
+        "drive-reversal"
+      ],
+      "dummy_setting": [],
+      "records": [
+        {
+          "key": "1",
+          "label": "ドライブラッシュ→強P"
+        }
+      ],
+      "reversal_setup": [
+        {
+          "tab": "ダウンリバーサル",
+          "slots": [
+            {
+              "action_category": "レコード",
+              "record_ref": "1",
+              "delay": "0F"
+            }
+          ]
+        }
+      ],
+      "success_criteria": "ラッシュの接近を見てから安定して割り込める。",
+      "tips": "ゲージ管理も重要なので、実戦を想定してゲージが少ない状況でも練習しておく。",
+      "parameter_setting": []
+    },
+    {
+      "id": "projectile-response",
+      "name": "飛び道具への反応(弾抜け/ガード)",
+      "purpose": "飛び道具を状況に応じてガード・ジャンプ・無敵技での弾抜けなど、正しく処理できるようにする。",
+      "category": "反応系",
+      "difficulty": "初級",
+      "recommended_opponent": "リュウ",
+      "related_systems": [
+        "projectile",
+        "projectile-dodge"
+      ],
+      "dummy_setting": [],
+      "records": [],
+      "reversal_setup": [
+        {
+          "tab": "ダウンリバーサル",
+          "slots": [
+            {
+              "action_category": "必殺技",
+              "action": "波動拳",
+              "delay": "0F"
+            }
+          ]
+        }
+      ],
+      "success_criteria": "飛び道具を安定してガードでき、余裕があれば弾抜けの選択も取れる。",
+      "tips": "見てから反応できる飛び道具は、ガードだけでなくパリィで受けるとドライブゲージの減少を防げる(ジャストパリィでなくてもよい)。",
+      "parameter_setting": []
+    },
+    {
+      "id": "wakeup-full-response",
+      "name": "起き上がり全対応(投げ/パリィ/前ジャンプ/ラッシュ/様子見)",
+      "purpose": "起き上がりに何をされても正しく対応できるようにする、総合的な反応練習。",
+      "category": "全対応系",
+      "difficulty": "上級",
+      "recommended_opponent": "任意",
+      "related_systems": [
+        "okizeme",
+        "drive-reversal",
+        "just-parry"
+      ],
+      "dummy_setting": [],
+      "records": [
+        {
+          "key": "1",
+          "label": "前ジャンプ攻撃"
+        }
+      ],
+      "reversal_setup": [
+        {
+          "tab": "ダウンリバーサル",
+          "slots": [
+            {
+              "action_category": "共通行動",
+              "action": "通常投げ",
+              "delay": "0F"
+            },
+            {
+              "action_category": "レコード",
+              "record_ref": "1",
+              "delay": "0F"
+            },
+            {
+              "action_category": "共通行動",
+              "action": "何もしない",
+              "delay": "0F"
+            }
+          ]
+        }
+      ],
+      "success_criteria": "5パターン前後の行動それぞれに対して、安定して正しい対応ができる。",
+      "tips": "最初は2択(投げ/様子見)から始め、慣れたら選択肢を1つずつ増やしていく。相手のドライブゲージが少ない状況では、あえて起き攻めに行かず様子見をして相手の不利な状態を維持するのが強い選択になることもある。",
+      "parameter_setting": []
+    },
+    {
+      "id": "mid-low-mixup-response",
+      "name": "中段・下段択の全対応",
+      "purpose": "中段と下段の二択を見てから、あるいは意識して正しくガードできるようにする。",
+      "category": "全対応系",
+      "difficulty": "中級",
+      "recommended_opponent": "リュウ",
+      "related_systems": [
+        "mixup",
+        "mid-attack",
+        "low-attack"
+      ],
+      "dummy_setting": [],
+      "records": [],
+      "reversal_setup": [
+        {
+          "tab": "ガードリバーサル",
+          "slots": [
+            {
+              "action_category": "特殊技",
+              "action": "かかと落とし(中段)",
+              "delay": "0F",
+              "count": "1"
+            },
+            {
+              "action_category": "通常技",
+              "action": "しゃがみ中キック(下段)",
+              "delay": "0F",
+              "count": "1"
+            }
+          ]
+        }
+      ],
+      "success_criteria": "ランダム再生でも高い確率で正しいガード方向を選べる。",
+      "tips": "",
+      "parameter_setting": []
+    },
+    {
+      "id": "just-parry-precision",
+      "name": "ジャストパリィ精度練習",
+      "purpose": "シビアな受付タイミングでジャストパリィを安定して成立させる。",
+      "category": "精度系",
+      "difficulty": "上級",
+      "recommended_opponent": "リュウ",
+      "related_systems": [
+        "just-parry"
+      ],
+      "dummy_setting": [
+        {
+          "item": "ガード",
+          "value": "ガードしない"
+        }
+      ],
+      "records": [],
+      "reversal_setup": [
+        {
+          "tab": "ダウンリバーサル",
+          "slots": [
+            {
+              "action_category": "必殺技",
+              "action": "波動拳",
+              "delay": "0F"
+            }
+          ]
+        }
+      ],
+      "success_criteria": "通常パリィではなく、ジャストパリィの成立を狙った頻度で出せる。",
+      "tips": "エフェクトや音に集中しすぎず、技の予備動作でタイミングを取る意識を持つ。",
+      "parameter_setting": []
+    },
+    {
+      "id": "punish-selection",
+      "name": "確定反撃の選択練習",
+      "purpose": "相手の技の不利フレームに応じて、最適な確定反撃(小技/中足/投げ/SAなど)を選び分ける。",
+      "category": "精度系",
+      "difficulty": "中級",
+      "recommended_opponent": "リュウ",
+      "related_systems": [
+        "punish"
+      ],
+      "dummy_setting": [],
+      "records": [],
+      "reversal_setup": [
+        {
+          "tab": "ダウンリバーサル",
+          "slots": [
+            {
+              "action_category": "必殺技",
+              "action": "竜巻旋風脚",
+              "delay": "0F"
+            }
+          ]
+        }
+      ],
+      "success_criteria": "技ごとに最大リターンの確定反撃を即座に選べる。",
+      "tips": "",
+      "parameter_setting": []
+    },
+    {
+      "id": "safejump-mastery",
+      "name": "セーフジャンプの体得",
+      "purpose": "起き上がりの無敵技をすり抜けて、安全に飛び込めるタイミングを体に覚えさせる。",
+      "category": "精度系",
+      "difficulty": "中級",
+      "recommended_opponent": "リュウ",
+      "related_systems": [
+        "safejump"
+      ],
+      "dummy_setting": [],
+      "records": [],
+      "reversal_setup": [
+        {
+          "tab": "ダウンリバーサル",
+          "slots": [
+            {
+              "action_category": "必殺技",
+              "action": "OD昇龍拳",
+              "delay": "0F"
+            }
+          ]
+        }
+      ],
+      "success_criteria": "無敵技を出されてもガードが成立し、被弾しない状態を安定して作れる。",
+      "tips": "着地際で技を重ねる感覚を掴むまで根気強く繰り返す。",
+      "parameter_setting": []
+    },
+    {
+      "id": "kara-cancel-precision",
+      "name": "空振りキャンセルの入力精度",
+      "purpose": "通常技の空振り中に必殺技でキャンセルする入力精度を上げる。",
+      "category": "精度系",
+      "difficulty": "上級",
+      "recommended_opponent": "任意",
+      "related_systems": [
+        "kara"
+      ],
+      "dummy_setting": [],
+      "records": [],
+      "reversal_setup": [],
+      "success_criteria": "狙った間合いで安定してキャンセルが成立する。",
+      "tips": "",
+      "parameter_setting": []
+    },
+    {
+      "id": "combo-hit-confirm",
+      "name": "コンボのヒット確認練習",
+      "purpose": "技がヒットしたかガードされたかを見てから、コンボを続けるか止めるかを判断できるようにする。",
+      "category": "コンボ安定化系",
+      "difficulty": "初級",
+      "recommended_opponent": "任意",
+      "related_systems": [
+        "combo",
+        "cancel"
+      ],
+      "dummy_setting": [
+        {
+          "item": "ガード",
+          "value": "ランダム"
+        }
+      ],
+      "records": [],
+      "reversal_setup": [],
+      "success_criteria": "ヒット時はコンボを継続し、ガード時は安全に技を止められる。",
+      "tips": "見た目の攻撃モーションよりも、攻撃を当てた瞬間の相手の体力ゲージが減ったかどうかで判断すると分かりやすい(体力が減ればヒット、減らなければガード)。",
+      "parameter_setting": []
+    },
+    {
+      "id": "punish-counter-combo",
+      "name": "パニッシュカウンター確認コンボ練習",
+      "purpose": "パニッシュカウンター発生時専用の追加コンボルートを安定して決める。",
+      "category": "コンボ安定化系",
+      "difficulty": "中級",
+      "recommended_opponent": "任意",
+      "related_systems": [
+        "punish-counter"
+      ],
+      "dummy_setting": [
+        {
+          "item": "カウンター",
+          "value": "常にパニッシュカウンター"
+        }
+      ],
+      "records": [],
+      "reversal_setup": [],
+      "success_criteria": "通常時とパニッシュカウンター時でコンボルートを正しく使い分けられる。",
+      "tips": "",
+      "parameter_setting": []
+    },
+    {
+      "id": "meaty-confirm-throw-mixup",
+      "name": "起き攻め小技重ね(ヒット確認→コンボ/投げ)",
+      "purpose": "起き攻めの小技重ねでヒット確認を行い、ヒットならコンボへ、ガードなら投げへ切り替える判断を安定させる。",
+      "category": "全対応系",
+      "difficulty": "中級",
+      "recommended_opponent": "任意",
+      "related_systems": [
+        "combo",
+        "normal-throw",
+        "okizeme",
+        "cancel"
+      ],
+      "dummy_setting": [
+        {
+          "item": "ガード",
+          "value": "ランダム"
+        },
+        {
+          "item": "起き上がり",
+          "value": "その場受け身"
+        }
+      ],
+      "records": [],
+      "reversal_setup": [],
+      "success_criteria": "攻撃を当てた瞬間の相手の体力ゲージの増減を見て、ヒット時はコンボ継続、ガード時は投げへ安定して切り替えられる。",
+      "tips": "見た目の攻撃モーションよりも相手の体力ゲージの変化に注目すると判断しやすい。ダミーの起き上がりを「最速小技暴れ」に設定すると、必殺技後などのセットプレイの重ねタイミングが合っているかも同時に確認できる。",
+      "parameter_setting": []
+    },
+    {
+      "id": "ground-neutral-response",
+      "name": "地上戦の複合反応練習",
+      "purpose": "相手の牽制技の空振りを見逃さず差し返し、安全な技は無視し、踏み込みやドライブインパクトには適切に対応する、地上戦の総合的な反応力を鍛える。",
+      "category": "全対応系",
+      "difficulty": "上級",
+      "recommended_opponent": "ルーク",
+      "related_systems": [
+        "counter-poke",
+        "drive-impact",
+        "ma-ai"
+      ],
+      "dummy_setting": [],
+      "records": [
+        {
+          "key": "1",
+          "label": "しゃがみ中キック"
+        },
+        {
+          "key": "2",
+          "label": "しゃがみ中パンチ"
+        },
+        {
+          "key": "3",
+          "label": "前ステップ→通常投げ"
+        },
+        {
+          "key": "4",
+          "label": "ドライブインパクト"
+        }
+      ],
+      "reversal_setup": [
+        {
+          "tab": "ダウンリバーサル",
+          "slots": [
+            {
+              "action_category": "レコード",
+              "record_ref": "1",
+              "delay": "0F"
+            },
+            {
+              "action_category": "レコード",
+              "record_ref": "2",
+              "delay": "0F"
+            },
+            {
+              "action_category": "レコード",
+              "record_ref": "3",
+              "delay": "0F"
+            },
+            {
+              "action_category": "レコード",
+              "record_ref": "4",
+              "delay": "0F"
+            }
+          ]
+        }
+      ],
+      "success_criteria": "空振りする牽制技には差し返し、隙のない技は無視、前ステの踏み込みには発生の早い技で迎撃、インパクトには返しで対応できる。",
+      "tips": "差し返しを狙う間合いを自分から作り、相手に技を振らせるように誘導する意識を持つと精度が上がる。",
+      "parameter_setting": []
+    },
+    {
+      "id": "guard-reversal-full-response",
+      "name": "ガード後の全対応練習(ガードリバーサル)",
+      "purpose": "ガードした直後に相手がしてくる複数の選択肢(ジャンプ・投げ・下段・パリィ・ドライブインパクトなど)すべてに正しく対応できるようにする、ガード後の総合反応練習。",
+      "category": "全対応系",
+      "difficulty": "上級",
+      "recommended_opponent": "リュウ",
+      "related_systems": [
+        "guard-cancel",
+        "drive-parry",
+        "drive-impact",
+        "normal-throw"
+      ],
+      "dummy_setting": [],
+      "records": [],
+      "reversal_setup": [
+        {
+          "tab": "ガードリバーサル",
+          "slots": [
+            {
+              "action_category": "共通行動",
+              "action": "垂直ジャンプ",
+              "delay": "0F",
+              "count": "1"
+            },
+            {
+              "action_category": "共通行動",
+              "action": "前方ジャンプ",
+              "delay": "0F",
+              "count": "1"
+            },
+            {
+              "action_category": "共通行動",
+              "action": "何もしない",
+              "delay": "0F",
+              "count": "1"
+            },
+            {
+              "action_category": "共通行動",
+              "action": "通常投げ",
+              "delay": "0F",
+              "count": "1"
+            },
+            {
+              "action_category": "共通行動",
+              "action": "通常投げ",
+              "delay": "5F",
+              "count": "1"
+            },
+            {
+              "action_category": "通常技",
+              "action": "しゃがみ中キック",
+              "delay": "0F",
+              "count": "1"
+            },
+            {
+              "action_category": "共通行動",
+              "action": "ドライブパリィ",
+              "delay": "1F",
+              "count": "1"
+            },
+            {
+              "action_category": "共通行動",
+              "action": "ドライブインパクト",
+              "delay": "0F",
+              "count": "1"
+            }
+          ]
+        }
+      ],
+      "success_criteria": "スロット数を増やしても、それぞれの行動に対して落ち着いて正しい対応(ガード継続/しゃがみガード/対空/パリィ/DI返し等)ができる。",
+      "tips": "最初は3〜4択程度から始め、慣れたら1つずつ選択肢を増やしていくと挫折しにくい。",
+      "parameter_setting": []
+    },
+    {
+      "id": "rush-mixup-parry",
+      "name": "ラッシュの中下段・DI見分けパリィ",
+      "purpose": "最速または遅らせのドライブラッシュから出てくる中段・下段・ドライブインパクトを見分け、パリィで対応できるようにする。",
+      "category": "精度系",
+      "difficulty": "上級",
+      "recommended_opponent": "リュウ",
+      "related_systems": [
+        "drive-rush",
+        "drive-parry",
+        "just-parry",
+        "drive-impact"
+      ],
+      "dummy_setting": [],
+      "records": [
+        {
+          "key": "1",
+          "label": "最速ドライブラッシュ→中段"
+        },
+        {
+          "key": "2",
+          "label": "最速ドライブラッシュ→下段"
+        },
+        {
+          "key": "3",
+          "label": "最速ドライブラッシュ→ドライブインパクト"
+        },
+        {
+          "key": "4",
+          "label": "遅らせドライブラッシュ→中段"
+        }
+      ],
+      "reversal_setup": [
+        {
+          "tab": "ガードリバーサル",
+          "slots": [
+            {
+              "action_category": "レコード",
+              "record_ref": "1",
+              "delay": "0F",
+              "count": "1"
+            },
+            {
+              "action_category": "レコード",
+              "record_ref": "2",
+              "delay": "0F",
+              "count": "1"
+            },
+            {
+              "action_category": "レコード",
+              "record_ref": "3",
+              "delay": "0F",
+              "count": "1"
+            },
+            {
+              "action_category": "レコード",
+              "record_ref": "4",
+              "delay": "0F",
+              "count": "1"
+            }
+          ]
+        }
+      ],
+      "success_criteria": "最速でも遅らせでも、中段・下段・DIのどれが来てもパリィまたは適切なガードで対応できる。",
+      "tips": "",
+      "parameter_setting": []
+    },
+    {
+      "id": "fuzzy-jab-mixup",
+      "name": "ファジーコパ暴れ練習",
+      "purpose": "小技をガードした直後の一瞬で暴れの小技(ファジーコパ)を差し込み、連続ガードの連携と投げの両方に対応できるようにする。",
+      "category": "全対応系",
+      "difficulty": "上級",
+      "recommended_opponent": "任意",
+      "related_systems": [
+        "mixup",
+        "normal-throw"
+      ],
+      "dummy_setting": [],
+      "records": [
+        {
+          "key": "1",
+          "label": "しゃがみ弱P→しゃがみ弱P(連続ガード)"
+        },
+        {
+          "key": "2",
+          "label": "しゃがみ弱P→通常投げ"
+        }
+      ],
+      "reversal_setup": [
+        {
+          "tab": "ガードリバーサル",
+          "slots": [
+            {
+              "action_category": "レコード",
+              "record_ref": "1",
+              "delay": "0F",
+              "count": "1"
+            },
+            {
+              "action_category": "レコード",
+              "record_ref": "2",
+              "delay": "0F",
+              "count": "1"
+            }
+          ]
+        }
+      ],
+      "success_criteria": "連続ガードの連携には安全に対応しつつ、投げ拒否の暴れも同時に成立させられる。",
+      "tips": "相手の当て投げ(技を当てた後の投げ)に対しては、投げ抜けよりも暴れ(小技)の方がリターンが大きい場合がある。",
+      "parameter_setting": []
+    },
+    {
+      "id": "combo-repetition-drill",
+      "name": "苦手なコンボの反復練習",
+      "purpose": "ミスが多いコンボや実戦でよく使うコンボを繰り返し練習し、安定して出せるようにする。",
+      "category": "コンボ安定化系",
+      "difficulty": "初級",
+      "recommended_opponent": "任意",
+      "related_systems": [
+        "combo",
+        "cancel"
+      ],
+      "dummy_setting": [
+        {
+          "item": "ガード",
+          "value": "ガードしない"
+        }
+      ],
+      "records": [],
+      "reversal_setup": [],
+      "success_criteria": "同じコンボを連続で高い成功率で出せる。",
+      "tips": "ミスが多いものを優先的に、次によく使うものを繰り返すと効率が良い。",
+      "parameter_setting": []
+    },
+    {
+      "id": "sa-command-precision",
+      "name": "SAコマンド安定化練習",
+      "purpose": "スーパーアーツのコマンド入力を、単発・実戦パターンの両方で安定させる。",
+      "category": "精度系",
+      "difficulty": "中級",
+      "recommended_opponent": "任意",
+      "related_systems": [
+        "super-art"
+      ],
+      "dummy_setting": [
+        {
+          "item": "ガード",
+          "value": "ガードしない"
+        }
+      ],
+      "records": [],
+      "reversal_setup": [],
+      "success_criteria": "単発でも実戦想定のルートでも、SAコマンドの入力ミスがほぼなくなる。",
+      "tips": "",
+      "parameter_setting": []
+    },
+    {
+      "id": "rush-string-hit-confirm",
+      "name": "中足ラッシュのヒット確認連携",
+      "purpose": "中足からのドライブラッシュ連携で、ヒットとガードを見分けてコンボ継続か安全な技で止めるかを判断する。",
+      "category": "精度系",
+      "difficulty": "上級",
+      "recommended_opponent": "任意",
+      "related_systems": [
+        "drive-rush",
+        "cancel",
+        "combo"
+      ],
+      "dummy_setting": [
+        {
+          "item": "ガード",
+          "value": "ランダム"
+        }
+      ],
+      "records": [],
+      "reversal_setup": [],
+      "success_criteria": "各段階でのヒット/ガードを見て、コンボ継続と安全な待機を正しく選び分けられる。",
+      "tips": "遅らせ小技を連続ガードにしてしまうと相手の暴れに負けるので、間隔の調整も合わせて意識する。",
+      "parameter_setting": []
+    },
+    {
+      "id": "blockstring-gap-check",
+      "name": "連続ガード見極め暴れ",
+      "purpose": "中足キャンセルラッシュの連携が「連続ガード」か「隙のある連携」かを見極め、隙がある場合のみ無敵技で割り込む。",
+      "category": "精度系",
+      "difficulty": "上級",
+      "recommended_opponent": "任意",
+      "related_systems": [
+        "drive-rush",
+        "cancel",
+        "reversal"
+      ],
+      "dummy_setting": [
+        {
+          "item": "ガード",
+          "value": "すべてガード"
+        }
+      ],
+      "records": [],
+      "reversal_setup": [
+        {
+          "tab": "ガードリバーサル",
+          "slots": [
+            {
+              "action_category": "必殺技",
+              "action": "OD昇龍拳",
+              "delay": "0F",
+              "count": "1"
+            }
+          ]
+        }
+      ],
+      "success_criteria": "連続ガードかどうかを見分け、隙のある連携にのみ安定して無敵技を通せる。",
+      "tips": "最初は連携の見た目の違いを覚えることから始め、慣れたら反応速度を上げていく。SAで割り込む場合は、暴発を防ぐためパリィボタンを使ってコマンドを入力する方法もおすすめ。",
+      "parameter_setting": []
+    },
+    {
+      "id": "lethal-confirm-drill",
+      "name": "リーサル判断練習",
+      "purpose": "「倒し切れる」と判断した場面で、最大コンボ(SA1〜3を含む)を正確に選び、出し切れるようにする。",
+      "category": "コンボ安定化系",
+      "difficulty": "中級",
+      "recommended_opponent": "任意",
+      "related_systems": [
+        "super-art",
+        "combo"
+      ],
+      "dummy_setting": [],
+      "records": [],
+      "reversal_setup": [],
+      "success_criteria": "様々な残り体力に対して、倒し切れるかどうかの判断とコンボの選択・実行が安定してできる。",
+      "tips": "倒しきれなかった場合も「このHPだと足りなかった」という学びになるので、失敗パターンを覚えておくと精度が上がりやすい。",
+      "parameter_setting": [
+        {
+          "item": "ダミー体力",
+          "value": "任意の数値に変更"
+        }
+      ]
+    },
+    {
+      "id": "induce-burnout-drill",
+      "name": "意図的バーンアウト誘導練習",
+      "purpose": "相手のドライブゲージが少ない時に、あえて打撃をガードさせ続けて相手をバーンアウトさせる感覚を掴む。",
+      "category": "精度系",
+      "difficulty": "中級",
+      "recommended_opponent": "任意",
+      "related_systems": [
+        "burnout",
+        "drive-gauge",
+        "chip-damage"
+      ],
+      "dummy_setting": [],
+      "records": [],
+      "reversal_setup": [],
+      "success_criteria": "相手のゲージが少ない状況を認識し、意図的にバーンアウトへ追い込めるようになる。",
+      "tips": "",
+      "parameter_setting": [
+        {
+          "item": "ダミードライブゲージ",
+          "value": "1〜2本に変更"
+        }
+      ]
+    },
+    {
+      "id": "crossup-anti-air-drill",
+      "name": "めくり対空の習得",
+      "purpose": "相手のめくりジャンプ攻撃に対しても、正しい対空を出せるようにする。",
+      "category": "精度系",
+      "difficulty": "上級",
+      "recommended_opponent": "任意",
+      "related_systems": [
+        "anti-air",
+        "mekuri"
+      ],
+      "dummy_setting": [],
+      "records": [
+        {
+          "key": "1",
+          "label": "めくりを狙った前ジャンプ攻撃"
+        }
+      ],
+      "reversal_setup": [
+        {
+          "tab": "ダウンリバーサル",
+          "slots": [
+            {
+              "action_category": "レコード",
+              "record_ref": "1",
+              "delay": "0F"
+            }
+          ]
+        }
+      ],
+      "success_criteria": "通常の対空とめくり対空の両方を、ジャンプの軌道を見てから安定して選び分けられる。",
+      "tips": "習得に時間がかかりやすいテクニックなので、短期間で諦めず継続することが重要。",
+      "parameter_setting": []
+    },
+    {
+      "id": "corner-escape-jump-drill",
+      "name": "画面端 前ジャンプ脱出練習",
+      "purpose": "画面端に追い詰められた状況から、前ジャンプ(または遅らせ前ジャンプ)で安全に脱出する感覚を身につける。",
+      "category": "精度系",
+      "difficulty": "中級",
+      "recommended_opponent": "リュウ",
+      "related_systems": [
+        "okizeme"
+      ],
+      "dummy_setting": [],
+      "records": [],
+      "reversal_setup": [
+        {
+          "tab": "ダウンリバーサル",
+          "slots": [
+            {
+              "action_category": "必殺技",
+              "action": "OD昇龍拳",
+              "delay": "0F"
+            },
+            {
+              "action_category": "共通行動",
+              "action": "通常投げ",
+              "delay": "0F"
+            }
+          ]
+        }
+      ],
+      "success_criteria": "投げ抜け以外の選択肢(前ジャンプ・遅らせ前ジャンプ)でも画面端を安全に脱出できる。",
+      "tips": "",
+      "parameter_setting": []
+    },
+    {
+      "id": "whiff-bait-input-buffer-drill",
+      "name": "置き仕込みの練習",
+      "purpose": "相手の目の前で通常技を空振り(置き)しつつ、その動作中にキャンセルラッシュや必殺技のコマンドを仕込んでおき、相手が前進してきた時だけ技を当てて自動でキャンセル行動に移行できるようにする。",
+      "category": "精度系",
+      "difficulty": "上級",
+      "recommended_opponent": "任意",
+      "related_systems": [
+        "kara",
+        "shimite",
+        "drive-rush"
+      ],
+      "dummy_setting": [
+        {
+          "item": "相手の動作",
+          "value": "立ち"
+        }
+      ],
+      "records": [],
+      "reversal_setup": [],
+      "success_criteria": "相手が間合いに入ってきた場合のみ技が当たり、キャンセル行動へ自動で移行できる。空振り時にコマンドが暴発しないことも確認する。",
+      "tips": "「置き」と「仕込み」を組み合わせた技術で、地上戦の中でも特に高度な部類に入る。",
+      "parameter_setting": []
+    },
+    {
+      "id": "safejump-defense-mixup-drill",
+      "name": "安全飛び後の読み合い対応",
+      "purpose": "相手の安全飛び(セーフジャンプ)にジャストパリィで対応した後、続く投げ・ファジーコパン・ファジージャンプなどの選択肢にも対応できるようにする。",
+      "category": "全対応系",
+      "difficulty": "上級",
+      "recommended_opponent": "リュウ",
+      "related_systems": [
+        "safejump",
+        "just-parry",
+        "normal-throw"
+      ],
+      "dummy_setting": [],
+      "records": [
+        {
+          "key": "1",
+          "label": "安全飛び攻撃→通常投げ"
+        },
+        {
+          "key": "2",
+          "label": "安全飛び攻撃→しゃがみ弱P(暴れ潰し)"
+        },
+        {
+          "key": "3",
+          "label": "安全飛び攻撃→前ジャンプ"
+        }
+      ],
+      "reversal_setup": [
+        {
+          "tab": "ダウンリバーサル",
+          "slots": [
+            {
+              "action_category": "レコード",
+              "record_ref": "1",
+              "delay": "0F"
+            },
+            {
+              "action_category": "レコード",
+              "record_ref": "2",
+              "delay": "0F"
+            },
+            {
+              "action_category": "レコード",
+              "record_ref": "3",
+              "delay": "0F"
+            }
+          ]
+        }
+      ],
+      "success_criteria": "安全飛びをジャストパリィで防いだ後も、続く投げ・暴れ・ジャンプの択に正しく対応できる。",
+      "tips": "",
+      "parameter_setting": []
+    },
+    {
+      "id": "random-guard-combo-stability",
+      "name": "ランダムガード設定でのコンボ安定化",
+      "purpose": "相手がヒット・ガードのどちらになっても崩れない、安定したコンボルートを身につける。",
+      "category": "コンボ安定化系",
+      "difficulty": "初級",
+      "recommended_opponent": "任意",
+      "related_systems": [
+        "combo"
+      ],
+      "dummy_setting": [
+        {
+          "item": "ガード",
+          "value": "ランダム"
+        }
+      ],
+      "records": [],
+      "reversal_setup": [],
+      "success_criteria": "ガード・ヒットどちらの場合でも、コンボが手癖で止まらず正しい対応ができる。",
+      "tips": "",
+      "parameter_setting": []
+    }
+  ]
+}

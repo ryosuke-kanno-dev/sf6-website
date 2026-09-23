@@ -858,3 +858,92 @@ html {
 .roadmap-rank-card {
   border-left: 4px solid var(--accent-color);
 }
+
+/* --- 用語集 v2スキーマ対応 --- */
+.core-term-badge {
+  display: inline-block;
+  background-color: var(--accent-color);
+  color: var(--btn-text-color, #fff);
+  font-size: 0.68rem;
+  font-weight: bold;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.accordion-item.is-core > .accordion-title {
+  font-size: 1.05rem;
+}
+.abbr-tag {
+  font-size: 0.75rem;
+  font-weight: normal;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  padding: 0 5px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.related-terms-box {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.82rem;
+}
+.related-terms-box .related-label {
+  color: var(--text-secondary);
+  margin-right: 8px;
+}
+.related-terms-box a {
+  color: var(--accent-color);
+  text-decoration: none;
+  margin-right: 10px;
+}
+.related-terms-box a:hover {
+  text-decoration: underline;
+}
+.setup-step-heading {
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: var(--accent-color);
+  margin-top: 8px;
+}
+.setup-step-heading:first-child {
+  margin-top: 0;
+}
+.setup-screen-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: bold;
+  font-size: 0.78rem;
+  color: var(--btn-text-color, #fff);
+  background-color: var(--accent-color);
+  padding: 3px 9px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+.setup-screen-tag:first-child {
+  margin-top: 0;
+}
+.setup-screen-tab {
+  font-weight: normal;
+  font-size: 0.72rem;
+  background-color: rgba(255,255,255,0.25);
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-left: 2px;
+}
+.setup-note .setup-step-list {
+  margin-top: 4px;
+}
+.setup-step-list {
+  margin: 4px 0 0 16px;
+  padding: 0;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+.setup-step-list li {
+  margin-bottom: 3px;
+  list-style: disc;
+}

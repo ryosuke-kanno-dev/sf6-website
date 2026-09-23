@@ -36,8 +36,8 @@ if (!function_exists('getDefaultRoadmapData')) {
                 'title'    => 'ビギナー',
                 'icon'     => '🔰',
                 'color'    => '#94a3b8',
-                'theme'    => '操作に慣れ、対戦の基本ルールを体に覚え込ませる段階',
-                'checklist' => [
+                'subtitle' => '操作に慣れ、対戦の基本ルールを体に覚え込ませる段階',
+                'goals'     => [
                     '自分の得意なキャラを1体決める',
                     '通常技・必殺技をコマンドで安定して出せるようになる',
                     '立ちガード／しゃがみガードを状況に応じて使い分けられる',
@@ -51,8 +51,8 @@ if (!function_exists('getDefaultRoadmapData')) {
                 'title'    => 'アイアン・ブロンズ',
                 'icon'     => '🥉',
                 'color'    => '#b45309',
-                'theme'    => 'まずは対空と確定反撃を覚える段階',
-                'checklist' => [
+                'subtitle' => 'まずは対空と確定反撃を覚える段階',
+                'goals'     => [
                     'ジャンプ攻撃への対空技を1つ決めて安定させる',
                     '自分のキャラの確定反撃を2〜3個覚える',
                     '相手の起き上がりに技を重ねられるようになる',
@@ -66,8 +66,8 @@ if (!function_exists('getDefaultRoadmapData')) {
                 'title'    => 'シルバー・ゴールド',
                 'icon'     => '🥈',
                 'color'    => '#64748b',
-                'theme'    => '崩し・連携の圧を意識し、2択を仕掛けられるようになる段階',
-                'checklist' => [
+                'subtitle' => '崩し・連携の圧を意識し、2択を仕掛けられるようになる段階',
+                'goals'     => [
                     'ドライブラッシュを使った連携を1つ習得する',
                     '中段・下段の2択を仕掛けられるようになる',
                     '相手の起き上がりに攻めを継続できるようになる',
@@ -81,8 +81,8 @@ if (!function_exists('getDefaultRoadmapData')) {
                 'title'    => 'プラチナ・ダイヤ',
                 'icon'     => '💎',
                 'color'    => '#38bdf8',
-                'theme'    => 'キャラ対策とフレーム管理で安定して勝てる試合を増やす段階',
-                'checklist' => [
+                'subtitle' => 'キャラ対策とフレーム管理で安定して勝てる試合を増やす段階',
+                'goals'     => [
                     '対戦相手の主要キャラの確定反撃・弱点を把握する',
                     'フレームデータを見て有利／不利状況を判断できるようになる',
                     'ドライブゲージの読み合い（相手のバーンアウトを誘発する）を意識する',
@@ -96,8 +96,8 @@ if (!function_exists('getDefaultRoadmapData')) {
                 'title'    => 'マスター',
                 'icon'     => '👑',
                 'color'    => '#f59e0b',
-                'theme'    => '読み合いの精度を高め、対策を継続的にアップデートする段階',
-                'checklist' => [
+                'subtitle' => '読み合いの精度を高め、対策を継続的にアップデートする段階',
+                'goals'     => [
                     '対戦データやリプレイを継続的に見直し、対策をアップデートする',
                     '相手のクセ・傾向を読み、択の選択を変化させる',
                     '連敗時のメンタルの立て直し方を持っておく',
@@ -146,8 +146,8 @@ if (!file_exists($roadmapJsonPath)) {
     }
 }
 
-// 2. data/training_menus.json の読み込み（「おすすめ練習メニュー」の紐付けに使用）
-$trainingJsonPath = __DIR__ . '/data/training_menus.json';
+// 2. data/drills.json の読み込み（「おすすめ練習メニュー」の紐付けに使用）
+$trainingJsonPath = __DIR__ . '/data/drills.json';
 $trainingMenusById = [];
 
 if (file_exists($trainingJsonPath)) {
@@ -155,9 +155,8 @@ if (file_exists($trainingJsonPath)) {
     if ($jsonRaw !== false) {
         $jsonRaw = preg_replace('/^\xEF\xBB\xBF/', '', $jsonRaw);
         $decoded = json_decode($jsonRaw, true);
-        if (json_last_error() === JSON_ERROR_NONE) {
-            $menus = extractJsonList($decoded);
-            foreach ($menus as $menu) {
+        if (json_last_error() === JSON_ERROR_NONE && isset($decoded['drills']) && is_array($decoded['drills'])) {
+            foreach ($decoded['drills'] as $menu) {
                 if (!empty($menu['id'])) {
                     $trainingMenusById[$menu['id']] = $menu;
                 }
@@ -245,7 +244,7 @@ include 'includes/head.php';
             </span>
           </div>
           <p class="hero-header-desc" style="margin:8px 0 4px;">
-            <?php echo h($rank['theme'] ?? ''); ?>
+            <?php echo h($rank['subtitle'] ?? ''); ?>
           </p>
 
           <details class="accordion-item" style="margin-top:10px;">
@@ -253,19 +252,42 @@ include 'includes/head.php';
             <div class="accordion-content">
 
               <!-- マスターすべき要素・課題リスト -->
-              <?php if (!empty($rank['checklist'])): ?>
+              <?php if (!empty($rank['goals'])): ?>
                 <div class="glossary-block-title">✅ マスターすべき要素・課題</div>
                 <ul class="roadmap-checklist">
-                  <?php foreach ($rank['checklist'] as $checkItem): ?>
+                  <?php foreach ($rank['goals'] as $checkItem): ?>
                     <li><span class="roadmap-check-icon">✅</span> <span><?php echo h($checkItem); ?></span></li>
                   <?php endforeach; ?>
                 </ul>
               <?php endif; ?>
 
-              <!-- Markdown本文 -->
-              <?php if (!empty($rank['body'])): ?>
+              <!-- Markdown本文（実データは data/roadmap/{md_file} を読み込む。
+                   フォールバックデータは 'body' にインラインのMarkdown文字列を持つ） -->
+              <?php
+                $rankBodyMarkdown = '';
+                if (!empty($rank['md_file'])) {
+                    $mdFsPath = __DIR__ . '/data/roadmap/' . basename($rank['md_file']);
+                    if (file_exists($mdFsPath)) {
+                        $mdRaw = file_get_contents($mdFsPath);
+                        if ($mdRaw !== false) {
+                            $rankBodyMarkdown = preg_replace('/^\xEF\xBB\xBF/', '', $mdRaw);
+                        }
+                    }
+                }
+                if ($rankBodyMarkdown === '' && !empty($rank['body'])) {
+                    $rankBodyMarkdown = $rank['body'];
+                }
+              ?>
+              <?php if ($rankBodyMarkdown !== ''): ?>
                 <div class="glossary-block-title">📖 この段階の考え方</div>
-                <div><?php echo renderMarkdown($rank['body']); ?></div>
+                <div><?php echo renderMarkdown($rankBodyMarkdown); ?></div>
+              <?php elseif (!empty($rank['md_file'])): ?>
+                <div class="glossary-block-title">📖 この段階の考え方</div>
+                <div class="alert-box" style="margin-top:8px;">
+                  <div class="alert-content">
+                    <code>data/roadmap/<?php echo h($rank['md_file']); ?></code> が見つからないため、本文は準備中です。
+                  </div>
+                </div>
               <?php endif; ?>
 
               <!-- おすすめ練習メニュー -->
