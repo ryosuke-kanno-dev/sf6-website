@@ -179,6 +179,9 @@ if (!function_exists('renderGuideTabGroup')) {
         foreach ($tabs as $i => $tab) {
             $tabId = $groupKey . '-tab-' . ($tab['id'] ?? $i);
             $html .= '<div class="tab-content' . ($i === 0 ? ' active' : '') . '" id="' . h($tabId) . '">';
+            if (!empty($tab['subtitle'])) {
+                $html .= '<div class="tab-subtitle">' . h($tab['subtitle']) . '</div>';
+            }
             foreach (($tab['guide'] ?? []) as $block) {
                 $html .= renderContentBlock($block);
             }
