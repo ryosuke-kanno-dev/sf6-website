@@ -947,3 +947,236 @@ html {
   margin-bottom: 3px;
   list-style: disc;
 }
+/* --- drill-list.css (トレモ練習メニュー：1カラム縦長リスト＋サイドバー連携) --- */
+
+.drill-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.drill-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  transition: border-color 0.2s ease;
+  scroll-margin-top: 72px; /* アンカージャンプ時、スティッキーヘッダーの下に隠れないように */
+}
+
+.drill-card:hover {
+  border-color: var(--accent-color);
+}
+
+.drill-card-title {
+  color: var(--text-primary);
+  font-size: 1.15rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.drill-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.drill-card-badges .combo-badge {
+  font-size: 0.7rem;
+}
+
+/* --- 折りたたみトグル（設定手順を見る） --- */
+
+.drill-setup-toggle {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border-color);
+}
+
+.drill-setup-summary {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: var(--accent-color);
+  list-style: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.drill-setup-summary::-webkit-details-marker {
+  display: none;
+}
+
+.drill-setup-summary::before {
+  content: "▶";
+  display: inline-block;
+  font-size: 0.7rem;
+  transition: transform 0.15s ease;
+}
+
+.drill-setup-toggle[open] > .drill-setup-summary::before {
+  transform: rotate(90deg);
+}
+
+.drill-setup-summary:hover {
+  color: var(--accent-hover);
+}
+
+/* --- 実機のトレモ「設定画面」を模したパネル ---
+   テーマ（ライト/ダーク）に関わらず常にダーク基調に固定し、
+   「ゲーム画面を見ている」感覚を出す（スクリーンショットに近い見た目にする）。 */
+
+.drill-setup-screen {
+  margin-top: 10px;
+  background-color: #14181A;
+  border: 1px solid #2B3230;
+  border-radius: 6px;
+  padding: 4px 16px;
+  font-family: "Consolas", "Menlo", "Yu Gothic UI", monospace;
+}
+
+.drill-screen-group {
+  padding: 10px 0;
+}
+
+.drill-screen-group + .drill-screen-group {
+  border-top: 1px solid #232928;
+}
+
+.drill-screen-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: bold;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: #E2622D;
+  margin-bottom: 6px;
+}
+
+.drill-screen-header-icon {
+  font-size: 0.85rem;
+}
+
+.drill-screen-tab {
+  font-weight: normal;
+  font-size: 0.7rem;
+  color: #8E968F;
+  background-color: rgba(255, 255, 255, 0.08);
+  padding: 1px 8px;
+  border-radius: 3px;
+  margin-left: 2px;
+}
+
+.drill-screen-rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.drill-screen-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 2px;
+  font-size: 0.82rem;
+  border-bottom: 1px dotted #232928;
+}
+
+.drill-screen-row:last-child {
+  border-bottom: none;
+}
+
+.drill-screen-label {
+  color: #8E968F;
+  flex-shrink: 0;
+}
+
+.drill-screen-value {
+  color: #E7E5DE;
+  font-weight: bold;
+  text-align: right;
+}
+
+@media (max-width: 480px) {
+  .drill-screen-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  .drill-screen-value {
+    text-align: left;
+  }
+}
+
+/* =====================================================
+   トレモ専用サイドバー（includes/training-sidebar.php）
+   既存の .sidebar / .sidebar-section / .sidebar-title / .sidebar-menu /
+   .sidebar-submenu（char-sidebar.php と共通）をベースに、検索・難易度ドットを追加する。
+   ===================================================== */
+
+.sidebar-filter-label {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin: 10px 0 6px;
+}
+
+.sidebar-search-input {
+  width: 100%;
+  min-width: 0;
+  font-size: 0.8rem;
+  padding: 6px 10px;
+}
+
+.sidebar-filter-btn-group .filter-btn {
+  font-size: 0.7rem;
+  padding: 4px 10px;
+}
+
+/* カテゴリ見出し（クリック不可、グループラベル） */
+.sidebar-index-category {
+  font-size: 0.72rem;
+  font-weight: bold;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-top: 14px;
+  padding: 4px 10px;
+}
+
+.sidebar-index-category:first-child {
+  margin-top: 0;
+}
+
+.sidebar-index-item a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 難易度ドット */
+.diff-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.diff-dot-easy   { background-color: #4CAF50; }
+.diff-dot-mid    { background-color: #E0A72E; }
+.diff-dot-hard   { background-color: #D9534F; }
+.diff-dot-unknown{ background-color: var(--text-secondary); }
+
+.sidebar-index-count {
+  padding: 10px 10px 0;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}

@@ -39,11 +39,24 @@ if ($drillsErr !== null) {
     $drills = $drillsDecoded['drills'];
 }
 
-// 2. data/training_guide.json の読み込み（ページ冒頭に固定表示する使い方ガイド）
-$guideBlocks = [];
+// 2. data/training_guide.json の読み込み
+//    構成： reference_intro / reference(タブ配列) / mindset / level_intro / level_guide(タブ配列)
+$guideReferenceIntro = [];
+$guideReferenceTabs  = [];
+$guideMindset        = [];
+$guideLevelIntro     = [];
+$guideLevelTabs      = [];
+$guideLoadError      = null;
+
 [$guideDecoded, $guideErr] = loadJsonFile(__DIR__ . '/data/training_guide.json');
-if ($guideErr === null && isset($guideDecoded['guide']) && is_array($guideDecoded['guide'])) {
-    $guideBlocks = $guideDecoded['guide'];
+if ($guideErr !== null) {
+    $guideLoadError = $guideErr;
+} else {
+    $guideReferenceIntro = $guideDecoded['reference_intro'] ?? [];
+    $guideReferenceTabs  = $guideDecoded['reference']       ?? [];
+    $guideMindset        = $guideDecoded['mindset']         ?? [];
+    $guideLevelIntro     = $guideDecoded['level_intro']     ?? [];
+    $guideLevelTabs      = $guideDecoded['level_guide']     ?? [];
 }
 
 // 3. related_systems を用語集の用語名に解決するため、glossary.json も軽量に読み込む
@@ -94,11 +107,11 @@ if (!function_exists('renderDrillSetup')) {
 
         // --- ダミー設定 ---
         if (!empty($drill['dummy_setting'])) {
-            $html .= '<div class="setup-screen-tag">🎮 ダミー設定</div><ul class="setup-step-list">';
+            $html .= '<div class="drill-screen-group"><div class="drill-screen-header"><span class="drill-screen-header-icon">🎮</span>ダミー設定</div><div class="drill-screen-rows">';
             foreach ($drill['dummy_setting'] as $s) {
-                $html .= '<li>' . h($s['item'] ?? '') . '：<strong>' . h($s['value'] ?? '') . '</strong></li>';
+                $html .= '<div class="drill-screen-row"><span class="drill-screen-label">' . h($s['item'] ?? '') . '</span><span class="drill-screen-value">' . h($s['value'] ?? '') . '</span></div>';
             }
-            $html .= '</ul>';
+            $html .= '</div></div>';
         }
 
         // --- レコード設定 ---
@@ -109,36 +122,70 @@ if (!function_exists('renderDrillSetup')) {
                     $recordsByKey[$r['key']] = $r;
                 }
             }
-            $html .= '<div class="setup-screen-tag">⏺ レコード設定</div><ul class="setup-step-list">';
+            $html .= '<div class="drill-screen-group"><div class="drill-screen-header"><span class="drill-screen-header-icon">⏺</span>レコード設定</div><div class="drill-screen-rows">';
             foreach ($drill['records'] as $r) {
-                $html .= '<li>記録「' . h($r['key'] ?? '') . '」：' . h($r['label'] ?? '') . '</li>';
+                $html .= '<div class="drill-screen-row"><span class="drill-screen-label">記録「' . h($r['key'] ?? '') . '」</span><span class="drill-screen-value">' . h($r['label'] ?? '') . '</span></div>';
             }
-            $html .= '</ul>';
+            $html .= '</div></div>';
         }
 
         // --- 反撃設定（tabごとにグルーピングし、スロット番号を振る） ---
         if (!empty($drill['reversal_setup'])) {
             foreach ($drill['reversal_setup'] as $group) {
                 $tab = $group['tab'] ?? '';
-                $html .= '<div class="setup-screen-tag">🛡 反撃設定<span class="setup-screen-tab">' . h($tab) . '</span></div><ul class="setup-step-list">';
+                $html .= '<div class="drill-screen-group"><div class="drill-screen-header"><span class="drill-screen-header-icon">🛡</span>反撃設定<span class="drill-screen-tab">' . h($tab) . '</span></div><div class="drill-screen-rows">';
                 $slotNum = 0;
                 foreach (($group['slots'] ?? []) as $slot) {
                     $slotNum++;
-                    $html .= '<li>スロット' . $slotNum . '：' . renderReversalSlot($slot, $recordsByKey) . '</li>';
+                    $html .= '<div class="drill-screen-row"><span class="drill-screen-label">スロット' . $slotNum . '</span><span class="drill-screen-value">' . renderReversalSlot($slot, $recordsByKey) . '</span></div>';
                 }
-                $html .= '</ul>';
+                $html .= '</div></div>';
             }
         }
 
         // --- パラメーター設定 ---
         if (!empty($drill['parameter_setting'])) {
-            $html .= '<div class="setup-screen-tag">📊 パラメーター設定</div><ul class="setup-step-list">';
+            $html .= '<div class="drill-screen-group"><div class="drill-screen-header"><span class="drill-screen-header-icon">📊</span>パラメーター設定</div><div class="drill-screen-rows">';
             foreach ($drill['parameter_setting'] as $s) {
-                $html .= '<li>' . h($s['item'] ?? '') . '：<strong>' . h($s['value'] ?? '') . '</strong></li>';
+                $html .= '<div class="drill-screen-row"><span class="drill-screen-label">' . h($s['item'] ?? '') . '</span><span class="drill-screen-value">' . h($s['value'] ?? '') . '</span></div>';
             }
-            $html .= '</ul>';
+            $html .= '</div></div>';
         }
 
+        return $html;
+    }
+}
+
+/**
+ * タブグループ（reference / level_guide）を tab-navigation + tab-content として描画する。
+ * character.php / guide.php のタブ切り替え(.tab-navigation/.tab-btn/.tab-content)を再利用する。
+ */
+if (!function_exists('renderGuideTabGroup')) {
+    function renderGuideTabGroup(string $groupKey, array $tabs): string {
+        if (empty($tabs)) {
+            return '';
+        }
+        $html = '<div class="tab-group" data-tab-group="' . h($groupKey) . '">';
+        $html .= '<div class="tab-navigation">';
+        foreach ($tabs as $i => $tab) {
+            $tabId = $groupKey . '-tab-' . ($tab['id'] ?? $i);
+            $icon  = $tab['icon'] ?? '';
+            $label = $tab['label'] ?? '';
+            $html .= '<button class="tab-btn' . ($i === 0 ? ' active' : '') . '" type="button" data-tab-target="' . h($tabId) . '">'
+                   . h($icon) . ' ' . h($label) . '</button>';
+        }
+        $html .= '</div>';
+
+        foreach ($tabs as $i => $tab) {
+            $tabId = $groupKey . '-tab-' . ($tab['id'] ?? $i);
+            $html .= '<div class="tab-content' . ($i === 0 ? ' active' : '') . '" id="' . h($tabId) . '">';
+            foreach (($tab['guide'] ?? []) as $block) {
+                $html .= renderContentBlock($block);
+            }
+            $html .= '</div>';
+        }
+
+        $html .= '</div>';
         return $html;
     }
 }
@@ -151,11 +198,7 @@ include 'includes/head.php';
 
 <div class="main-wrapper">
 
-  <?php
-    // このページは章立てされた構成ではなく単一の一覧のため、目次は用意しない
-    $page_toc = [];
-    include 'includes/toc-sidebar.php';
-  ?>
+  <?php include 'includes/training-sidebar.php'; ?>
 
   <main class="content-area">
 
@@ -165,23 +208,50 @@ include 'includes/head.php';
       <p class="page-desc">レベルに応じたトレーニングモードの活用法と、効率的な反復練習メニュー。</p>
     </div>
 
-    <!-- トレモの使い方ガイド（固定表示・検索/フィルタ対象外） -->
-    <?php if (!empty($guideBlocks)): ?>
-      <div class="alert-box" style="margin-bottom:24px; padding:18px 20px;">
-        <div class="alert-title" style="margin-bottom:10px;">📘 トレモの使い方・設定ガイド</div>
-        <?php foreach ($guideBlocks as $block): ?>
+    <?php if ($guideLoadError !== null): ?>
+      <div class="alert-box warning" style="margin-bottom:24px;">
+        <div class="alert-title">⚠️ 使い方ガイドの読み込みエラー</div>
+        <div class="alert-content"><?php echo h($guideLoadError); ?></div>
+      </div>
+    <?php else: ?>
+
+      <!-- ① 設定項目リファレンス（トレモ画面のメニュー順タブ） -->
+      <section id="guide-reference" style="margin-bottom:28px;">
+        <h2 class="glossary-block-title" style="font-size:1.1rem;">📘 設定項目リファレンス</h2>
+        <?php foreach ($guideReferenceIntro as $block): ?>
           <?php echo renderContentBlock($block); ?>
         <?php endforeach; ?>
-      </div>
+        <?php echo renderGuideTabGroup('ref', $guideReferenceTabs); ?>
+      </section>
+
+      <!-- 練習に取り組む際の心構え（タブ化しない、レベル非依存の内容） -->
+      <?php if (!empty($guideMindset)): ?>
+        <div class="alert-box" style="margin-bottom:28px;">
+          <div class="alert-title">🧠 練習に取り組む際の心構え</div>
+          <?php foreach ($guideMindset as $block): ?>
+            <?php echo renderContentBlock($block); ?>
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
+
+      <!-- ② レベル別・上達の指針（MR帯タブ） -->
+      <section id="guide-level" style="margin-bottom:28px;">
+        <h2 class="glossary-block-title" style="font-size:1.1rem;">📈 レベル別・上達の指針</h2>
+        <?php foreach ($guideLevelIntro as $block): ?>
+          <?php echo renderContentBlock($block); ?>
+        <?php endforeach; ?>
+        <?php echo renderGuideTabGroup('level', $guideLevelTabs); ?>
+      </section>
+
     <?php endif; ?>
 
-    <!-- 検索・フィルターバー（カテゴリ×難易度の2軸） -->
+    <!-- 検索・フィルターバー（サイドバー側と状態を同期） -->
     <div class="filter-bar" style="flex-direction:column; align-items:stretch; gap:10px;">
       <input type="text" id="trainingSearchInput" class="filter-input" placeholder="練習項目を検索...">
 
       <div>
         <div style="font-size:0.75rem; color:var(--text-secondary); margin-bottom:6px;">目的から探す</div>
-        <div class="filter-btn-group" data-filter-group="category">
+        <div class="filter-btn-group" data-filter-group="category" data-filter-scope="main">
           <button class="filter-btn active" type="button" data-filter="all">すべて</button>
           <?php foreach ($categoryOptions as $cat): ?>
             <button class="filter-btn" type="button" data-filter="<?php echo h($cat); ?>"><?php echo h($cat); ?></button>
@@ -191,7 +261,7 @@ include 'includes/head.php';
 
       <div>
         <div style="font-size:0.75rem; color:var(--text-secondary); margin-bottom:6px;">難易度から探す</div>
-        <div class="filter-btn-group" data-filter-group="difficulty">
+        <div class="filter-btn-group" data-filter-group="difficulty" data-filter-scope="main">
           <button class="filter-btn active" type="button" data-filter="all">すべて</button>
           <?php foreach ($difficultyOptions as $diff): ?>
             <button class="filter-btn" type="button" data-filter="<?php echo h($diff); ?>"><?php echo h($diff); ?></button>
@@ -212,7 +282,7 @@ include 'includes/head.php';
         <div class="alert-content">現在、登録されている練習メニューがありません。</div>
       </div>
     <?php else: ?>
-      <div class="card-grid" id="trainingCardGrid" style="margin-top:18px;">
+      <div class="drill-list" id="trainingCardGrid">
         <?php foreach ($drills as $item): ?>
           <?php
             $name          = $item['name'] ?? '(名称未設定)';
@@ -225,31 +295,26 @@ include 'includes/head.php';
             $tips          = $item['tips'] ?? '';
             $setupHtml     = renderDrillSetup($item);
           ?>
-          <div class="grid-card" id="<?php echo h($item['id'] ?? ''); ?>" data-category="<?php echo h($category); ?>" data-difficulty="<?php echo h($difficulty); ?>">
-            <div class="grid-card-title">
+          <div class="drill-card" id="<?php echo h($item['id'] ?? ''); ?>" data-category="<?php echo h($category); ?>" data-difficulty="<?php echo h($difficulty); ?>">
+
+            <div class="drill-card-title">
               <span>🎯</span> <?php echo h($name); ?>
             </div>
 
-            <div style="display:flex; flex-wrap:wrap; gap:4px; margin-bottom:8px;">
+            <div class="drill-card-badges">
               <?php if ($category !== ''): ?>
-                <span class="combo-badge" style="font-size:0.7rem;"><?php echo h($category); ?></span>
+                <span class="combo-badge"><?php echo h($category); ?></span>
               <?php endif; ?>
               <?php if ($difficulty !== ''): ?>
-                <span class="combo-badge" style="font-size:0.7rem;">難易度：<?php echo h($difficulty); ?></span>
+                <span class="combo-badge">難易度：<?php echo h($difficulty); ?></span>
               <?php endif; ?>
               <?php if ($recommendedOp !== '' && $recommendedOp !== '任意'): ?>
-                <span class="combo-badge" style="font-size:0.7rem;">推奨対戦相手：<?php echo h($recommendedOp); ?></span>
+                <span class="combo-badge">推奨対戦相手：<?php echo h($recommendedOp); ?></span>
               <?php endif; ?>
             </div>
 
             <?php if ($purpose !== ''): ?>
               <div class="grid-card-desc"><?php echo nl2br(h($purpose)); ?></div>
-            <?php endif; ?>
-
-            <?php if ($setupHtml !== ''): ?>
-              <div class="combo-note setup-note" style="margin-top:10px;">
-                <?php echo $setupHtml; ?>
-              </div>
             <?php endif; ?>
 
             <?php if ($successCrit !== ''): ?>
@@ -276,6 +341,16 @@ include 'includes/head.php';
                 <?php endforeach; ?>
               </div>
             <?php endif; ?>
+
+            <?php if ($setupHtml !== ''): ?>
+              <details class="drill-setup-toggle">
+                <summary class="drill-setup-summary">設定手順を見る（トレモ画面での設定）</summary>
+                <div class="drill-setup-screen">
+                  <?php echo $setupHtml; ?>
+                </div>
+              </details>
+            <?php endif; ?>
+
           </div>
         <?php endforeach; ?>
       </div>
@@ -292,39 +367,99 @@ include 'includes/head.php';
   </main>
 </div>
 
-<!-- 検索・カテゴリ／難易度フィルターの簡易JS（2軸のANDフィルタ＋キーワード検索） -->
+<!-- ①タブ切り替え（設定項目リファレンス／レベル別指針、両グループ共通の汎用JS） -->
 <script>
   (function () {
-    var searchInput = document.getElementById('trainingSearchInput');
-    var cards        = document.querySelectorAll('#trainingCardGrid .grid-card');
-    var filterGroups = document.querySelectorAll('[data-filter-group]');
-    var currentFilters = { category: 'all', difficulty: 'all' };
+    document.querySelectorAll('.tab-group').forEach(function (group) {
+      var buttons  = group.querySelectorAll('.tab-btn[data-tab-target]');
+      var contents = group.querySelectorAll('.tab-content');
 
-    function applyFilters() {
-      var keyword = (searchInput ? searchInput.value : '').trim().toLowerCase();
-      cards.forEach(function (card) {
-        var matchesCategory   = currentFilters.category === 'all' || card.dataset.category === currentFilters.category;
-        var matchesDifficulty = currentFilters.difficulty === 'all' || card.dataset.difficulty === currentFilters.difficulty;
-        var matchesKeyword    = card.textContent.toLowerCase().includes(keyword);
-        card.style.display = (matchesCategory && matchesDifficulty && matchesKeyword) ? '' : 'none';
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var targetId = btn.dataset.tabTarget;
+          buttons.forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          contents.forEach(function (c) { c.classList.toggle('active', c.id === targetId); });
+        });
       });
+    });
+  })();
+</script>
+
+<!-- ②検索・カテゴリ／難易度フィルター：コンテンツエリアとサイドバーの2箇所のUIを同一状態に同期する -->
+<script>
+  (function () {
+    var searchInputs  = [document.getElementById('trainingSearchInput'), document.getElementById('trainingSearchInputSidebar')].filter(Boolean);
+    var cards         = document.querySelectorAll('#trainingCardGrid .drill-card');
+    var sidebarItems  = document.querySelectorAll('#trainingSidebarIndex .sidebar-index-item');
+    var sidebarCats   = document.querySelectorAll('#trainingSidebarIndex .sidebar-index-category');
+    var sidebarCount  = document.getElementById('trainingSidebarCount');
+    var filterGroups  = document.querySelectorAll('[data-filter-group]');
+    var currentFilters = { category: 'all', difficulty: 'all' };
+    var currentKeyword = '';
+
+    function matchesItem(el) {
+      var matchesCategory   = currentFilters.category === 'all' || el.dataset.category === currentFilters.category;
+      var matchesDifficulty = currentFilters.difficulty === 'all' || el.dataset.difficulty === currentFilters.difficulty;
+      var matchesKeyword    = el.textContent.toLowerCase().includes(currentKeyword);
+      return matchesCategory && matchesDifficulty && matchesKeyword;
     }
 
+    function applyFilters() {
+      var visibleCount = 0;
+
+      cards.forEach(function (card) {
+        card.style.display = matchesItem(card) ? '' : 'none';
+      });
+
+      sidebarItems.forEach(function (item) {
+        var match = matchesItem(item);
+        item.style.display = match ? '' : 'none';
+        if (match) visibleCount++;
+      });
+
+      // カテゴリ見出しは、配下の項目が1件も表示されていなければ隠す
+      sidebarCats.forEach(function (catEl) {
+        var cat = catEl.dataset.category;
+        var hasVisibleChild = Array.prototype.some.call(sidebarItems, function (item) {
+          return item.dataset.category === cat && item.style.display !== 'none';
+        });
+        catEl.style.display = hasVisibleChild ? '' : 'none';
+      });
+
+      if (sidebarCount) {
+        sidebarCount.textContent = visibleCount + '件を表示中';
+      }
+    }
+
+    // 検索窓：メイン／サイドバーどちらに入力しても、もう片方にも反映して同期する
+    searchInputs.forEach(function (input) {
+      input.addEventListener('input', function () {
+        currentKeyword = input.value.trim().toLowerCase();
+        searchInputs.forEach(function (other) {
+          if (other !== input) other.value = input.value;
+        });
+        applyFilters();
+      });
+    });
+
+    // フィルターボタン：メイン／サイドバー両方の同名グループのactive状態を揃える
     filterGroups.forEach(function (group) {
       var groupName = group.dataset.filterGroup;
       group.querySelectorAll('.filter-btn').forEach(function (btn) {
         btn.addEventListener('click', function () {
-          group.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
-          btn.classList.add('active');
           currentFilters[groupName] = btn.dataset.filter;
+
+          document.querySelectorAll('[data-filter-group="' + groupName + '"]').forEach(function (g) {
+            g.querySelectorAll('.filter-btn').forEach(function (b) {
+              b.classList.toggle('active', b.dataset.filter === btn.dataset.filter);
+            });
+          });
+
           applyFilters();
         });
       });
     });
-
-    if (searchInput) {
-      searchInput.addEventListener('input', applyFilters);
-    }
   })();
 </script>
 
