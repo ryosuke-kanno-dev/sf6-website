@@ -47,12 +47,12 @@ Options -Indexes
 
 # db-check.php（DB内部状況を表示する診断用ツール）は本番公開厳禁のため、
 # 常時アクセス拒否にしておく。ローカルで確認する際は一時的にこのブロックをコメントアウトする。
-<Files "db-check.php">
-    <IfModule mod_authz_core.c>
-        Require all denied
-    </IfModule>
-    <IfModule !mod_authz_core.c>
-        Order allow,deny
-        Deny from all
-    </IfModule>
-</Files>
+# <Files "db-check.php">
+#     <IfModule mod_authz_core.c>
+#         Require all denied
+#     </IfModule>
+#     <IfModule !mod_authz_core.c>
+#         Order allow,deny
+#         Deny from all
+#     </IfModule>
+# </Files>
