@@ -1180,3 +1180,12 @@ html {
   font-size: 0.72rem;
   color: var(--text-secondary);
 }
+
+/* --- tab-subtitle（レベル別タブ内に表示するMR帯の目安。タブラベル自体は短く保ち、
+   長い付随情報はここに逃がしてタブの折り返しを防ぐ） --- */
+
+.tab-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
