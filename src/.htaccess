@@ -7,6 +7,10 @@ RewriteEngine On
 # --- ① .php付きURLへ直接アクセスされた場合、拡張子なしURLへ301リダイレクト ---
 #     例: /character.php?char=luke -> /character?char=luke
 #     （SEO対策：重複コンテンツ防止・URLの正規化）
+#     ※ POSTリクエストはこの対象から除外する。301リダイレクトはブラウザの仕様上
+#       POSTをGETに変換してしまい、フォームの送信データが失われるため
+#       （admin/のログインフォーム等、POSTを使う画面すべてに影響する）。
+RewriteCond %{REQUEST_METHOD} !POST
 RewriteCond %{THE_REQUEST} \s/+(.+)\.php[\s?] [NC]
 RewriteRule ^ /%1 [R=301,L]
 

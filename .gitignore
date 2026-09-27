@@ -5,3 +5,6 @@ _docs_and_backup/
 *.xlsx
 .DS_Store
 Thumbs.db
+
+# 管理画面（開発中のこのPCだけで保持し、GitHubには上げない）
+src/admin/

@@ -4,166 +4,15 @@ require_once 'includes/db.php';
 require_once 'includes/functions/db_helpers.php';
 require_once 'includes/functions/command_converter.php';
 
-/**
- * combos.title が未設定の場合に、position / hit_type / hit_position / special_state
- * のENUM値から簡易的な状況ラベルを組み立てるフォールバック関数。
- */
-if (!function_exists('buildComboSituationLabel')) {
-    function buildComboSituationLabel(array $combo): string {
-        if (!empty($combo['title'])) {
-            return $combo['title'];
-        }
+// buildComboSituationLabel() / translateDifficulty() / comboCategoryKey() / comboCategoryLabel() /
+// comboCategoryOrder() / renderComboMemo() は includes/functions/db_helpers.php に
+// 共通定義を移動しました（admin/ 側と共用するため）。
 
-        $positionMap = ['Any' => '位置問わず', 'Mid' => '中央', 'Corner' => '画面端'];
-        $hitTypeMap  = ['Normal' => '通常ヒット', 'Counter' => 'カウンターヒット', 'Punish' => 'パニカン'];
-        $hitPosMap   = ['Ground' => '地上ヒット', 'Air' => '空中ヒット'];
-        $stateMap    = ['WallSplat' => '壁バウンド', 'Stun' => 'スタン中'];
+// frameAdvClass() / translateMoveType() は includes/functions/db_helpers.php に
+// 共通定義を移動しました（admin/ 側と共用するため）。
 
-        $parts = [];
-        $parts[] = $positionMap[$combo['position']] ?? $combo['position'];
-        if (($combo['hit_type'] ?? 'Normal') !== 'Normal') {
-            $parts[] = $hitTypeMap[$combo['hit_type']] ?? $combo['hit_type'];
-        }
-        if (($combo['hit_position'] ?? 'Ground') !== 'Ground') {
-            $parts[] = $hitPosMap[$combo['hit_position']] ?? $combo['hit_position'];
-        }
-        if (($combo['special_state'] ?? 'None') !== 'None') {
-            $parts[] = $stateMap[$combo['special_state']] ?? $combo['special_state'];
-        }
-
-        return implode(' / ', $parts);
-    }
-}
-
-/**
- * combos.difficulty（Beginner/Intermediate/Advanced）を日本語ラベルに変換する。
- */
-if (!function_exists('translateDifficulty')) {
-    function translateDifficulty(string $difficulty): string {
-        $map = [
-            'Beginner'     => '初級',
-            'Intermediate' => '中級',
-            'Advanced'     => '上級',
-        ];
-        return $map[$difficulty] ?? $difficulty;
-    }
-}
-
-/**
- * combos を「中央コンボ」「画面端コンボ」「パニカン・確定反撃始動」の3カテゴリに分類する。
- * 優先順位：hit_type='Punish' を最優先（確定反撃・パニカン始動という文脈が最も重要なため）、
- * 次に position='Corner'、それ以外は「中央コンボ」扱い。
- */
-if (!function_exists('comboCategoryKey')) {
-    function comboCategoryKey(array $combo): string {
-        if (($combo['hit_type'] ?? '') === 'Punish') {
-            return 'punish';
-        }
-        if (($combo['position'] ?? '') === 'Corner') {
-            return 'corner';
-        }
-        return 'center';
-    }
-}
-
-if (!function_exists('comboCategoryLabel')) {
-    function comboCategoryLabel(string $key): string {
-        $map = [
-            'center' => '中央コンボ',
-            'corner' => '画面端コンボ',
-            'punish' => 'パニカン・確定反撃始動',
-        ];
-        return $map[$key] ?? $key;
-    }
-}
-
-if (!function_exists('comboCategoryOrder')) {
-    function comboCategoryOrder(): array {
-        return ['center', 'corner', 'punish'];
-    }
-}
-
-
-/**
- * frame.guard_adv / frame.hit_adv（VARCHAR、'-3' 等の数値表記や 'D'・'—' を含む）の
- * 先頭数値を判定し、プラスなら緑、マイナスなら赤のCSSクラス名を返す。
- * 'D'（ダウン）や '—'（該当なし）は先頭に数値が無いため、(int)キャストで 0 扱いとなり中立表示になる。
- */
-if (!function_exists('frameAdvClass')) {
-    function frameAdvClass(?string $value): string {
-        if ($value === null || $value === '') {
-            return '';
-        }
-        $num = (int)$value;
-        if ($num > 0) {
-            return 'frame-plus';
-        }
-        if ($num < 0) {
-            return 'frame-minus';
-        }
-        return '';
-    }
-}
-
-/**
- * frame.move_type（ENUM）を日本語ラベルに変換する。
- */
-if (!function_exists('translateMoveType')) {
-    function translateMoveType(string $moveType): string {
-        $map = [
-            'normal_moves'   => '通常技',
-            'unique_attacks' => '特殊技',
-            'special_moves'  => '必殺技',
-            'super_arts'     => 'SA',
-            'throws'         => '投げ技',
-            'common_moves'   => '共通技',
-        ];
-        return $map[$moveType] ?? $moveType;
-    }
-}
-
-/**
- * matchup_guides.category（ENUM）を日本語ラベルに変換する。
- * summary（クイックサマリー）は専用セクションで表示するため、通常のカテゴリループには含めない。
- */
-if (!function_exists('matchupCategoryLabel')) {
-    function matchupCategoryLabel(string $category): string {
-        $map = [
-            'summary'        => 'クイックサマリー',
-            'neutral'        => '立ち回り（ニュートラル）',
-            'pressure'       => '攻め・プレッシャー対策',
-            'punish'         => '確定反撃',
-            'reversal'       => '切り返し・リバーサル対策',
-            'oki'            => '起き攻め・受け身',
-            'char_condition' => 'キャラ特有システムへの対策',
-            'gap'            => '技の隙・割り込み',
-        ];
-        return $map[$category] ?? $category;
-    }
-}
-
-// アコーディオンで表示するカテゴリの並び順（summary はクイックサマリーとして別枠表示するため含めない）
-if (!function_exists('matchupCategoryOrder')) {
-    function matchupCategoryOrder(): array {
-        return ['neutral', 'pressure', 'punish', 'reversal', 'oki', 'char_condition', 'gap'];
-    }
-}
-
-/**
- * matchup_guides.condition_tag（自分の使用キャラの条件に応じた補足タグ）を日本語ラベルに変換する。
- * 定義書（matchup_guides.md）に記載の主要タグに対応。未知のタグはそのまま表示する。
- */
-if (!function_exists('matchupConditionTagLabel')) {
-    function matchupConditionTagLabel(string $tag): string {
-        $map = [
-            'has_dp'         => '無敵対空技持ち限定',
-            'is_grappler'    => 'コマンド投げキャラ限定',
-            'has_projectile' => '飛び道具持ち限定',
-            'has_install'    => '強化インストール技持ち限定',
-        ];
-        return $map[$tag] ?? $tag;
-    }
-}
+// matchupCategoryLabel() / matchupCategoryOrder() / matchupConditionTagLabel() は
+// includes/functions/db_helpers.php に共通定義を移動しました（admin/ 側と共用するため）。
 
 /**
  * key_points / overview / matchup_guides.content 用のレンダラー。
@@ -229,23 +78,7 @@ if (!function_exists('renderProfileText')) {
     }
 }
 
-/**
- * combos.memo（コンボ注釈・補足コメント）表示用のレンダラー。
- * renderMarkdown()（Parsedown経由）でHTML変換した上で、先頭に「※」を付与する。
- * Parsedownの出力は <p>...</p> で始まるブロック要素のため、単純に文字列連結すると
- * "※" が段落の外側に浮いてしまう。そのため最初の <p> タグの直後に "※" を挿し込む。
- */
-if (!function_exists('renderComboMemo')) {
-    function renderComboMemo(string $memo): string {
-        $html = renderMarkdown($memo);
-        if (preg_match('/^<p>/', $html)) {
-            $html = preg_replace('/^<p>/', '<p>※', $html, 1);
-        } else {
-            $html = '※' . $html;
-        }
-        return $html;
-    }
-}
+// renderComboMemo() は includes/functions/db_helpers.php に共通定義を移動しました。
 
 // 2. URLパラメータからキャラクタースラッグを取得（未指定・不正時は 'luke' をデフォルトに）
 $char_slug = isset($_GET['char']) ? trim($_GET['char']) : 'luke';
@@ -443,6 +276,21 @@ include 'includes/head.php';
 
             <?php if (!empty($matchup['overview'])): ?>
               <p class="hero-header-desc"><?php echo renderMatchupMultiline($matchup['overview']); ?></p>
+            <?php endif; ?>
+
+            <?php if (!empty($matchup['strengths']) || !empty($matchup['weaknesses'])): ?>
+              <div class="combo-note" style="margin-top:10px;">
+                <?php if (!empty($matchup['strengths'])): ?>
+                  <strong class="training-block-heading">■強み</strong><br>
+                  <?php echo renderMatchupMultiline($matchup['strengths']); ?>
+                <?php endif; ?>
+                <?php if (!empty($matchup['weaknesses'])): ?>
+                  <div style="<?php echo !empty($matchup['strengths']) ? 'margin-top:8px;' : ''; ?>">
+                    <strong class="training-block-heading">■弱み</strong><br>
+                    <?php echo renderMatchupMultiline($matchup['weaknesses']); ?>
+                  </div>
+                <?php endif; ?>
+              </div>
             <?php endif; ?>
 
             <?php if (!empty($matchup['key_points'])): ?>
