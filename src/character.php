@@ -243,12 +243,19 @@ include 'includes/head.php';
     <div class="tab-content" id="tab-matchup">
 
       <!-- 対策総評（matchup） -->
-      <?php if ($matchup === null && empty($matchup_guides) && empty($punish_frames)): ?>
+      <?php // 対策総評・コラムが未登録の場合は「準備中」を案内する。
+      //（確定反撃リストはフレームデータから自動算出されるため、それだけ表示されて唐突に終わって見えるのを防ぐ） ?>
+      <?php if ($matchup === null && empty($matchup_guides)): ?>
         <div class="alert-box">
-          <div class="alert-title">💡 Notice</div>
-          <div class="alert-content">現在、<?php echo h($selected_char); ?> の対策データは登録されていません。</div>
+          <div class="alert-title">🚧 準備中</div>
+          <div class="alert-content">
+            <?php echo h($selected_char); ?> の対策総評・立ち回り解説は現在準備中です。
+            <?php if (!empty($punish_frames)): ?>下の確定反撃リストはフレームデータから自動で算出しています。<?php endif; ?>
+          </div>
         </div>
-      <?php else: ?>
+      <?php endif; ?>
+
+      <?php if ($matchup !== null || !empty($matchup_guides) || !empty($punish_frames)): ?>
 
         <?php if ($matchup !== null): ?>
           <div class="hero-header">
@@ -397,7 +404,7 @@ include 'includes/head.php';
               ?>
               <details class="accordion-item">
                 <summary class="accordion-title">
-                  ❓ <?php echo h($guide['title']); ?>
+                  <?php echo h($guide['title']); ?>
                   <?php if (!empty($guide['condition_tag'])): ?>
                     <span class="combo-badge" style="margin-left:8px; font-size:0.7rem;"><?php echo h(matchupConditionTagLabel($guide['condition_tag'])); ?></span>
                   <?php endif; ?>

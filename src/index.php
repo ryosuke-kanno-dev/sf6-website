@@ -173,25 +173,65 @@ $pickupCharacters = array_slice(getAllCharacters($pdo), 0, 4);
   </div>
 </div>
 
+<?php
+// ---- QUICK JUMP のリンクデータ ----
+// リンク先を手書きすると他ページの実態とずれる（旧ID・削除済みIDが残る）ため、
+// 各ページと同じデータ（drills.json / roadmap.json / DB）から組み立てる。
+$charCount = getCharacterCount($pdo);
+
+// 2. トレモ：代表的なドリルをID指定で選び、表示名は drills.json から取得（IDが無くなれば自動的に除外される）
+$quickTrainingIds = ['anti-air-reaction', 'drive-impact-punish', 'wakeup-full-response'];
+$trainingLinks    = [];
+$drillsRaw = @file_get_contents(__DIR__ . '/data/drills.json');
+if ($drillsRaw !== false) {
+    $drillsDecoded = json_decode(preg_replace('/^\xEF\xBB\xBF/', '', $drillsRaw), true);
+    $drillNames = [];
+    foreach (($drillsDecoded['drills'] ?? []) as $d) {
+        if (!empty($d['id'])) { $drillNames[$d['id']] = $d['name'] ?? $d['id']; }
+    }
+    foreach ($quickTrainingIds as $drillId) {
+        if (isset($drillNames[$drillId])) {
+            $trainingLinks[] = ['name' => $drillNames[$drillId], 'url' => 'training.php#' . $drillId];
+        }
+    }
+}
+if (empty($trainingLinks)) {
+    $trainingLinks[] = ['name' => 'トレモ練習メニュー一覧', 'url' => 'training.php'];
+}
+
+// 4. ロードマップ：roadmap.json のランクをそのままリンク化（id が anchor になる）
+$roadmapLinks = [];
+$rmRaw = @file_get_contents(__DIR__ . '/data/roadmap.json');
+if ($rmRaw !== false) {
+    $rmDecoded = json_decode(preg_replace('/^\xEF\xBB\xBF/', '', $rmRaw), true);
+    foreach (($rmDecoded ?? []) as $rank) {
+        if (!empty($rank['id'])) {
+            $roadmapLinks[] = ['name' => $rank['title'] ?? $rank['id'], 'url' => 'roadmap.php#rank-' . $rank['id']];
+        }
+    }
+}
+if (empty($roadmapLinks)) {
+    $roadmapLinks[] = ['name' => 'ロードマップ一覧', 'url' => 'roadmap.php'];
+}
+
+$jsonFlags = JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT;
+?>
 <!-- 9. トップページ専用カルーセル動作用JavaScript -->
 <script>
   const menuData = {
     1: {
       title: "1. 初期設定・環境構想 - QUICK JUMP",
       links: [
-        { name: "キーコンフィグ設定", url: "guide.php#keyconfig" },
-        { name: "画面・グラフィック", url: "guide.php#graphics" },
-        { name: "サウンド設定", url: "guide.php#sound" }
+        { name: "操作タイプを選ぶ", url: "guide.php#operation-types" },
+        { name: "ゲーム内設定", url: "guide.php#settings" },
+        { name: "デバイスを選ぶ", url: "guide.php#devices" },
+        { name: "チュートリアル解説", url: "guide.php#tutorials" }
       ],
       guide: "グラフィック設定や入力遅延軽減など、スト6を始める前にやっておくべき必須設定です。"
     },
     2: {
       title: "2. トレモ練習メニュー - QUICK JUMP",
-      links: [
-        { name: "対空練習", url: "training.php#anti-air-001" },
-        { name: "投げ抜け練習", url: "training.php#throw-escape-001" },
-        { name: "起き攻め練習", url: "training.php#oki-001" }
-      ],
+      links: <?php echo json_encode($trainingLinks, $jsonFlags); ?>,
       guide: "トレーニングモードのダミー設定や、効率的な反復練習レシピをまとめています。"
     },
     3: {
@@ -201,18 +241,13 @@ $pickupCharacters = array_slice(getAllCharacters($pdo), 0, 4);
         { name: "リュウ", url: "character.php?char=ryu" },
         { name: "ケン", url: "character.php?char=ken" },
         { name: "春麗", url: "character.php?char=chunli" },
-        { name: "全30+キャラ一覧...", url: "character.php" }
+        { name: "全<?php echo (int)$charCount; ?>キャラ一覧...", url: "character.php" }
       ],
       guide: "全キャラクターのコンボレシピ・確定反撃・フレームデータを検索できます。"
     },
     4: {
       title: "4. 上達ロードマップ - QUICK JUMP",
-      links: [
-        { name: "ビギナー", url: "roadmap.php#rank-beginner" },
-        { name: "アイアン・ブロンズ", url: "roadmap.php#rank-iron_bronze" },
-        { name: "シルバー・ゴールド", url: "roadmap.php#rank-silver_gold" },
-        { name: "プラチナ・ダイヤ〜マスター", url: "roadmap.php#rank-platinum_diamond" }
-      ],
+      links: <?php echo json_encode($roadmapLinks, $jsonFlags); ?>,
       guide: "自分のランクに合わせた目標・立ち回りの考え方・練習メニューのロードマップです。"
     },
     5: {

@@ -87,6 +87,11 @@ function getAllCharacters($pdo) {
     return $stmt->fetchAll();
 }
 
+// 1b. 登録キャラクター数の取得（「全N キャラ」表記を実データから自動表示するため）
+function getCharacterCount($pdo) {
+    return (int)$pdo->query("SELECT COUNT(*) FROM characters")->fetchColumn();
+}
+
 // 2. スラッグ指定によるキャラクター単体情報の取得（例: 'luke', 'akuma'）
 function getCharacterBySlug($pdo, $slug) {
     $stmt = $pdo->prepare("SELECT * FROM characters WHERE char_slug = ?");

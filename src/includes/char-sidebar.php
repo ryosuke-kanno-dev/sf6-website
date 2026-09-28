@@ -8,6 +8,10 @@ $selected_char_icon = isset($selected_char_icon) ? $selected_char_icon : 'L';
 // 未定義の場合（他ページから誤って読み込まれた場合等）は空配列にして安全に倒す。
 $combosByCategory  = isset($combosByCategory) ? $combosByCategory : [];
 $guidesByCategory   = isset($guidesByCategory) ? $guidesByCategory : [];
+
+// 「全N キャラから変更する」の N は、DBの実キャラ数から自動表示する（手書きの数字がずれないように）。
+// $pdo / getCharacterCount() が使えない場合は数字を出さずに済む文言へ安全に倒す。
+$charCount = (isset($pdo) && function_exists('getCharacterCount')) ? getCharacterCount($pdo) : 0;
 ?>
 <aside class="sidebar" id="sidebar">
 
@@ -24,7 +28,7 @@ $guidesByCategory   = isset($guidesByCategory) ? $guidesByCategory : [];
     </div>
 
     <button class="char-open-btn" onclick="toggleCharModal(true)">
-      全30+キャラから変更する 🔍
+      <?php echo $charCount > 0 ? '全' . (int)$charCount . 'キャラから変更する' : 'キャラクターを変更する'; ?> 🔍
     </button>
   </div>
 
