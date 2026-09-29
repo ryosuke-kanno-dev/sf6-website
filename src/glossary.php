@@ -227,7 +227,7 @@ include 'includes/head.php';
     });
   })();
 
-  // #用語ID で直接リンクされた場合、該当のアコーディオンを自動的に開く
+  // #用語ID で直接リンクされた場合、該当のアコーディオンを自動的に開き、一瞬ハイライトする
   // （<details>のidを直接指定した場合、ブラウザはスクロールはしても開閉はしてくれないため）
   (function () {
     function openTargetFromHash() {
@@ -237,6 +237,13 @@ include 'includes/head.php';
       if (target && target.tagName === 'DETAILS') {
         target.open = true;
         target.scrollIntoView();
+        target.classList.remove('is-jump-target');
+        // 再度同じ用語に飛んだ時もアニメーションが再生されるよう、一度クラスを外してから付け直す
+        void target.offsetWidth;
+        target.classList.add('is-jump-target');
+        setTimeout(function () {
+          target.classList.remove('is-jump-target');
+        }, 1600);
       }
     }
     openTargetFromHash();

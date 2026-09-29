@@ -5,6 +5,17 @@
   border-radius: 8px;
   margin-bottom: 12px;
   overflow: hidden;
+  scroll-margin-top: 72px; /* ハッシュリンクでジャンプした時、スティッキーヘッダーの下に隠れないように */
+}
+
+/* ハッシュリンクで開いた項目を、一瞬光らせて「これのことです」を示す */
+.accordion-item.is-jump-target {
+  animation: accordionJumpFlash 1.6s ease;
+}
+@keyframes accordionJumpFlash {
+  0%   { box-shadow: 0 0 0 2px var(--accent-color); }
+  70%  { box-shadow: 0 0 0 2px var(--accent-color); }
+  100% { box-shadow: 0 0 0 0 transparent; }
 }
 
 .accordion-title {
