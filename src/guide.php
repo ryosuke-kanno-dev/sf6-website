@@ -95,44 +95,46 @@ if (!function_exists('tutorialLevelIcon')) {
 
 /**
  * tutorials.json の画像スラッグ配列を、存在チェック付きの<img>タグ群としてレンダリングする。
- * 実ファイルが無い場合は "画像準備中" のプレースホルダーにフォールバックする。
+ * 実ファイルが無いスロットは、"準備中"のプレースホルダー枠を出さずスキップする
+ * （多数の空枠が並んで未完成に見えるのを避けるため）。全滅した場合は行自体を出さない。
  */
 if (!function_exists('renderTutorialImages')) {
     function renderTutorialImages(array $imgs, string $altText): string {
-        $html = '<div class="tutorial-media-row">';
+        $items = '';
         foreach ($imgs as $imgSlug) {
             $relPath = 'img/tutorials/' . $imgSlug . '.png';
             $fsPath  = __DIR__ . '/img/tutorials/' . $imgSlug . '.png';
             if (file_exists($fsPath)) {
-                $html .= '<div class="tutorial-media-item"><img src="' . h($relPath) . '" alt="' . h($altText) . '"></div>';
-            } else {
-                $html .= '<div class="tutorial-media-item"><div class="tutorial-media-placeholder">🖼️ 画像準備中</div></div>';
+                $items .= '<div class="tutorial-media-item"><img src="' . h($relPath) . '" alt="' . h($altText) . '" loading="lazy"></div>';
             }
         }
-        $html .= '</div>';
-        return $html;
+        if ($items === '') {
+            return '';
+        }
+        return '<div class="tutorial-media-row">' . $items . '</div>';
     }
 }
 
 /**
  * tutorials.json の動画スラッグ配列を、存在チェック付きの<video>タグ群としてレンダリングする。
- * 実ファイルが無い場合は "動画準備中" のプレースホルダーにフォールバックする。
+ * 実ファイルが無いスロットは、"準備中"のプレースホルダー枠を出さずスキップする。
+ * 全滅した場合は行自体を出さない。
  */
 if (!function_exists('renderTutorialVideos')) {
     function renderTutorialVideos(array $videos, string $levelEn, ?string $operation): string {
-        $html = '<div class="tutorial-media-row">';
+        $items = '';
         foreach ($videos as $videoSlug) {
             $relPath = 'videos/tutorials/' . $levelEn . '/' . $videoSlug . '.mp4';
             $fsPath  = __DIR__ . '/videos/tutorials/' . $levelEn . '/' . $videoSlug . '.mp4';
             if (file_exists($fsPath)) {
-                $loopAttrs = ($operation === 'play') ? 'autoplay loop muted playsinline' : 'controls';
-                $html .= '<div class="tutorial-media-item"><video ' . $loopAttrs . '><source src="' . h($relPath) . '" type="video/mp4">お使いのブラウザは動画タグをサポートしていません。</video></div>';
-            } else {
-                $html .= '<div class="tutorial-media-item"><div class="tutorial-media-placeholder">🎬 動画準備中</div></div>';
+                $loopAttrs = ($operation === 'play') ? 'autoplay loop muted playsinline preload="none"' : 'controls preload="none"';
+                $items .= '<div class="tutorial-media-item"><video ' . $loopAttrs . '><source src="' . h($relPath) . '" type="video/mp4">お使いのブラウザは動画タグをサポートしていません。</video></div>';
             }
         }
-        $html .= '</div>';
-        return $html;
+        if ($items === '') {
+            return '';
+        }
+        return '<div class="tutorial-media-row">' . $items . '</div>';
     }
 }
 
@@ -423,7 +425,7 @@ include 'includes/head.php';
                   ?>
                   <div class="device-product-card">
                     <?php if ($hasThumbnail): ?>
-                      <img class="device-product-thumb" src="<?php echo h($thumbRelPath); ?>" alt="<?php echo h($productName); ?>">
+                      <img class="device-product-thumb" src="<?php echo h($thumbRelPath); ?>" alt="<?php echo h($productName); ?>" loading="lazy">
                     <?php else: ?>
                       <div class="device-product-thumb-placeholder"><?php echo h(deviceTypeIcon($type)); ?></div>
                     <?php endif; ?>

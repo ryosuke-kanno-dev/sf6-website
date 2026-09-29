@@ -111,7 +111,12 @@ include 'includes/head.php';
 
     <!-- 検索バー -->
     <div class="filter-bar">
-      <input type="text" id="glossarySearchInput" class="filter-input" placeholder="用語名で検索 (例: キャンセル, 確反)...">
+      <input type="text" id="glossarySearchInput" class="filter-input" placeholder="用語名・本文で検索 (例: キャンセル, 確反)...">
+    </div>
+
+    <div id="glossaryNoResult" class="alert-box" style="display:none;">
+      <div class="alert-title">💡 見つかりませんでした</div>
+      <div class="alert-content">条件に一致する用語がありません。キーワードを変えてお試しください。</div>
     </div>
 
     <!-- アコーディオン形式の用語一覧（JSON連携） -->
@@ -130,6 +135,7 @@ include 'includes/head.php';
         <?php $categoryIndex = 0; ?>
         <?php foreach ($termsByCategory as $categoryName => $termsInCategory): ?>
           <?php $categoryIndex++; ?>
+          <div class="glossary-category-group">
           <h2 class="glossary-block-title" id="<?php echo h(glossaryCategorySlug($categoryName, $categoryIndex)); ?>" style="font-size:1.05rem; margin-top:20px;">
             <?php echo $categoryName !== '' ? h($categoryName) : '未分類'; ?>
           </h2>
@@ -183,6 +189,7 @@ include 'includes/head.php';
               </div>
             </details>
           <?php endforeach; ?>
+          </div>
         <?php endforeach; ?>
       </div>
     <?php endif; ?>
@@ -190,18 +197,50 @@ include 'includes/head.php';
   </main>
 </div>
 
-<!-- 用語検索：クライアントサイドの簡易フィルタ（表示テキスト全体＝用語名・かな・略称・本文・関連用語を対象） -->
+<!-- 用語検索：クライアントサイドの簡易フィルタ。キーワード一致で用語を絞り込み、
+     該当0件のカテゴリ見出しは隠し、全体0件なら案内を出す。 -->
 <script>
   (function () {
-    var input = document.getElementById('glossarySearchInput');
+    var input     = document.getElementById('glossarySearchInput');
+    var groups    = document.querySelectorAll('#glossaryList .glossary-category-group');
+    var noResultEl = document.getElementById('glossaryNoResult');
     if (!input) return;
+
     input.addEventListener('input', function (e) {
       var keyword = e.target.value.trim().toLowerCase();
-      document.querySelectorAll('#glossaryList .accordion-item').forEach(function (item) {
-        var text = item.textContent.toLowerCase();
-        item.style.display = text.includes(keyword) ? '' : 'none';
+      var visibleTotal = 0;
+
+      groups.forEach(function (group) {
+        var visibleInGroup = 0;
+        group.querySelectorAll('.accordion-item').forEach(function (item) {
+          var match = item.textContent.toLowerCase().includes(keyword);
+          item.style.display = match ? '' : 'none';
+          if (match) visibleInGroup++;
+        });
+        group.style.display = visibleInGroup > 0 ? '' : 'none';
+        visibleTotal += visibleInGroup;
       });
+
+      if (noResultEl) {
+        noResultEl.style.display = visibleTotal === 0 ? '' : 'none';
+      }
     });
+  })();
+
+  // #用語ID で直接リンクされた場合、該当のアコーディオンを自動的に開く
+  // （<details>のidを直接指定した場合、ブラウザはスクロールはしても開閉はしてくれないため）
+  (function () {
+    function openTargetFromHash() {
+      var hash = window.location.hash;
+      if (!hash) return;
+      var target = document.querySelector(hash);
+      if (target && target.tagName === 'DETAILS') {
+        target.open = true;
+        target.scrollIntoView();
+      }
+    }
+    openTargetFromHash();
+    window.addEventListener('hashchange', openTargetFromHash);
   })();
 </script>
 
