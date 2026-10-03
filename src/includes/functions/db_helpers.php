@@ -264,6 +264,89 @@ function getFrameById($pdo, $frame_id) {
     return $stmt->fetch();
 }
 
+// 3d. 豪鬼専用の実戦コンボ集（akuma.php / admin/ 共用）。purpose(practical/lethal)問わず全件、表示順で取得
+function getAkumaCombos($pdo) {
+    $stmt = $pdo->query("SELECT * FROM akuma_combos ORDER BY purpose ASC, sort_order ASC, id ASC");
+    return $stmt->fetchAll();
+}
+
+function getAkumaComboById($pdo, $combo_id) {
+    $stmt = $pdo->prepare("SELECT * FROM akuma_combos WHERE id = ?");
+    $stmt->execute([$combo_id]);
+    return $stmt->fetch();
+}
+
+// 3e. 起き攻め／セットアップのマトリクス表 関連（akuma.php / admin/ 共用）
+
+// 相手の行動マスタ一覧（マトリクスの列として使う。表記・順序を揃えるための一覧）
+function getAkumaOpponentActions($pdo) {
+    $stmt = $pdo->query("SELECT * FROM akuma_opponent_actions ORDER BY sort_order ASC, id ASC");
+    return $stmt->fetchAll();
+}
+
+// 状況一覧（category: 'oki'=起き攻め / 'setup'=セットアップ）
+function getAkumaOkiSetups($pdo, string $category) {
+    $stmt = $pdo->prepare("SELECT * FROM akuma_oki_setups WHERE category = ? ORDER BY sort_order ASC, id ASC");
+    $stmt->execute([$category]);
+    return $stmt->fetchAll();
+}
+
+// 指定した状況(setup_id)に属する択の一覧
+function getAkumaOkiOptionsBySetupId($pdo, $setup_id) {
+    $stmt = $pdo->prepare("SELECT * FROM akuma_oki_options WHERE setup_id = ? ORDER BY sort_order ASC, id ASC");
+    $stmt->execute([$setup_id]);
+    return $stmt->fetchAll();
+}
+
+// 指定した択の一覧(複数可)に属する結果を、[option_id][opponent_action_id] => row の形でまとめて取得する
+// （択ごとに1クエリずつ投げるのではなく、マトリクス1枚分を1クエリでまとめて取るため）
+function getAkumaOkiOutcomesByOptionIds($pdo, array $option_ids) {
+    $map = [];
+    if (empty($option_ids)) {
+        return $map;
+    }
+    $placeholders = implode(',', array_fill(0, count($option_ids), '?'));
+    $stmt = $pdo->prepare("SELECT * FROM akuma_oki_outcomes WHERE option_id IN ($placeholders)");
+    $stmt->execute($option_ids);
+    foreach ($stmt->fetchAll() as $row) {
+        $map[$row['option_id']][$row['opponent_action_id']] = $row;
+    }
+    return $map;
+}
+
+// akuma_oki_outcomes.result（ENUM）を日本語ラベル／CSSクラスに変換する
+if (!function_exists('akumaOutcomeLabel')) {
+    function akumaOutcomeLabel(string $result): string {
+        $map = ['win' => '勝ち', 'slight_win' => '微勝ち', 'slight_lose' => '微負け', 'lose' => '負け'];
+        return $map[$result] ?? $result;
+    }
+}
+if (!function_exists('akumaOutcomeClass')) {
+    function akumaOutcomeClass(string $result): string {
+        $map = ['win' => 'akuma-result-win', 'slight_win' => 'akuma-result-slight-win', 'slight_lose' => 'akuma-result-slight-lose', 'lose' => 'akuma-result-lose'];
+        return $map[$result] ?? '';
+    }
+}
+
+// 3f. 豪鬼視点でのキャラ対策（akuma_matchups）。character_id問わず全件 or 1件取得（akuma.php / admin/ 共用）
+
+// 全キャラ分を [opponent_char_id => row] の形でまとめて取得する
+function getAllAkumaMatchups($pdo) {
+    $stmt = $pdo->query("SELECT * FROM akuma_matchups");
+    $map = [];
+    foreach ($stmt->fetchAll() as $row) {
+        $map[(int)$row['opponent_char_id']] = $row;
+    }
+    return $map;
+}
+
+function getAkumaMatchupByCharId($pdo, $opponent_char_id) {
+    $stmt = $pdo->prepare("SELECT * FROM akuma_matchups WHERE opponent_char_id = ?");
+    $stmt->execute([$opponent_char_id]);
+    $row = $stmt->fetch();
+    return $row === false ? null : $row;
+}
+
 // 4. ガード時硬直差がマイナスの技（確定反撃候補）を取得
 //    frame.guard_adv は VARCHAR（'-3' 等の数値のほか 'D'（ダウン）や '—'（該当なし）を含む）のため、
 //    CAST(... AS SIGNED) で数値変換した上で比較・ソートする。
