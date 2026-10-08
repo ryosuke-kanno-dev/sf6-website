@@ -1,4 +1,7 @@
 <?php
+// 環境判定（開発/本番でエラー表示を切り替える）。他ファイルで読込済みでも二重実行されない
+require_once __DIR__ . '/env.php';
+
 // データベース接続設定
 $host = 'localhost';
 $dbname = 'sf6';
@@ -16,6 +19,11 @@ $options = [
 try {
     $pdo = new PDO($dsn, $username, $password, $options);
 } catch (\PDOException $e) {
-    // 開発時はエラーを表示し、接続確認を行う
-    die('データベース接続エラー: ' . $e->getMessage());
+    // 詳細（ホスト名・ユーザー名などを含みうる）は本番では画面に出さず、ログにだけ残す
+    error_log('DB connection failed: ' . $e->getMessage());
+    if (APP_ENV === 'development') {
+        die('データベース接続エラー: ' . $e->getMessage());
+    }
+    http_response_code(503);
+    die('ただいまサイトに接続できません。時間をおいて再度お試しください。');
 }

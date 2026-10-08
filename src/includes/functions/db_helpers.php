@@ -340,6 +340,20 @@ function getAllAkumaMatchups($pdo) {
     return $map;
 }
 
+function getAkumaOkiSetupById($pdo, $id) {
+    $stmt = $pdo->prepare("SELECT * FROM akuma_oki_setups WHERE id = ?");
+    $stmt->execute([$id]);
+    $row = $stmt->fetch();
+    return $row === false ? null : $row;
+}
+
+function getAkumaOkiOptionById($pdo, $id) {
+    $stmt = $pdo->prepare("SELECT * FROM akuma_oki_options WHERE id = ?");
+    $stmt->execute([$id]);
+    $row = $stmt->fetch();
+    return $row === false ? null : $row;
+}
+
 function getAkumaMatchupByCharId($pdo, $opponent_char_id) {
     $stmt = $pdo->prepare("SELECT * FROM akuma_matchups WHERE opponent_char_id = ?");
     $stmt->execute([$opponent_char_id]);

@@ -8,3 +8,5 @@ Thumbs.db
 
 # 管理画面（開発中のこのPCだけで保持し、GitHubには上げない）
 src/admin/
+
+src/includes/env-local.php

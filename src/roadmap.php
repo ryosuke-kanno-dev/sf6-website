@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/includes/env.php';
 // renderMarkdown() 等の共通関数を読み込む（このページ自体はDB接続不要なので db.php は読み込まない）
 require_once 'includes/functions/db_helpers.php';
 
@@ -25,8 +26,12 @@ if (!function_exists('extractJsonList')) {
 
 /**
  * ランク帯別の目標達成度に応じたフォールバックデータ。
- * data/roadmap.json が存在しない場合、この配列を使用する。
- * 各ランクは id / title / icon / color / theme / checklist / body(Markdown) / recommend_training(training_menus.jsonのID配列) を持つ。
+ * data/roadmap.json が読み込めなかった場合の緊急時用で、$usingFallbackData / $roadmapLoadError に
+ * 応じて画面上にも「暫定データを表示中」の案内が出る（サイレントに差し替わるわけではない）。
+ * 本データ(data/roadmap.json)とはランク区分が異なる（本データ: beginner/silver/platinum/master の4区分、
+ * こちらは5区分）ため、完全に一致させる必要はない。ただし recommend_training に指定するIDは
+ * 必ず data/drills.json に実在するものを使うこと（存在しないIDは静かにリンク切れになるため）。
+ * 各ランクは id / title / icon / color / subtitle / goals / body(Markdown) / recommend_training(drills.jsonのID配列) を持つ。
  */
 if (!function_exists('getDefaultRoadmapData')) {
     function getDefaultRoadmapData(): array {
@@ -44,7 +49,8 @@ if (!function_exists('getDefaultRoadmapData')) {
                     '投げ間合いで危険を感じたら投げ抜けを意識する',
                 ],
                 'body' => "この段階では**勝敗よりも「毎試合ひとつ新しいことを試す」意識**が大切です。\n負けが続いても、操作やコマンドに慣れることを最優先にしましょう。",
-                'recommend_training' => ['anti-air-001', 'throw-escape-001'],
+                // 'anti-air-reaction' は data/drills.json に実在するIDのみ使用（存在しないIDへのリンクを作らないため）
+                'recommend_training' => ['anti-air-reaction'],
             ],
             [
                 'id'       => 'iron_bronze',
@@ -74,7 +80,8 @@ if (!function_exists('getDefaultRoadmapData')) {
                     'ドライブゲージ管理（バーンアウト回避）を意識する',
                 ],
                 'body' => "受け身の対策が固まってきたら、次は**攻めの選択肢を増やす段階**です。\n1つの連携パターンに固執せず、状況に応じて崩し方を変える意識を持ちましょう。",
-                'recommend_training' => ['oki-001'],
+                // 'wakeup-full-response' は data/drills.json に実在するIDのみ使用
+                'recommend_training' => ['wakeup-full-response'],
             ],
             [
                 'id'       => 'platinum_diamond',

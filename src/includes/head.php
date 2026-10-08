@@ -1,4 +1,6 @@
 <?php
+// 環境判定（guide/training/glossary などDB・roadmapを読まないページでも確実に適用するため）
+require_once __DIR__ . '/env.php';
 // HTMLエスケープ用ヘルパー（他ファイルの h() と衝突しないようガード）
 if (!function_exists('h')) {
     function h($str): string {
