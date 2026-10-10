@@ -28,6 +28,16 @@ if (!function_exists('loadJsonFile')) {
 $strengthsWeaknesses = $akumaGuide['strengths_weaknesses'] ?? [];
 $basicTactics        = $akumaGuide['basic_tactics'] ?? [];
 
+// 「（執筆中）」で始まるテキストブロックは未執筆のプレースホルダー。
+// 公開側には出さず、他セクションと同じ「準備中」表示にする（JSON側の文言は執筆用の目印としてそのまま残してよい）
+$akumaDraftFilter = function (array $blocks): array {
+    return array_values(array_filter($blocks, function ($b) {
+        return !(($b['type'] ?? '') === 'text' && mb_strpos(trim((string)($b['body'] ?? '')), '（執筆中）') === 0);
+    }));
+};
+$strengthsWeaknesses = $akumaDraftFilter($strengthsWeaknesses);
+$basicTactics        = $akumaDraftFilter($basicTactics);
+
 // 3b. 豪鬼専用コンボ（実戦コンボ集／リーサル判断の両方をここから分配する）
 $akumaCombos    = getAkumaCombos($pdo);
 $practicalCombos = array_values(array_filter($akumaCombos, fn($c) => $c['purpose'] === 'practical'));
@@ -210,6 +220,12 @@ include 'includes/head.php';
     <!-- 強み・弱み -->
     <section id="strengths-weaknesses" style="margin-bottom:32px;">
       <h2 class="hero-header-title" style="font-size:1.3rem;">強み・弱み</h2>
+      <?php if (empty($strengthsWeaknesses)): ?>
+        <div class="alert-box">
+          <div class="alert-title">🚧 準備中</div>
+          <div class="alert-content">豪鬼の強み・弱みの総評は現在準備中です。</div>
+        </div>
+      <?php endif; ?>
       <?php foreach ($strengthsWeaknesses as $block): ?>
         <?php echo renderContentBlock($block); ?>
       <?php endforeach; ?>
@@ -218,6 +234,12 @@ include 'includes/head.php';
     <!-- 立ち回りの基本 -->
     <section id="basic-tactics" style="margin-bottom:32px;">
       <h2 class="hero-header-title" style="font-size:1.3rem;">立ち回りの基本</h2>
+      <?php if (empty($basicTactics)): ?>
+        <div class="alert-box">
+          <div class="alert-title">🚧 準備中</div>
+          <div class="alert-content">立ち回りの基本は現在準備中です。</div>
+        </div>
+      <?php endif; ?>
       <?php foreach ($basicTactics as $block): ?>
         <?php echo renderContentBlock($block); ?>
       <?php endforeach; ?>

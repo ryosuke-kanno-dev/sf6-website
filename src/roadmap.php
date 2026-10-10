@@ -258,9 +258,9 @@ include 'includes/head.php';
             <summary class="accordion-title">📋 このランクでやること・詳細を見る</summary>
             <div class="accordion-content">
 
-              <!-- マスターすべき要素・課題リスト -->
+              <!-- 身につけるべき要素・課題リスト -->
               <?php if (!empty($rank['goals'])): ?>
-                <div class="glossary-block-title">✅ マスターすべき要素・課題</div>
+                <div class="glossary-block-title">✅ 身につけるべき要素・課題</div>
                 <ul class="roadmap-checklist">
                   <?php foreach ($rank['goals'] as $checkItem): ?>
                     <li><span class="roadmap-check-icon">✅</span> <span><?php echo h($checkItem); ?></span></li>
@@ -287,7 +287,7 @@ include 'includes/head.php';
               ?>
               <?php if ($rankBodyMarkdown !== ''): ?>
                 <div class="glossary-block-title">📖 この段階の考え方</div>
-                <div><?php echo renderMarkdown($rankBodyMarkdown); ?></div>
+                <div class="md-body"><?php echo renderMarkdown($rankBodyMarkdown); ?></div>
               <?php elseif (!empty($rank['md_file'])): ?>
                 <div class="glossary-block-title">📖 この段階の考え方</div>
                 <div class="alert-box" style="margin-top:8px;">
@@ -312,15 +312,21 @@ include 'includes/head.php';
                 <div class="card-grid">
                   <?php foreach ($recommendMenus as $menu): ?>
                     <a href="training.php#<?php echo h($menu['id']); ?>" class="grid-card" style="text-decoration:none; color:inherit;">
-                      <div class="grid-card-title"><span>🎯</span> <?php echo h($menu['title'] ?? ''); ?></div>
-                      <div class="grid-card-desc">
-                        <?php echo h($menu['category_label'] ?? ''); ?>
-                        <?php if (!empty($menu['duration'])): ?>
-                          ・<?php echo (int)$menu['duration']; ?>分
-                        <?php endif; ?>
-                      </div>
-                      <?php if (!empty($menu['objective'])): ?>
-                        <div class="grid-card-desc" style="margin-top:6px;"><?php echo h($menu['objective']); ?></div>
+                      <?php
+                        // drills.json の実際のキーは name / category / difficulty / purpose（旧キー title 等は後方互換のフォールバック）
+                        $menuTitle   = $menu['name'] ?? ($menu['title'] ?? '');
+                        $menuMeta    = array_filter([
+                            $menu['category'] ?? ($menu['category_label'] ?? ''),
+                            $menu['difficulty'] ?? '',
+                        ], fn($v) => $v !== '');
+                        $menuPurpose = $menu['purpose'] ?? ($menu['objective'] ?? '');
+                      ?>
+                      <div class="grid-card-title"><span>🎯</span> <?php echo h($menuTitle); ?></div>
+                      <?php if (!empty($menuMeta)): ?>
+                        <div class="grid-card-desc"><?php echo h(implode('・', $menuMeta)); ?></div>
+                      <?php endif; ?>
+                      <?php if ($menuPurpose !== ''): ?>
+                        <div class="grid-card-desc" style="margin-top:6px;"><?php echo h($menuPurpose); ?></div>
                       <?php endif; ?>
                       <p style="margin-top:10px; color:var(--accent-color); font-size:0.85rem; font-weight:bold;">練習を始める →</p>
                     </a>

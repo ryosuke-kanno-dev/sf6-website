@@ -123,7 +123,7 @@ $pickupCharacters = array_slice(getAllCharacters($pdo), 0, 4);
 <div class="patch-note-box">
   <div class="patch-note-head">
     <span class="patch-ver">Ver.2.030 対応済み</span>
-    <span class="patch-status">✔ フレームデータ・キャラ対策を最新Verに反映済み</span>
+    <span class="patch-status">✔ フレームデータを最新Verに反映済み（キャラ対策は順次追加中）</span>
   </div>
   <ul>
     <li>ドライブラッシュのガード硬直差を調整（+2F → +1F）</li>
@@ -134,6 +134,7 @@ $pickupCharacters = array_slice(getAllCharacters($pdo), 0, 4);
 
 <!-- 8. 下部サブエリア -->
 <div class="bottom-section">
+  <?php if (!empty($listUpdates)): // 更新情報が0件のときは欄ごと非表示にする ?>
   <div class="section-box">
     <div class="section-title">最新更新情報 / 注目のコンボレシピ</div>
     <ul class="info-list">
@@ -146,6 +147,7 @@ $pickupCharacters = array_slice(getAllCharacters($pdo), 0, 4);
       <?php endforeach; ?>
     </ul>
   </div>
+  <?php endif; ?>
 
   <div class="section-box">
     <div class="section-title">ピックアップキャラ</div>

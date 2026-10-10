@@ -131,6 +131,8 @@ CREATE TABLE matchup (
     has_command_grab     TINYINT(1)   NOT NULL DEFAULT 0,
     has_install          TINYINT(1)   NOT NULL DEFAULT 0,
     key_points           TEXT,
+    strengths            TEXT,
+    weaknesses           TEXT,
     overview             TEXT,
     created_at           DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at           DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

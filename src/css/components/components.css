@@ -1346,3 +1346,212 @@ html {
 @media (max-width: 768px) {
   .akuma-matrix-block { overflow-x: auto; }
 }
+
+/* --- md-body.css : Markdown（Parsedown）出力の共通スタイル ---
+   renderMarkdown() の出力を <div class="md-body"> で包むと適用される（ロードマップ本文など）。
+   色はすべてテーマ変数を使うので、ダーク/ライト両方で崩れない。 */
+.md-body {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+.md-body > *:first-child { margin-top: 0; }
+.md-body > *:last-child  { margin-bottom: 0; }
+
+.md-body h1,
+.md-body h2,
+.md-body h3,
+.md-body h4 {
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+.md-body h2 {
+  font-size: 1.15rem;
+  margin: 34px 0 14px;
+  padding-left: 12px;
+  border-left: 3px solid var(--accent-color);
+}
+.md-body h3 {
+  font-size: 1.02rem;
+  margin: 26px 0 8px;
+  color: var(--accent-color);
+}
+.md-body h4 {
+  font-size: 0.95rem;
+  margin: 20px 0 6px;
+}
+
+.md-body p { margin: 0 0 14px; }
+
+.md-body ul,
+.md-body ol {
+  margin: 0 0 16px;
+  padding-left: 1.5em;
+}
+.md-body ul { list-style: disc; }
+.md-body ol { list-style: decimal; }
+.md-body li { margin: 5px 0; }
+.md-body li::marker { color: var(--accent-color); }
+
+.md-body strong {
+  font-weight: 700;
+  background: linear-gradient(transparent 62%, var(--accent-soft) 62%);
+}
+
+.md-body blockquote {
+  margin: 14px 0 18px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--accent-line);
+  background: var(--accent-wash);
+  border-radius: 0 6px 6px 0;
+}
+.md-body blockquote p:last-child { margin-bottom: 0; }
+
+.md-body hr {
+  border: 0;
+  border-top: 1px solid var(--border-color-soft);
+  margin: 30px 0;
+}
+
+.md-body code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--bg-hero);
+  border: 1px solid var(--border-color);
+}
+
+.md-body table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 16px 0 22px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-card);
+  overflow: hidden;
+  font-size: 0.92rem;
+}
+.md-body th,
+.md-body td {
+  padding: 10px 14px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border-color-soft);
+}
+.md-body th {
+  background: var(--bg-hero);
+  color: var(--text-secondary);
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-color);
+}
+.md-body tr:last-child td { border-bottom: none; }
+
+@media (max-width: 640px) {
+  /* 幅が足りないスマホでは表だけ横スクロールさせる（ページ全体は横に伸ばさない） */
+  .md-body table { display: block; overflow-x: auto; }
+}
+
+/* --- punish-list.css : 確定反撃リスト（ガード時の不利Fの大きさ別にまとめて表示）--- */
+.punish-list { margin-top: 14px; }
+
+.punish-lead {
+  margin: 0 0 16px;
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+.punish-lead strong { color: var(--text-primary); }
+
+.punish-tier {
+  --tier-color: var(--text-secondary);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--tier-color);
+  border-radius: 8px;
+  padding: 14px 16px 16px;
+  margin-bottom: 12px;
+}
+/* 不利が大きいほど濃い赤、小さいほど目立たない色にして「どれだけ大きな隙か」を色でも伝える */
+.punish-tier--t1 { --tier-color: var(--neg-color); }
+.punish-tier--t2 { --tier-color: color-mix(in srgb, var(--neg-color) 80%, var(--text-secondary)); }
+.punish-tier--t3 { --tier-color: color-mix(in srgb, var(--neg-color) 62%, var(--text-secondary)); }
+.punish-tier--t4 { --tier-color: color-mix(in srgb, var(--neg-color) 46%, var(--text-secondary)); }
+.punish-tier--t5 { --tier-color: color-mix(in srgb, var(--neg-color) 32%, var(--text-secondary)); }
+.punish-tier--t6 { --tier-color: var(--text-secondary); }
+
+.punish-tier-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-bottom: 6px;
+}
+.punish-tier-range {
+  font-family: 'Oswald', 'Noto Sans JP', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--tier-color);
+  letter-spacing: 0.02em;
+}
+.punish-tier-title { font-weight: 700; color: var(--text-primary); }
+.punish-tier-count {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+.punish-tier-desc {
+  margin: 0 0 12px;
+  font-size: 0.86rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.punish-move-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 8px;
+  align-items: start;
+}
+.punish-move {
+  background-color: var(--bg-hero);
+  border: 1px solid var(--border-color-soft);
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+.punish-move.has-note { border-color: var(--accent-line); }
+.punish-move-name { font-weight: 600; font-size: 0.92rem; color: var(--text-primary); }
+.punish-move-variant { font-size: 0.8rem; color: var(--text-secondary); }
+.punish-move-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 10px;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+.punish-move-adv { font-weight: 700; }
+.punish-move-type {
+  margin-left: auto;
+  padding: 0 7px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 0.72rem;
+}
+.punish-note { margin-top: 6px; font-size: 0.84rem; }
+.punish-note summary {
+  cursor: pointer;
+  color: var(--accent-color);
+  font-weight: 600;
+}
+.punish-note-body { margin-top: 6px; line-height: 1.7; color: var(--text-primary); }
+
+@media (max-width: 640px) {
+  .punish-move-list { grid-template-columns: 1fr; }
+}

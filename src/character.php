@@ -106,12 +106,6 @@ $combos        = getCombosByCharId($pdo, $character['id']);
 $punish_frames = getPunishableFramesByCharId($pdo, $character['id']);
 $all_frames    = getFrameDataByCharId($pdo, $character['id']);
 
-// combos の中から「確定反撃」用（hit_type = Punish）のものだけを抽出
-// （matchup/matchup_guides テーブルが未確認のため、既存の combos データで代用）
-$punish_combos = array_values(array_filter($combos, function ($combo) {
-    return ($combo['hit_type'] ?? '') === 'Punish';
-}));
-
 // コンボ集タブ用：中央／画面端／パニカン・確定反撃始動 の3カテゴリにグループ化
 $combosByCategory = [];
 foreach ($combos as $combo) {
@@ -328,66 +322,97 @@ include 'includes/head.php';
           </div>
         <?php endif; ?>
 
-        <!-- 確定反撃リスト（frame連携：guard_adv < 0 の技 + matchup_guides(punish)の解説を move_slug で紐付け） -->
+        <!-- 確定反撃リスト
+             frame テーブルの guard_adv < 0 の技を「ガード時の不利Fの大きさ」でティア分けして表示する（表示専用の整形。DBのデータは変更しない）。
+             ルール：ガード時 -N F の技は、発生 N F 以内の技で反撃できる。
+             matchup_guides(category='punish') の解説は move_slug で技ごとに紐付け、「解説を見る」で開く。 -->
         <?php if (!empty($punish_frames)): ?>
-          <div class="table-container" id="anti-air" style="margin-top:14px;">
-            <div class="glossary-block-title">🥊 確定反撃リスト</div>
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>技名</th>
-                  <th>発生(F)</th>
-                  <th>ガード時硬直差</th>
-                  <th>解説・おすすめ反撃</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php foreach ($punish_frames as $frame): ?>
-                  <?php $punishGuide = $punishGuideBySlug[$frame['move_slug']] ?? null; ?>
-                  <tr>
-                    <td><?php echo h($frame['move_name_jp']); ?></td>
-                    <td><?php echo h($frame['startup']); ?></td>
-                    <td class="<?php echo frameAdvClass($frame['guard_adv']); ?>">
-                      <strong><?php echo h($frame['guard_adv']); ?></strong>
-                    </td>
-                    <td>
-                      <?php if ($punishGuide !== null && !empty($punishGuide['content'])): ?>
-                        <?php echo renderMatchupMultiline($punishGuide['content']); ?>
-                      <?php else: ?>
-                        <?php
-                          // matchup_guides に対応する解説が無い場合のフォールバック表示
-                          // guard_adv は VARCHAR（'-3' 等の数値表記）。(int)キャストは先頭の数値部分のみを解釈する。
-                          $guardAdv = (int)$frame['guard_adv'];
-                          echo $guardAdv <= -4 ? '確定反撃あり' : '状況次第';
-                        ?>
-                      <?php endif; ?>
-                    </td>
-                  </tr>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
-          </div>
+          <?php
+            // ティア定義（N = ガード時の不利Fの絶対値。-8 なら N=8 → 発生8F以内の技で反撃できる）
+            $punishTiers = [
+                ['key' => 't1', 'min' => 20, 'max' => 999, 'range' => '-20F 以下', 'title' => '大きな隙',
+                 'desc' => '発生の遅い技でも反撃が間に合います。最大リターンのコンボを狙えます。'],
+                ['key' => 't2', 'min' => 13, 'max' => 19,  'range' => '-13F 〜 -19F', 'title' => '強い反撃が狙える',
+                 'desc' => '発生13〜19F以内の技で反撃できます。強攻撃や必殺技など、リターンの大きい反撃を選べます。'],
+                ['key' => 't3', 'min' => 9,  'max' => 12,  'range' => '-9F 〜 -12F', 'title' => '中〜強攻撃で反撃',
+                 'desc' => '発生9〜12F以内の技で反撃できます。中・強攻撃や発生の早い必殺技が目安です。'],
+                ['key' => 't4', 'min' => 6,  'max' => 8,   'range' => '-6F 〜 -8F', 'title' => '中攻撃で反撃',
+                 'desc' => '発生6〜8F以内の技で反撃できます。中攻撃など、発生の早い技が目安です。'],
+                ['key' => 't5', 'min' => 4,  'max' => 5,   'range' => '-4F 〜 -5F', 'title' => '弱攻撃で反撃',
+                 'desc' => '発生4〜5F以内の技で反撃できます。立ち・しゃがみの弱攻撃で反撃します。'],
+                ['key' => 't6', 'min' => 1,  'max' => 3,   'range' => '-1F 〜 -3F', 'title' => '基本的に確定しない',
+                 'desc' => '弱攻撃では間に合わないため、基本的に確定反撃にはなりません。距離や状況次第で対応します。'],
+            ];
 
-          <!-- おすすめの反撃例（combos.hit_type = Punish のコンボを流用） -->
-          <?php if (!empty($punish_combos)): ?>
-            <div class="table-container" style="margin-top:10px;">
-              <div class="glossary-block-title">🥊 おすすめの確定反撃コンボ</div>
-              <?php foreach ($punish_combos as $combo): ?>
-                <div class="combo-card">
-                  <div class="combo-header">
-                    <span class="combo-title"><?php echo h(buildComboSituationLabel($combo)); ?></span>
-                    <span class="combo-badge">難易度：<?php echo h(translateDifficulty($combo['difficulty'])); ?></span>
-                  </div>
-                  <div class="combo-command">
-                    <?php echo convertCommandToIcons($combo['recipe']); ?>
-                  </div>
-                  <?php if (!empty($combo['memo'])): ?>
-                    <div class="combo-note"><?php echo renderComboMemo($combo['memo']); ?></div>
-                  <?php endif; ?>
-                </div>
-              <?php endforeach; ?>
-            </div>
-          <?php endif; ?>
+            $punishByTier = [];
+            foreach ($punish_frames as $punishFrame) {
+                // guard_adv は VARCHAR（'-3' 等）。(int)キャストは先頭の数値部分のみを解釈する
+                $n = -(int)$punishFrame['guard_adv'];
+                if ($n < 1) { continue; }
+                foreach ($punishTiers as $tier) {
+                    if ($n >= $tier['min'] && $n <= $tier['max']) {
+                        $punishFrame['_n'] = $n;
+                        $punishByTier[$tier['key']][] = $punishFrame;
+                        break;
+                    }
+                }
+            }
+            // ティア内は「不利が大きい順 → フレーム表の並び順」
+            foreach ($punishByTier as &$tierItems) {
+                usort($tierItems, function ($x, $y) {
+                    return ($y['_n'] <=> $x['_n']) ?: ((int)$x['sort_order'] <=> (int)$y['sort_order']);
+                });
+            }
+            unset($tierItems);
+          ?>
+          <div class="punish-list" id="punish-list">
+            <div class="glossary-block-title">🥊 確定反撃リスト</div>
+            <p class="punish-lead">
+              相手の技をガードして硬直差が <strong>-N</strong> のとき、<strong>発生N F 以内</strong>の技で反撃できます。
+              自キャラで使える最速の技（弱攻撃など）の発生Fと見比べて確認しましょう。距離が離れていると届かない場合があります。
+            </p>
+
+            <?php foreach ($punishTiers as $tier): ?>
+              <?php $tierItems = $punishByTier[$tier['key']] ?? []; ?>
+              <?php if (empty($tierItems)): continue; endif; ?>
+              <section class="punish-tier punish-tier--<?php echo h($tier['key']); ?>">
+                <header class="punish-tier-head">
+                  <span class="punish-tier-range"><?php echo h($tier['range']); ?></span>
+                  <span class="punish-tier-title"><?php echo h($tier['title']); ?></span>
+                  <span class="punish-tier-count"><?php echo count($tierItems); ?>技</span>
+                </header>
+                <p class="punish-tier-desc"><?php echo h($tier['desc']); ?></p>
+                <ul class="punish-move-list">
+                  <?php foreach ($tierItems as $frame): ?>
+                    <?php
+                      $punishGuide = $punishGuideBySlug[$frame['move_slug']] ?? null;
+                      $hasNote     = ($punishGuide !== null && !empty($punishGuide['content']));
+                      $startupText = (isset($frame['startup']) && $frame['startup'] !== '') ? $frame['startup'] . 'F' : '—';
+                    ?>
+                    <li class="punish-move<?php echo $hasNote ? ' has-note' : ''; ?>">
+                      <div class="punish-move-main">
+                        <span class="punish-move-name"><?php echo h($frame['move_name_jp']); ?></span>
+                        <?php if (!empty($frame['move_variant'])): ?>
+                          <span class="punish-move-variant">（<?php echo h($frame['move_variant']); ?>）</span>
+                        <?php endif; ?>
+                      </div>
+                      <div class="punish-move-meta">
+                        <span class="punish-move-adv <?php echo frameAdvClass($frame['guard_adv']); ?>"><?php echo h($frame['guard_adv']); ?>F</span>
+                        <span>発生 <?php echo h($startupText); ?></span>
+                        <span class="punish-move-type"><?php echo h(translateMoveType($frame['move_type'])); ?></span>
+                      </div>
+                      <?php if ($hasNote): ?>
+                        <details class="punish-note">
+                          <summary>解説を見る</summary>
+                          <div class="punish-note-body"><?php echo renderMatchupMultiline($punishGuide['content']); ?></div>
+                        </details>
+                      <?php endif; ?>
+                    </li>
+                  <?php endforeach; ?>
+                </ul>
+              </section>
+            <?php endforeach; ?>
+          </div>
         <?php endif; ?>
 
         <!-- カテゴリ別 対策コラム（matchup_guides） -->
