@@ -12,6 +12,7 @@ $current_page = isset($current_page) ? $current_page : '';
       <li><a href="character.php" class="<?php echo $current_page === 'character' ? 'active' : ''; ?>">3. キャラ攻略</a></li>
       <li><a href="roadmap.php" class="<?php echo $current_page === 'roadmap' ? 'active' : ''; ?>">4. ロードマップ</a></li>
       <li><a href="glossary.php" class="<?php echo $current_page === 'glossary' ? 'active' : ''; ?>">5. 用語集</a></li>
+      <li><a href="akuma.php" class="header-nav-special<?php echo $current_page === 'akuma' ? ' active' : ''; ?>">豪鬼特設</a></li>
     </ul>
   </nav>
   

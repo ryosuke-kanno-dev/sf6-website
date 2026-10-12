@@ -241,6 +241,25 @@ if (!function_exists('frameAdvClass')) {
 }
 
 /**
+ * フレーム表・確定反撃リストに表示する「技の補足(move_variant)」を返す。
+ * DB上の move_variant は L / M / H / OD / 2hit のような短い表記のほか、
+ * L_charged / while_blocking / strike のような「内部識別用のID」も入っている。
+ * 後者は技名（ホールド・ガード時・打撃 など）とすでに重複しているため、画面には出さない（DBの値は変更しない）。
+ */
+if (!function_exists('moveVariantLabel')) {
+    function moveVariantLabel($variant): string {
+        $v = trim((string)$variant);
+        if ($v === '' || strpos($v, '_') !== false) {
+            return '';
+        }
+        if (preg_match('/^(strike|projectile|charged|perfect|forward|backward)$/i', $v)) {
+            return '';
+        }
+        return $v;
+    }
+}
+
+/**
  * frame.move_type（ENUM）を日本語ラベルに変換する。
  */
 if (!function_exists('translateMoveType')) {
@@ -274,6 +293,138 @@ function getAkumaComboById($pdo, $combo_id) {
     $stmt = $pdo->prepare("SELECT * FROM akuma_combos WHERE id = ?");
     $stmt->execute([$combo_id]);
     return $stmt->fetch();
+}
+
+// 3f. 豪鬼コンボ（akuma_combos）の属性：位置・ヒット状況・始動技（akuma.php / admin 共用）
+// 始動技は frame テーブル（豪鬼）の move_slug + move_variant で指定する。キーは「slug|variant」形式。
+if (!function_exists('akumaComboPositionOptions')) {
+    function akumaComboPositionOptions(): array {
+        return ['Any' => '位置問わず', 'Center' => '中央', 'OppCorner' => '相手が端', 'SelfCorner' => '自分が端'];
+    }
+}
+if (!function_exists('akumaComboHitTypeOptions')) {
+    function akumaComboHitTypeOptions(): array {
+        return ['Normal' => '通常ヒット', 'Counter' => 'カウンター', 'Punish' => 'パニカン・確反'];
+    }
+}
+if (!function_exists('akumaStartMoveKey')) {
+    function akumaStartMoveKey($slug, $variant): string {
+        $slug = trim((string)$slug);
+        return $slug === '' ? '' : $slug . '|' . trim((string)$variant);
+    }
+}
+// $raw = true のときは内部ID形式の補足(L_charged 等)も含める（管理画面用）。公開側は技名の重複を避けるため隠す
+if (!function_exists('akumaStartMoveLabel')) {
+    function akumaStartMoveLabel(array $frame, bool $raw = false): string {
+        $name    = (string)($frame['move_name_jp'] ?? '');
+        $variant = $raw ? trim((string)($frame['move_variant'] ?? '')) : moveVariantLabel($frame['move_variant'] ?? null);
+        return $variant !== '' ? $name . '（' . $variant . '）' : $name;
+    }
+}
+if (!function_exists('akumaFrameMapByStartKey')) {
+    function akumaFrameMapByStartKey(array $frames): array {
+        $map = [];
+        foreach ($frames as $f) {
+            $map[akumaStartMoveKey($f['move_slug'], $f['move_variant'] ?? '')] = $f;
+        }
+        return $map;
+    }
+}
+// 始動技セレクト用の <option>（技種別ごとの <optgroup>）
+// 3g. 豪鬼の「要注意技と確反」（akuma_punishes）：相手の技 × 距離 × 位置 → 使う豪鬼コンボ
+if (!function_exists('akumaPunishDistanceOptions')) {
+    function akumaPunishDistanceOptions(): array {
+        return ['Any' => '距離問わず', 'Point' => '密着', 'Close' => '近距離', 'Mid' => '中距離', 'Far' => '遠距離'];
+    }
+}
+// 相手キャラ1人分の確反データ（テーブル未作成・取得失敗のときは空配列を返し、ページ全体は止めない）
+if (!function_exists('getAkumaPunishesByOpponent')) {
+    function getAkumaPunishesByOpponent($pdo, int $opponentCharId): array {
+        try {
+            $stmt = $pdo->prepare("SELECT * FROM akuma_punishes WHERE opponent_char_id = ? ORDER BY sort_order ASC, id ASC");
+            $stmt->execute([$opponentCharId]);
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            error_log('getAkumaPunishesByOpponent failed: ' . $e->getMessage());
+            return [];
+        }
+    }
+}
+// 全キャラ分を [opponent_char_id => 行の配列] で返す
+if (!function_exists('getAllAkumaPunishes')) {
+    function getAllAkumaPunishes($pdo): array {
+        try {
+            $rows = $pdo->query("SELECT * FROM akuma_punishes ORDER BY sort_order ASC, id ASC")->fetchAll();
+        } catch (PDOException $e) {
+            error_log('getAllAkumaPunishes failed: ' . $e->getMessage());
+            return [];
+        }
+        $map = [];
+        foreach ($rows as $row) {
+            $map[(int)$row['opponent_char_id']][] = $row;
+        }
+        return $map;
+    }
+}
+// フレーム上の確反判定：相手の技のガード時 -N F に対し、反撃の始動技の発生 S F が S <= N なら間に合う
+//   need    : 必要発生F（ガード時が -N のとき N。不利でない/数値でない場合は null）
+//   startup : 始動技の発生F（先頭の数値。取れなければ null）
+//   ok      : 両方取れたときだけ true/false、判定できないときは null
+if (!function_exists('akumaPunishFrameCheck')) {
+    function akumaPunishFrameCheck(?array $oppFrame, ?array $startFrame): array {
+        $need = null;
+        if ($oppFrame !== null && preg_match('/^-\d+/', trim((string)($oppFrame['guard_adv'] ?? '')), $m)) {
+            $need = -(int)$m[0];
+        }
+        $startup = null;
+        if ($startFrame !== null && preg_match('/^\d+/', trim((string)($startFrame['startup'] ?? '')), $m)) {
+            $startup = (int)$m[0];
+        }
+        $ok = ($need !== null && $startup !== null) ? ($startup <= $need) : null;
+        return ['need' => $need, 'startup' => $startup, 'ok' => $ok];
+    }
+}
+// 相手の技セレクト用 <option>（技種別ごとの <optgroup>）。ラベルにガード時硬直差を併記し、data-need に必要発生Fを持たせる
+if (!function_exists('renderOpponentMoveOptions')) {
+    function renderOpponentMoveOptions(array $frames, string $selectedKey = ''): string {
+        $groups = [];
+        foreach ($frames as $f) {
+            $groups[$f['move_type']][] = $f;
+        }
+        $html = '';
+        foreach ($groups as $type => $rows) {
+            $html .= '<optgroup label="' . h(translateMoveType((string)$type)) . '">';
+            foreach ($rows as $f) {
+                $key   = akumaStartMoveKey($f['move_slug'], $f['move_variant'] ?? '');
+                $check = akumaPunishFrameCheck($f, null);
+                $guard = trim((string)($f['guard_adv'] ?? ''));
+                $label = akumaStartMoveLabel($f, true) . ($guard !== '' ? '  [ガード ' . $guard . ']' : '');
+                $sel   = ($key !== '' && $key === $selectedKey) ? ' selected' : '';
+                $html .= '<option value="' . h($key) . '" data-need="' . ($check['need'] === null ? '' : (int)$check['need']) . '"' . $sel . '>' . h($label) . '</option>';
+            }
+            $html .= '</optgroup>';
+        }
+        return $html;
+    }
+}
+if (!function_exists('renderAkumaStartMoveOptions')) {
+    function renderAkumaStartMoveOptions(array $frames, string $selectedKey = '', bool $raw = false): string {
+        $groups = [];
+        foreach ($frames as $f) {
+            $groups[$f['move_type']][] = $f;
+        }
+        $html = '';
+        foreach ($groups as $type => $rows) {
+            $html .= '<optgroup label="' . h(translateMoveType((string)$type)) . '">';
+            foreach ($rows as $f) {
+                $key  = akumaStartMoveKey($f['move_slug'], $f['move_variant'] ?? '');
+                $sel  = ($key !== '' && $key === $selectedKey) ? ' selected' : '';
+                $html .= '<option value="' . h($key) . '"' . $sel . '>' . h(akumaStartMoveLabel($f, $raw)) . '</option>';
+            }
+            $html .= '</optgroup>';
+        }
+        return $html;
+    }
 }
 
 // 3e. 起き攻め／セットアップのマトリクス表 関連（akuma.php / admin/ 共用）

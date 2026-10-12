@@ -1555,3 +1555,340 @@ html {
 @media (max-width: 640px) {
   .punish-move-list { grid-template-columns: 1fr; }
 }
+
+/* 確定反撃リスト：件数が多い「基本的に確定しない」段の折りたたみ */
+.punish-fold > summary {
+  cursor: pointer;
+  display: inline-block;
+  padding: 4px 12px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent-color);
+}
+.punish-fold[open] > summary { margin-bottom: 12px; }
+
+/* --- akuma-combo-filter.css : 豪鬼 実戦コンボ集の絞り込み／リーサル判断 --- */
+.akuma-filter-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px 14px;
+  align-items: end;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.akuma-filter-field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.akuma-filter-field--wide { grid-column: span 2; }
+.akuma-filter-field label,
+.akuma-filter-check {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+.akuma-filter-field select {
+  width: 100%;
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+}
+.akuma-filter-field select:focus { outline: none; border-color: var(--accent-color); }
+.akuma-range-row { display: flex; align-items: center; gap: 10px; }
+.akuma-range-row input[type="range"] { flex: 1; min-width: 0; }
+.akuma-range-row .combo-badge { min-width: 116px; text-align: center; }
+.akuma-filter-check { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.akuma-filter-count {
+  margin: 0 0 12px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+.akuma-card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+
+.akuma-lethal-summary {
+  margin: 0 0 14px;
+  padding: 12px 16px;
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--text-secondary);
+  border-radius: 6px;
+  background-color: var(--bg-card);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+.akuma-lethal-summary.is-ok { border-left-color: var(--pos-color); }
+.akuma-lethal-summary.is-ng { border-left-color: var(--neg-color); }
+
+.akuma-lethal-badge {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 1px solid var(--border-color);
+}
+.akuma-lethal-badge[hidden] { display: none; }
+.akuma-lethal-badge.is-ok { color: var(--pos-color); border-color: var(--pos-color); }
+.akuma-lethal-badge.is-ng { color: var(--neg-color); border-color: var(--neg-color); }
+
+@media (max-width: 640px) {
+  .akuma-filter-field--wide { grid-column: span 1; }
+}
+
+/* --- akuma-punish.css : 豪鬼キャラ対策の「要注意技と確反」 --- */
+.akuma-matchup-card { align-self: start; }
+/* 折りたたみを開いたカードは、行全体に広げて読みやすくする（:has 非対応のブラウザでは通常幅のまま） */
+.akuma-matchup-card:has(.akuma-punish-fold[open]) { grid-column: 1 / -1; }
+
+.akuma-punish-fold { margin-top: 12px; }
+.akuma-punish-fold > summary {
+  cursor: pointer;
+  display: inline-block;
+  padding: 4px 12px;
+  border: 1px solid var(--accent-line);
+  border-radius: 14px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+.akuma-punish-fold[open] > summary { margin-bottom: 10px; }
+
+.akuma-punish-move {
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--accent-color);
+  border-radius: 6px;
+  background-color: var(--bg-hero);
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+.akuma-punish-move-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  margin-bottom: 8px;
+}
+.akuma-punish-meta { font-size: 0.8rem; color: var(--text-secondary); margin-left: 6px; }
+.akuma-punish-move-head .akuma-punish-meta { margin-left: 0; }
+
+.akuma-punish-row {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid var(--border-color-soft);
+}
+.akuma-punish-row:first-of-type { border-top: none; }
+.akuma-punish-cond { display: flex; flex-wrap: wrap; align-content: flex-start; gap: 4px; }
+.akuma-punish-body { min-width: 0; }
+.akuma-punish-combo-title { font-weight: 700; margin-bottom: 4px; }
+.akuma-punish-warn {
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--neg-color);
+}
+
+@media (max-width: 640px) {
+  .akuma-punish-row { grid-template-columns: 1fr; }
+}
+
+/* --- akuma-tabs.css : 豪鬼ページのタブ（共通の .tab-navigation / .tab-btn / .tab-content を使用）--- */
+.akuma-tab-nav { margin-top: 8px; }
+.akuma-tab-nav .tab-btn { white-space: nowrap; }
+/* まだ内容が無い（準備中の）タブは、少し薄く表示する */
+.tab-btn.is-empty { opacity: 0.55; }
+.tab-btn.is-empty.active { opacity: 1; }
+/* 目次リンクで別タブの途中へスクロールするとき、上端に張り付かないように余白を取る */
+.tab-content section[id] { scroll-margin-top: 16px; }
+
+/* --- tab-nav-scroll-fix.css : タブバーの縦スクロールバー（変なスライダー）対策 ---
+   overflow-x:auto を指定すると overflow-y も auto になり、タブボタンの margin-bottom:-2px 分で縦スクロールバーが出ていた。
+   PCでは横スクロール自体が不要なので指定せず、スマホ（横にあふれる幅）だけ縦方向を隠して横スクロールにする。 */
+@media (max-width: 768px) {
+  .tab-navigation {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }
+  .tab-navigation::-webkit-scrollbar { display: none; }
+  /* overflow-y を隠すと、margin-bottom:-2px でバーの下線にはみ出す分が切れるため、はみ出さない形にする */
+  .tab-navigation .tab-btn { margin-bottom: 0; }
+}
+
+/* --- combo-oneline.css : コンボのコマンドは折り返さず1行で表示し、はみ出す分だけ横スクロール ---
+   コンボのカードは1列（全幅）にして、1行に収まりやすくする。 */
+.combo-command {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden; /* overflow-x を指定すると縦もautoになり、縦スクロールバーが出るのを防ぐ */
+  scrollbar-width: thin;
+}
+.combo-command .p-combo__recipe-icons { flex-wrap: nowrap; }
+.combo-command .p-combo__recipe-icons > *,
+.combo-command .c-cmd-img,
+.combo-command .c-cmd-badge,
+.combo-command .c-cmd-text {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.card-grid.combo-list {
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+.card-grid.combo-list > * { min-width: 0; }
+
+/* --- header-nav-special.css : ヘッダーの「豪鬼特設」リンク / キャラ選択の特設バッジ / 豪鬼のキャラ攻略ページの案内 --- */
+.header-nav a.header-nav-special {
+  color: var(--akuma-accent, #D6336C);
+  border: 1px solid var(--akuma-accent, #D6336C);
+  border-radius: 14px;
+  padding: 3px 12px;
+  font-weight: 700;
+}
+.header-nav a.header-nav-special:hover,
+.header-nav a.header-nav-special.active {
+  background-color: var(--akuma-accent, #D6336C);
+  color: #fff;
+}
+.modal-char-special {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--akuma-accent, #D6336C);
+}
+.akuma-link-banner { border-left-color: var(--akuma-accent, #D6336C); }
+.akuma-link-banner .alert-title { color: var(--akuma-accent, #D6336C); }
+.akuma-link-banner-btn {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 3px 12px;
+  border: 1px solid var(--akuma-accent, #D6336C);
+  border-radius: 14px;
+  font-weight: 700;
+  color: var(--akuma-accent, #D6336C);
+  text-decoration: none;
+}
+.akuma-link-banner-btn:hover { background-color: var(--akuma-accent, #D6336C); color: #fff; }
+
+/* --- frame-table.css : フレームデータ表（includes/functions/frame_table.php / js/frame-table.js） --- */
+.frame-table-wrap { margin-top: 12px; }
+.frame-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+.frame-toolbar-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+.frame-toolbar-label { font-size: 0.78rem; color: var(--text-secondary); margin-right: 4px; }
+.frame-search {
+  flex: 1 1 220px;
+  max-width: 360px;
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+.frame-search:focus { outline: none; border-color: var(--accent-color); }
+.frame-count { font-size: 0.82rem; color: var(--text-secondary); }
+.frame-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  background-color: var(--bg-main);
+  font-size: 0.82rem;
+  cursor: pointer;
+  user-select: none;
+}
+.frame-chip small { color: var(--text-secondary); font-size: 0.72rem; }
+.frame-chip:has(input:checked) { border-color: var(--accent-color); color: var(--accent-color); }
+.frame-cols > summary { cursor: pointer; font-size: 0.88rem; font-weight: 700; color: var(--accent-color); }
+.ft-cols-count { font-weight: 400; color: var(--text-secondary); font-size: 0.78rem; }
+.frame-cols-body { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.frame-col-group,
+.frame-presets { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+
+.frame-table-scroll {
+  max-height: 75vh;
+  overflow: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--bg-card);
+}
+.frame-table { width: max-content; min-width: 100%; border-collapse: separate; border-spacing: 0; margin: 0; }
+.frame-table th,
+.frame-table td {
+  white-space: nowrap;
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border-color-soft);
+}
+.frame-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background-color: var(--bg-hero);
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: bottom;
+}
+.frame-table thead th small { display: block; font-weight: 400; font-size: 0.68rem; }
+.frame-table .ft-col-name {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  min-width: 180px;
+  font-weight: 700;
+  background-color: var(--bg-card);
+}
+.frame-table thead .ft-col-name { z-index: 4; background-color: var(--bg-hero); }
+.frame-table tbody tr.frame-row:hover td { background-color: var(--bg-card-active); }
+.frame-group-row th {
+  background-color: var(--bg-hero);
+  color: var(--accent-color);
+  font-size: 0.88rem;
+}
+.frame-group-row th small { margin-left: 8px; font-weight: 400; color: var(--text-secondary); }
+.ft-variant { font-weight: 400; font-size: 0.8rem; color: var(--text-secondary); }
+.ft-cmd { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.8rem; color: var(--text-secondary); background: none; }
+.ft-attr { display: inline-block; padding: 0 6px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 0.78rem; }
+.ft-misc { white-space: normal; min-width: 280px; max-width: 420px; font-size: 0.82rem; line-height: 1.6; color: var(--text-secondary); }
+.frame-note { margin: 8px 2px 0; font-size: 0.78rem; color: var(--text-secondary); }
+
+/* 表示項目のチェックを外した列を隠す（js/frame-table.js が外枠に ft-hide-◯◯ を付ける） */
+.ft-hide-command [data-col="command"],
+.ft-hide-startup [data-col="startup"],
+.ft-hide-active [data-col="active"],
+.ft-hide-recovery [data-col="recovery"],
+.ft-hide-hit_adv [data-col="hit_adv"],
+.ft-hide-guard_adv [data-col="guard_adv"],
+.ft-hide-damage [data-col="damage"],
+.ft-hide-hit_level [data-col="hit_level"],
+.ft-hide-cancel [data-col="cancel"],
+.ft-hide-combo_scaling [data-col="combo_scaling"],
+.ft-hide-misc [data-col="misc"],
+.ft-hide-dg_increase_hit [data-col="dg_increase_hit"],
+.ft-hide-dg_decrease_block [data-col="dg_decrease_block"],
+.ft-hide-dg_decrease_punish [data-col="dg_decrease_punish"],
+.ft-hide-sa_gauge_increase [data-col="sa_gauge_increase"] { display: none; }
+
+@media (max-width: 640px) {
+  .frame-table-scroll { max-height: 70vh; }
+  .frame-table .ft-col-name { min-width: 140px; }
+  .frame-search { max-width: none; }
+}

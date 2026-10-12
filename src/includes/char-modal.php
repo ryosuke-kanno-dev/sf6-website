@@ -47,6 +47,7 @@ $allCharacters = getAllCharacters($pdo);
               <div class="char-icon-placeholder"><?php echo h($icon); ?></div>
             <?php endif; ?>
             <?php echo h($nameJp); ?>
+            <?php if ($slug === 'gouki'): ?><span class="modal-char-special">特設ページあり</span><?php endif; ?>
           </a>
         <?php endforeach; ?>
       <?php endif; ?>

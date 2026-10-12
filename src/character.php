@@ -2,6 +2,7 @@
 // 1. DB接続・共通関数の読み込み
 require_once 'includes/db.php';
 require_once 'includes/functions/db_helpers.php';
+require_once __DIR__ . '/includes/functions/frame_table.php';
 require_once 'includes/functions/command_converter.php';
 
 // buildComboSituationLabel() / translateDifficulty() / comboCategoryKey() / comboCategoryLabel() /
@@ -163,6 +164,13 @@ include 'includes/head.php';
       <p class="page-desc"><?php echo h($character['name_jp']); ?>のコンボ・確定反撃・フレームデータの統合ガイド</p>
     </div>
 
+    <?php if (($character['char_slug'] ?? '') === 'gouki'): ?>
+      <div class="alert-box akuma-link-banner">
+        <div class="alert-title">★ 豪鬼特設ページ</div>
+        <div class="alert-content">豪鬼専用の攻略（状況別コンボ・リーサル判断・起き攻め・キャラ別の確反）はこちら。 <a href="akuma.php" class="akuma-link-banner-btn">豪鬼特設ページへ →</a></div>
+      </div>
+    <?php endif; ?>
+
     <!-- タブナビゲーション -->
     <div class="tab-navigation">
       <button class="tab-btn active" type="button" data-tab-target="tab-combos">【自キャラ用】コンボ集</button>
@@ -196,7 +204,7 @@ include 'includes/head.php';
               （<?php echo count($combosByCategory[$categoryKey]); ?>件）
             </span>
           </h3>
-          <div class="card-grid" id="combo-<?php echo h($categoryKey); ?>">
+          <div class="card-grid combo-list" id="combo-<?php echo h($categoryKey); ?>">
             <?php foreach ($combosByCategory[$categoryKey] as $combo): ?>
               <div class="combo-card">
                 <div class="combo-header">
@@ -382,6 +390,8 @@ include 'includes/head.php';
                   <span class="punish-tier-count"><?php echo count($tierItems); ?>技</span>
                 </header>
                 <p class="punish-tier-desc"><?php echo h($tier['desc']); ?></p>
+                <?php $foldTier = ($tier['key'] === 't6'); // 基本的に確定しない段は、件数が多いので折りたたみ ?>
+                <?php if ($foldTier): ?><details class="punish-fold"><summary><?php echo count($tierItems); ?>技を表示</summary><?php endif; ?>
                 <ul class="punish-move-list">
                   <?php foreach ($tierItems as $frame): ?>
                     <?php
@@ -392,8 +402,9 @@ include 'includes/head.php';
                     <li class="punish-move<?php echo $hasNote ? ' has-note' : ''; ?>">
                       <div class="punish-move-main">
                         <span class="punish-move-name"><?php echo h($frame['move_name_jp']); ?></span>
-                        <?php if (!empty($frame['move_variant'])): ?>
-                          <span class="punish-move-variant">（<?php echo h($frame['move_variant']); ?>）</span>
+                        <?php $variantText = moveVariantLabel($frame['move_variant'] ?? null); ?>
+                        <?php if ($variantText !== ''): ?>
+                          <span class="punish-move-variant">（<?php echo h($variantText); ?>）</span>
                         <?php endif; ?>
                       </div>
                       <div class="punish-move-meta">
@@ -410,6 +421,7 @@ include 'includes/head.php';
                     </li>
                   <?php endforeach; ?>
                 </ul>
+                <?php if ($foldTier): ?></details><?php endif; ?>
               </section>
             <?php endforeach; ?>
           </div>
@@ -465,39 +477,7 @@ include 'includes/head.php';
           <div class="alert-content">現在、<?php echo h($selected_char); ?> のフレームデータは登録されていません。</div>
         </div>
       <?php else: ?>
-        <div class="table-container" id="frame-data">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>技名</th>
-                <th>種別</th>
-                <th>発生(F)</th>
-                <th>持続</th>
-                <th>硬直</th>
-                <th>ガード時硬直差</th>
-                <th>ヒット時硬直差</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($all_frames as $frame): ?>
-                <tr>
-                  <td>
-                    <?php echo h($frame['move_name_jp']); ?>
-                    <?php if (!empty($frame['move_variant'])): ?>
-                      <span style="color:var(--text-secondary); font-size:0.8rem;">（<?php echo h($frame['move_variant']); ?>）</span>
-                    <?php endif; ?>
-                  </td>
-                  <td><?php echo h(translateMoveType($frame['move_type'])); ?></td>
-                  <td><?php echo h($frame['startup']); ?></td>
-                  <td><?php echo h($frame['active']); ?></td>
-                  <td><?php echo h($frame['recovery']); ?></td>
-                  <td class="<?php echo frameAdvClass($frame['guard_adv']); ?>"><?php echo h($frame['guard_adv']); ?></td>
-                  <td class="<?php echo frameAdvClass($frame['hit_adv']); ?>"><?php echo h($frame['hit_adv']); ?></td>
-                </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-        </div>
+        <?php echo renderFrameTable($all_frames, 'frame-data'); ?>
       <?php endif; ?>
     </div>
 
@@ -532,6 +512,8 @@ include 'includes/head.php';
     });
   })();
 </script>
+
+<script src="js/frame-table.js?v=<?php echo (int)@filemtime(__DIR__ . '/js/frame-table.js'); ?>"></script>
 
 <!-- 8. フッター読み込み -->
 <?php include 'includes/footer.php'; ?>
