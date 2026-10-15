@@ -93,14 +93,14 @@ function convertButtons(string $btnStr): string {
     static $btnMap = [
         'LPLK' => ['lp.png', 'lk.png'],
         'HPHK' => ['hp.png', 'hk.png'],
-        'MPMK' => ['mp.png', 'hk.png'],
+        'MPMK' => ['mp.png', 'mk.png'],
         'PP'   => ['p.png',  'p.png'],
         'KK'   => ['k.png',  'k.png'],
         'LP'   => ['lp.png'],
         'MP'   => ['mp.png'],
         'HP'   => ['hp.png'],
         'LK'   => ['lk.png'],
-        'MK'   => ['hk.png'],
+        'MK'   => ['mk.png'],
         'HK'   => ['hk.png'],
         'P'    => ['p.png'],
         'K'    => ['k.png'],
@@ -140,6 +140,10 @@ function convertDirAndButton(string $numStr, string $btnStr): string {
  * トークン文字列を HTML に変換する（内部ヘルパー）
  */
 function convertToken(string $token): string {
+    // 修飾子 [w] → [W] など、角括弧トークンの大文字小文字の違いを吸収する
+    if ($token !== '' && $token[0] === '[') {
+        $token = strtoupper($token);
+    }
     switch ($token) {
         // ── 特殊アイコン（[タグ] 形式） ──────────────────────────────
         case '[J/H]':
@@ -191,12 +195,19 @@ function convertToken(string $token): string {
             // ホールド入力（hold.pngのみ）
             return cmdImg('hold.png', 'HOLD', 'c-cmd-img--mod');
 
+        case '[HJ]':
+            // ハイジャンプ（ヴァイパーの特殊動作。↓入力直後に↑）
+            return cmdBadge('ハイジャンプ', 'hj');
+
         // ── 区切り記号 ────────────────────────────────────────────────
         case ' -> ':
             return '<span class="c-cmd-sep" title="次の技へ">→</span>';
 
         case ' > ':
             return '<span class="c-cmd-sep c-cmd-sep--derive" title="派生入力">⇒</span>';
+
+        case ' / ':
+            return '<span class="c-cmd-sep" title="または">/</span>';
 
         case '~':
             return cmdImg('next.png', '~', 'c-cmd-img--sym');
@@ -248,30 +259,37 @@ function convertToken(string $token): string {
 // メイン関数
 // ======================================================================
 
+// ======================================================================
+// トークン正規表現（変換処理 convertCommandToIcons と、表記チェック analyzeCommandText で共用）
+// ======================================================================
+
 /**
- * コマンド文字列を HTML アイコンに変換する
- *
- * 単一パス正規表現方式 + 方向＋ボタン間に「+」自動挿入
+ * ボタン部分の正規表現（長い順に並べて最長一致を優先する）
  */
-function convertCommandToIcons(string $command): string {
-    if (empty(trim($command))) return '';
+function cmdButtonPattern(): string {
+    return 'LPLK|HPHK|MPMK|LP|MP|HP|LK|MK|HK|PP|KK|SA[123]|P(?![PH])|K(?!K)';
+}
 
-    $btnP = 'LPLK|HPHK|MPMK|LP|MP|HP|LK|MK|HK|PP|KK|SA[123]|P(?![PH])|K(?!K)';
-
-    // トークンパターン（長い順に並べることで最長マッチを優先する）
-    $pattern = implode('|', [
+/**
+ * コマンド文字列を分解するトークン正規表現（デリミタなし）
+ */
+function cmdTokenPattern(): string {
+    $btnP = cmdButtonPattern();
+    return implode('|', [
         '\[J\/H\]',            // [J/H]
         '\[360360\]',          // [360360] 二回転
         '\[AUTO\]',            // [AUTO]
         '\[360\]',             // [360] 一回転
         '\[OD\]','\[NR\]','\[CR\]','\[IM\]', // 特殊[]
-        '\[W\]','\[BJ\]','\[BS\]','\[D\]',   // 移動系[]
+        '\[[wW]\]','\[BJ\]','\[BS\]','\[D\]',   // 移動系[]
         '\[J\]','\[H\]',                       // 修飾子[]
+        '\[[hH][jJ]\]',                          // ハイジャンプ [HJ]（ヴァイパー）
         '\[[1-9]+\]',          // 溜め方向 [数字]
         ' -> ',                // 技区切り（スペース込み）
         ' > ',                 // 派生区切り（スペース込み）
+        ' \/ ',                // 並列の区切り（スペース込み）「A / B」
         '\(x\d+-\d+\)',        // 繰り返し (xN-M)  ← (丸括弧グループより先にマッチさせる)
-        '\([^)]+\)',           // 丸括弧グループ（内部は数字を素通し、他の記法は変換）
+        '\((?:[^()]|\([^()]*\))+\)',  // 丸括弧グループ（1段の入れ子まで対応。内部は数字を素通し、他の記法は変換）
         '~',                   // 連続入力
         'j\.',                 // ジャンプ修飾子
         'or',                  // or
@@ -284,6 +302,59 @@ function convertCommandToIcons(string $command): string {
         '[1-9]+(?:' . $btnP . ')?', // 方向数字（オプションでボタンあり）
         '\+',                  // +記号（単独 → plus.png）
     ]);
+}
+
+/**
+ * コマンド文字列を解析し、「認識されなかった部分」を返す（管理画面の「コマンド表記チェック」用）。
+ *  - leftover       : トークンとして認識されず、丸括弧( )の外に残った文字（例: 214LPホールド の「ホールド」）。
+ *                     画面ではそのまま文字として表示される（アイコンにならない）。
+ *  - unknown_tokens : 認識はされたが、対応するアイコンが無いトークン（「不明」バッジで表示されるもの）
+ * 丸括弧の中は条件の文章（「(ジャンプ中に)」など）として扱うため、チェック対象外。
+ *
+ * @return array{leftover: string[], unknown_tokens: string[]}
+ */
+function analyzeCommandText(string $command): array {
+    $leftover = [];
+    if (trim($command) === '') {
+        return ['leftover' => [], 'unknown_tokens' => []];
+    }
+
+    // トークン間のすき間を拾う。トークンは ASCII のみなので、すき間の境界はUTF-8の文字境界に一致する
+    $pos = 0;
+    if (preg_match_all('/' . cmdTokenPattern() . '/', $command, $matches, PREG_OFFSET_CAPTURE)) {
+        foreach ($matches[0] as $m) {
+            [$tok, $off] = $m;
+            if ($off > $pos) {
+                $leftover[] = substr($command, $pos, $off - $pos);
+            }
+            $pos = $off + strlen($tok);
+        }
+    }
+    if ($pos < strlen($command)) {
+        $leftover[] = substr($command, $pos);
+    }
+    $leftover = array_values(array_filter(array_map('trim', $leftover), fn($t) => $t !== ''));
+
+    // 「不明」バッジになったトークン
+    $unknown = [];
+    if (preg_match_all('/<span class="c-cmd-badge c-cmd-badge--unknown">(.*?)<\/span>/u', convertCommandToIcons($command), $um)) {
+        foreach ($um[1] as $t) {
+            $unknown[] = html_entity_decode($t, ENT_QUOTES, 'UTF-8');
+        }
+    }
+    return ['leftover' => $leftover, 'unknown_tokens' => $unknown];
+}
+
+/**
+ * コマンド文字列を HTML アイコンに変換する
+ *
+ * 単一パス正規表現方式 + 方向＋ボタン間に「+」自動挿入
+ */
+function convertCommandToIcons(string $command): string {
+    if (empty(trim($command))) return '';
+
+    $btnP    = cmdButtonPattern();
+    $pattern = cmdTokenPattern();
 
     $html = preg_replace_callback(
         '/' . $pattern . '/',
@@ -298,15 +369,16 @@ function convertCommandToIcons(string $command): string {
             // ── 丸括弧グループ (...) ─────────────────────────────────────────
             // 内部の数字（1〜9 単体）はテキストのまま表示。
             // ボタン名・方向+ボタン・[数字]溜め表記などその他の記法は通常変換する。
-            if (preg_match('/^\(([^)]+)\)$/', $token, $pm)) {
+            if (preg_match('/^\((.+)\)$/s', $token, $pm)) {
                 $inner = $pm[1];
 
                 // () 内専用パターン: bare [1-9]+ を意図的に除外
                 $innerPattern = implode('|', [
                     '\[J\/H\]', '\[360360\]', '\[AUTO\]', '\[360\]',
                     '\[OD\]', '\[NR\]', '\[CR\]', '\[IM\]',
-                    '\[W\]', '\[BJ\]', '\[BS\]', '\[D\]',
+                    '\[[wW]\]', '\[BJ\]', '\[BS\]', '\[D\]',
                     '\[J\]', '\[H\]',
+                    '\[[hH][jJ]\]',
                     '\[[1-9]+\]',          // 溜め方向 [数字] は変換
                     ' -> ', ' > ',
                     '~', 'j\.', 'or', 'N',

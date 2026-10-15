@@ -19,6 +19,11 @@ function ftRowVisible(row, state) {
   return true;
 }
 
+// コマンド表示形式の保存値：'icons' / 'text' 以外は 'icons'（初期値）に戻す
+function ftParseCmdMode(raw) {
+  return raw === 'text' ? 'text' : 'icons';
+}
+
 // 保存値の読み出し：配列でなければ null。存在しない項目キーは取り除く
 function ftParseStored(raw, validKeys) {
   if (raw == null) return null;
@@ -34,6 +39,7 @@ function ftParseStored(raw, validKeys) {
 
 (function () {
   var STORE_KEY = 'sf6ft_cols_v1';
+  var CMD_KEY   = 'sf6ft_cmd_v1';
 
   function toArray(list) { return Array.prototype.slice.call(list); }
 
@@ -44,6 +50,7 @@ function ftParseStored(raw, validKeys) {
     var rows = toArray(wrap.querySelectorAll('tbody tr.frame-row')).map(function (tr) {
       return { el: tr, type: tr.dataset.type, text: ftNormalize(tr.dataset.search) };
     });
+    var cmdRadios = toArray(wrap.querySelectorAll('.ft-cmd-mode'));
     var search   = wrap.querySelector('.frame-search');
     var countEl  = wrap.querySelector('.frame-count');
     var colsInfo = wrap.querySelector('.ft-cols-count');
@@ -99,6 +106,22 @@ function ftParseStored(raw, validKeys) {
     typeChecks.forEach(function (c) { c.addEventListener('change', applyFilter); });
     if (search) search.addEventListener('input', applyFilter);
 
+    // コマンド表示の切り替え（アイコン / テンキー表記）。外枠に ft-cmd-text を付けると文字表示になる（CSSで切替）
+    function applyCmdMode(mode) {
+      wrap.classList.toggle('ft-cmd-text', mode === 'text');
+      cmdRadios.forEach(function (r) { r.checked = (r.value === mode); });
+    }
+    function loadCmdMode() {
+      try { return ftParseCmdMode(localStorage.getItem(CMD_KEY)); } catch (e) { return 'icons'; }
+    }
+    cmdRadios.forEach(function (r) {
+      r.addEventListener('change', function () {
+        if (!r.checked) return;
+        applyCmdMode(r.value);
+        try { localStorage.setItem(CMD_KEY, r.value); } catch (e) { /* 保存できなくても表示は動く */ }
+      });
+    });
+
     toArray(wrap.querySelectorAll('.ft-preset')).forEach(function (btn) {
       btn.addEventListener('click', function () {
         var keys = btn.dataset.preset === 'basic' ? FT_PRESET_BASIC.filter(function (k) { return validKeys.indexOf(k) !== -1; })
@@ -110,6 +133,7 @@ function ftParseStored(raw, validKeys) {
     });
 
     applyCols(loadCols() || defaults);
+    applyCmdMode(loadCmdMode());
     applyFilter();
   }
 

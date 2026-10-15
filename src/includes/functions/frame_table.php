@@ -34,6 +34,29 @@ if (!function_exists('frameTableColumns')) {
     }
 }
 
+if (!function_exists('renderNumpadLegend')) {
+    /**
+     * 「テンキー表記の見方」（折りたたみ）。コマンドの数字（方向）とボタン名の意味を説明する。
+     */
+    function renderNumpadLegend(): string {
+        $pad = [['7', '↖'], ['8', '↑'], ['9', '↗'], ['4', '←'], ['5', 'N'], ['6', '→'], ['1', '↙'], ['2', '↓'], ['3', '↘']];
+        $html  = '<details class="frame-legend"><summary>テンキー表記の見方</summary><div class="frame-legend-body">';
+        $html .= '<div class="frame-numpad" aria-hidden="true">';
+        foreach ($pad as [$num, $arrow]) {
+            $html .= '<span><b>' . $num . '</b><i>' . $arrow . '</i></span>';
+        }
+        $html .= '</div>';
+        $html .= '<ul>'
+               . '<li>数字は<strong>キーボードのテンキーの位置＝方向</strong>です（自キャラが右向きのとき）。<code>2</code>=↓ <code>6</code>=→ <code>4</code>=←</li>'
+               . '<li><code>236</code>=↓↘→（波動拳コマンド）／ <code>623</code>=→↓↘（昇龍拳コマンド）／ <code>214</code>=↓↙←</li>'
+               . '<li><code>66</code>=→→（前ダッシュ）／ <code>44</code>=←←（バックステップ）</li>'
+               . '<li><code>LP MP HP</code>=弱・中・強パンチ ／ <code>LK MK HK</code>=弱・中・強キック ／ <code>PP</code>・<code>KK</code>=同時押し（OD技など）</li>'
+               . '<li>丸括弧( )の中は、そのコマンドが使える条件です（例: <code>(ジャンプ中に)LP</code>）</li>'
+               . '</ul></div></details>';
+        return $html;
+    }
+}
+
 if (!function_exists('renderFrameTable')) {
     /**
      * @param array  $frames フレームデータ（frame テーブルの行。sort_order 順を想定）
@@ -75,6 +98,14 @@ if (!function_exists('renderFrameTable')) {
                    . h(translateMoveType((string)$type)) . '<small>' . count($byType[$type]) . '</small></label>';
         }
         $html .= '</div>';
+
+        // コマンドの表示形式：アイコン（初期）／テンキー表記（文字）。選択はブラウザに保存する
+        $html .= '<div class="frame-toolbar-row frame-cmdmode">';
+        $html .= '<span class="frame-toolbar-label">コマンド表示</span>';
+        $html .= '<label class="frame-chip"><input type="radio" class="ft-cmd-mode" name="ft-cmd-' . h($wrapId) . '" value="icons" checked> アイコン</label>';
+        $html .= '<label class="frame-chip"><input type="radio" class="ft-cmd-mode" name="ft-cmd-' . h($wrapId) . '" value="text"> テンキー表記（文字）</label>';
+        $html .= '</div>';
+        $html .= renderNumpadLegend();
 
         $html .= '<details class="frame-cols">';
         $html .= '<summary>表示する項目を選ぶ <span class="ft-cols-count"></span></summary>';
@@ -124,7 +155,15 @@ if (!function_exists('renderFrameTable')) {
                     if ($key === 'hit_adv' || $key === 'guard_adv') {
                         $cls = ' class="' . frameAdvClass($val) . '"';
                     } elseif ($key === 'command' && $val !== '') {
-                        $inner = '<code class="ft-cmd">' . h($val) . '</code>';
+                        // アイコン（既定）とテンキー表記（文字）の両方を出力し、表示の切り替えは外枠のクラスで行う。
+                        // 変換処理が使えない場合は、文字だけを常に表示する。
+                        $icons = function_exists('convertCommandToIcons') ? convertCommandToIcons($val) : '';
+                        if ($icons !== '') {
+                            $inner = '<span class="ft-cmd-icons" title="' . h($val) . '">' . $icons . '</span>'
+                                   . '<code class="ft-cmd">' . h($val) . '</code>';
+                        } else {
+                            $inner = '<code class="ft-cmd ft-cmd--solo">' . h($val) . '</code>';
+                        }
                     } elseif ($key === 'hit_level' && $val !== '') {
                         $inner = '<span class="ft-attr">' . h($val) . '</span>';
                     } elseif ($key === 'misc' && $val !== '') {
@@ -136,7 +175,7 @@ if (!function_exists('renderFrameTable')) {
             }
         }
         $html .= '</tbody></table></div>';
-        $html .= '<p class="frame-note">「D」はダウン、「—」は該当なしを表します。表示項目の選択はこのブラウザに保存されます。</p>';
+        $html .= '<p class="frame-note">「D」はダウン、「—」は該当なしを表します。表示項目・コマンド表示の選択はこのブラウザに保存されます。</p>';
         $html .= '</div>'; // .frame-table-wrap
         return $html;
     }

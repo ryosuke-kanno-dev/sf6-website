@@ -1892,3 +1892,28 @@ html {
   .frame-table .ft-col-name { min-width: 140px; }
   .frame-search { max-width: none; }
 }
+
+/* --- frame-table-command.css : フレーム表のコマンド列（アイコン／テンキー表記の切り替え）と凡例 --- */
+.frame-table-wrap:not(.ft-cmd-text) .ft-cmd:not(.ft-cmd--solo) { display: none; }
+.frame-table-wrap.ft-cmd-text .ft-cmd-icons { display: none; }
+/* 長い条件文（「(体力25%以下で)236236K」など）で列が横に広がり、表が横スクロールになるのを防ぐため、
+   幅に上限を設けて、長いものだけセルの中で折り返す */
+.frame-table .ft-cmd-icons { display: inline-block; max-width: 300px; white-space: normal; vertical-align: top; }
+.frame-table .ft-cmd { display: inline-block; max-width: 300px; white-space: normal; word-break: break-all; }
+.frame-table .ft-cmd-icons .p-combo__recipe-icons { flex-wrap: wrap; row-gap: 2px; display: inline-flex; align-items: center; }
+.frame-table .c-cmd-img { width: 20px; height: 20px; margin: 0 1px; }
+.frame-table .c-cmd-img--dir { width: 17px; height: 17px; }
+.frame-table .c-cmd-badge { font-size: 0.68rem; padding: 0 5px; }
+
+.frame-legend > summary { cursor: pointer; font-size: 0.85rem; font-weight: 700; color: var(--accent-color); }
+.frame-legend-body { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: flex-start; margin-top: 10px; }
+.frame-numpad { display: grid; grid-template-columns: repeat(3, 46px); gap: 4px; }
+.frame-numpad span {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  height: 42px; border: 1px solid var(--border-color); border-radius: 6px;
+  background-color: var(--bg-main); line-height: 1.2;
+}
+.frame-numpad b { font-size: 0.95rem; }
+.frame-numpad i { font-style: normal; font-size: 0.8rem; color: var(--accent-color); }
+.frame-legend-body ul { margin: 0; padding-left: 1.2em; font-size: 0.84rem; line-height: 1.9; color: var(--text-secondary); flex: 1 1 300px; }
+.frame-legend-body code { font-size: 0.85em; padding: 1px 5px; border: 1px solid var(--border-color); border-radius: 4px; background-color: var(--bg-hero); color: var(--text-primary); }
